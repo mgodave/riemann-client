@@ -7,15 +7,16 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 
 import static com.aphyr.riemann.Proto.Event;
 import static com.aphyr.riemann.Proto.Msg;
+import static java.util.Arrays.asList;
 
-@NotThreadSafe
+@ThreadSafe
 public class Connection implements Closeable {
 
   private final Channel channel;
@@ -25,68 +26,59 @@ public class Connection implements Closeable {
   }
 
   public ListenableFuture<Boolean> sendEvent(Event e) throws InterruptedException {
-    final Msg msg = Msg.newBuilder()
-      .addEvents(e)
-      .build();
+    final Msg.Builder msg = Msg.newBuilder()
+        .addEvents(e);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
   public ListenableFuture<Boolean> sendEvents(Event e1, Event e2) throws InterruptedException {
-    final Msg msg = Msg.newBuilder()
-      .addEvents(0, e1)
-      .addEvents(1, e2)
-      .build();
+    final Msg.Builder msg = Msg.newBuilder()
+        .addEvents(0, e1)
+        .addEvents(1, e2);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
   public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3) throws InterruptedException {
-    final Msg msg = Msg.newBuilder()
-      .addEvents(0, e1)
-      .addEvents(1, e2)
-      .addEvents(2, e3)
-      .build();
+    final Msg.Builder msg = Msg.newBuilder()
+        .addEvents(0, e1)
+        .addEvents(1, e2)
+        .addEvents(2, e3);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
   public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4) throws InterruptedException {
-    final Msg msg = Msg.newBuilder()
-      .addEvents(0, e1)
-      .addEvents(1, e2)
-      .addEvents(2, e3)
-      .addEvents(3, e4)
-      .build();
+    final Msg.Builder msg = Msg.newBuilder()
+        .addEvents(0, e1)
+        .addEvents(1, e2)
+        .addEvents(2, e3)
+        .addEvents(3, e4);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
   public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4, Event e5) throws InterruptedException {
-    final Msg msg = Msg.newBuilder()
-      .addEvents(0, e1)
-      .addEvents(1, e2)
-      .addEvents(2, e3)
-      .addEvents(3, e4)
-      .addEvents(3, e5)
-      .build();
+    final Msg.Builder msg = Msg.newBuilder()
+        .addEvents(0, e1)
+        .addEvents(1, e2)
+        .addEvents(2, e3)
+        .addEvents(3, e4)
+        .addEvents(3, e5);
     return sendMsg(channel, new ReturnableEvent(msg));
   }
 
   public ListenableFuture<Boolean> sendEvents(Event... events) throws InterruptedException {
-    final Msg.Builder msgBuilder = Msg.newBuilder();
-    for (Event event : events) {
-      msgBuilder.addEvents(event);
-    }
-    final Msg msg = msgBuilder.build();
+    final Msg.Builder msg = Msg.newBuilder()
+        .addAllEvents(asList(events));
     return sendMsg(channel, new ReturnableEvent(msg));
   }
 
   public ListenableFuture<List<Proto.Event>> query(String query) throws InterruptedException {
-    final Msg msg = Msg.newBuilder()
-      .setQuery(Proto.Query.newBuilder()
-        .setString(query))
-      .build();
+    final Msg.Builder msg = Msg.newBuilder()
+        .setQuery(Proto.Query.newBuilder()
+            .setString(query));
     return sendMsg(channel, new ReturnableQuery(msg));
   }
 

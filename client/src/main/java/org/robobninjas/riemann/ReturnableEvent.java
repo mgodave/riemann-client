@@ -8,10 +8,14 @@ class ReturnableEvent extends ReturnableMessage<Boolean> {
     super(msg);
   }
 
+  public ReturnableEvent(Proto.Msg.Builder builder) {
+    super(builder);
+  }
+
   @Override
   public void handleResult(Proto.Msg msg) {
     if (msg.hasError()) {
-      future.setException(new ReturnableException(msg.getError()));
+      future.setException(new RiemannClientException(msg.getError()));
     } else {
       future.set(msg.getOk());
     }

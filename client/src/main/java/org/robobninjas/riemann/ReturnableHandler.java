@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import static org.jboss.netty.channel.Channels.write;
+
 class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(ReturnableHandler.class);
@@ -23,7 +25,8 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
         final ReturnableMessage<?> returnable = (ReturnableMessage<?>) msgEvent.getMessage();
         returnables.offer(new WeakReference<ReturnableMessage<?>>(returnable));
         // strip the returnable and send the protobuf downstream
-        Channels.write(ctx, e.getFuture(), returnable.getMsg(), ((MessageEvent) e).getRemoteAddress());
+        write(ctx, e.getFuture(), returnable.getMsg(), ((MessageEvent) e).getRemoteAddress());
+        return;
       }
     } else if (e instanceof ChannelStateEvent) {
       final ChannelStateEvent stateEvent = (ChannelStateEvent) e;
@@ -37,7 +40,6 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
         }
         returnables.clear();
       }
-      ctx.sendDownstream(e);
     }
     ctx.sendDownstream(e);
   }

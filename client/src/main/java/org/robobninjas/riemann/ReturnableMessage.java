@@ -2,6 +2,7 @@ package org.robobninjas.riemann;
 
 import com.aphyr.riemann.Proto;
 import com.google.common.util.concurrent.SettableFuture;
+import com.google.protobuf.MessageOrBuilder;
 
 abstract class ReturnableMessage<T> {
 
@@ -11,6 +12,10 @@ abstract class ReturnableMessage<T> {
   public ReturnableMessage(Proto.Msg msg) {
     this.msg = msg;
     this.future = SettableFuture.create();
+  }
+
+  public ReturnableMessage(Proto.Msg.Builder builder) {
+    this(builder.build());
   }
 
   public SettableFuture<T> getFuture() {
