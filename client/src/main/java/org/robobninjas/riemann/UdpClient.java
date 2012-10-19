@@ -6,12 +6,13 @@ import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.socket.DatagramChannelFactory;
 
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
 import java.net.InetSocketAddress;
 
 import static org.robobninjas.riemann.Client.DEFAULT_PORT;
 
-@NotThreadSafe
+@ThreadSafe
 public class UdpClient implements Client {
 
   private final ConnectionlessBootstrap bootstrap;

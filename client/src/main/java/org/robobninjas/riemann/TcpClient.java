@@ -1,27 +1,26 @@
 package org.robobninjas.riemann;
 
 import com.google.common.base.Optional;
-import com.google.common.base.Throwables;
 import com.google.inject.assistedinject.Assisted;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.socket.ClientSocketChannelFactory;
 
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
 import java.net.InetSocketAddress;
 
+import static com.google.common.base.Throwables.propagate;
 import static com.google.common.base.Throwables.propagateIfInstanceOf;
-import static com.google.common.base.Throwables.propagateIfPossible;
-import static org.robobninjas.riemann.Client.DEFAULT_PORT;
 
-@NotThreadSafe
+@ThreadSafe
 public class TcpClient implements Client {
 
   private static final int DEFAULT_RETRIES = 0;
 
   private final ClientBootstrap bootstrap;
-  private int maxRetries = DEFAULT_RETRIES;
+  private volatile int maxRetries = DEFAULT_RETRIES;
 
   @Inject
   public TcpClient(ClientSocketChannelFactory channelFactory, @Assisted String address, @Assisted int port) {
@@ -69,12 +68,10 @@ public class TcpClient implements Client {
     }
 
     if (lastException.isPresent()) {
-      final Exception e = lastException.get();
-      propagateIfPossible(e);
-      throw new RuntimeException("Unknown Error", e);
+      throw propagate(lastException.get());
     }
 
-    throw new RuntimeException("Unknown Error");
+    return null;
   }
 
   @Override
@@ -98,12 +95,10 @@ public class TcpClient implements Client {
     }
 
     if (lastException.isPresent()) {
-      final Exception e = lastException.get();
-      propagateIfPossible(e);
-      throw new RuntimeException("Unknown Error", e);
+      throw propagate(lastException.get());
     }
 
-    throw new RuntimeException("Unknown Error");
+    return null;
   }
 
   @Override

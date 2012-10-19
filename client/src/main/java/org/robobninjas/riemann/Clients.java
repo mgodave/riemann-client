@@ -3,10 +3,13 @@ package org.robobninjas.riemann;
 import org.jboss.netty.channel.socket.oio.OioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.oio.OioDatagramChannelFactory;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.robobninjas.riemann.Client.DEFAULT_PORT;
 
+@ThreadSafe
 public class Clients {
 
   public static UdpClient makeUdpClient(String address, int port) {
