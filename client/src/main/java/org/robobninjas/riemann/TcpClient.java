@@ -74,7 +74,7 @@ public class TcpClient implements Client {
       throw new RuntimeException("Unknown Error", e);
     }
 
-    return null; //never hit, make compiler happy
+    throw new RuntimeException("Unknown Error");
   }
 
   @Override
@@ -103,7 +103,7 @@ public class TcpClient implements Client {
       throw new RuntimeException("Unknown Error", e);
     }
 
-    return null; //never hit, make compiler happy
+    throw new RuntimeException("Unknown Error");
   }
 
   @Override
