@@ -9,6 +9,8 @@ import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.util.concurrent.Future;
 
+import static com.google.common.io.Closeables.closeQuietly;
+
 public class RiemannClient {
 
   public static void main(String[] args) {
@@ -30,7 +32,10 @@ public class RiemannClient {
         try {
           pool.returnObject(conn.get());
         } catch (Exception e) {
-          e.printStackTrace();
+        }
+        try {
+          pool.close();
+        } catch (Exception e) {
         }
       }
     }

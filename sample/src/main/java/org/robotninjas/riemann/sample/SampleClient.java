@@ -1,6 +1,8 @@
-package org.robobninjas.riemann;
+package org.robotninjas.riemann.sample;
 
 import com.aphyr.riemann.Proto;
+import org.robobninjas.riemann.Client;
+import org.robobninjas.riemann.Connection;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
