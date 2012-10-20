@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.robotninjas.riemann</groupId>
     <artifactId>riemann-java</artifactId>
-    <version>${version}</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <name>Riemann Client</name>
@@ -20,10 +20,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
-    <properties>
-        <version>1.0</version>
-    </properties>
 
     <scm>
         <connection>scm:git:git://github.com/mgodave/riemann-client.git</connection>
