@@ -2,16 +2,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+    <groupId>org.robotninjas.riemann</groupId>
+    <artifactId>riemann-java</artifactId>
+    <version>${version}</version>
+    <packaging>pom</packaging>
+
+    <name>Riemann Client</name>
+    <description>A Java client for the Riemann Metrics Server</description>
+    <url>https://github.com/mgodave/riemann-client</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <version>1.0</version>
     </properties>
 
-    <groupId>org.robotninjas.riemann</groupId>
-    <artifactId>riemann-java</artifactId>
-    <version>${version}</version>
-    <packaging>pom</packaging>
+    <scm>
+        <connection>scm:git:git://github.com/mgodave/riemann-client.git</connection>
+        <developerConnection>scm:git@github.com:mgodave/riemann-client.git</developerConnection>
+        <url>https://github.com/mgodave/riemann-client</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Dave Rusek</name>
+            <email>dave.rusek@gmail.com</email>
+        </developer>
+    </developers>
 
     <modules>
         <module>client</module>
