@@ -53,3 +53,20 @@ public class SampleClient {
 
 }
 ```
+
+Clients
+-------
+
+There are two client implementations, both of which implement the Client interface, these are the TcpClient 
+and the UdpClient. Both clients have constructors which take a Netty channel factory, remote address, and port.
+For simple usage, a Clients class with static factory methods is made available. By default the Clients factory
+methods construct implementations which use old school blocking IO.
+
+Guice
+-----
+
+Both of the client implementations have constructors annotated with the @Inject annotation. These constructors are
+also make use the Guice's AssistedInject extension and annotate the appropriate constructor arguments.  In both cases
+the approrpriate arguments are the address and port fields.
+
+
