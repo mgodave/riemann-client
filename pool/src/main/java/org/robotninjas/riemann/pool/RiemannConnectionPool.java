@@ -34,6 +34,11 @@ public class RiemannConnectionPool extends GenericObjectPool<Connection> {
     this.client = client;
   }
 
+  public RiemannConnectionPool(Client client, Config config) {
+    super(new ConnectionFactory(client), config);
+    this.client = client;
+  }
+
   @Override
   public void close() throws Exception {
     super.close();

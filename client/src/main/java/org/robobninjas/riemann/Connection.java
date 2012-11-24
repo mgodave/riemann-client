@@ -83,7 +83,7 @@ public class Connection implements Closeable {
         .addEvents(1, e2)
         .addEvents(2, e3)
         .addEvents(3, e4)
-        .addEvents(3, e5);
+        .addEvents(4, e5);
     return sendMsg(channel, new ReturnableEvent(msg));
   }
 

@@ -26,12 +26,18 @@ import org.jboss.netty.channel.socket.nio.NioDatagramChannelFactory;
 import org.robobninjas.riemann.Client;
 import org.robobninjas.riemann.UdpClient;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 
+import javax.inject.Singleton;
 import java.util.concurrent.Executor;
 
 import static java.util.concurrent.Executors.newCachedThreadPool;
 
 public class ClientModule extends AbstractModule {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(ClientModule.class);
 
   private final String address;
   private final int port;
@@ -56,8 +62,6 @@ public class ClientModule extends AbstractModule {
       bind(Executor.class)
         .toInstance(newCachedThreadPool());
 
-      bind(RiemannConnectionPool.class);
-
     } catch (NoSuchMethodException e) {
       e.printStackTrace();
     }
@@ -66,6 +70,27 @@ public class ClientModule extends AbstractModule {
   @Provides
   public Client getClient(ClientFactory factory) {
     return factory.create(address, port);
+  }
+
+  @Provides
+  @Singleton
+  public RiemannConnectionPool getConnectionPool(Client client) {
+    final RiemannConnectionPool connectionPool = new RiemannConnectionPool(client);
+    Runtime.getRuntime().addShutdownHook(
+      new Thread(
+        new Runnable() {
+          @Override
+          public void run() {
+            try {
+              connectionPool.close();
+            } catch (Exception e) {
+              LOGGER.info("Exception thrown while closing connection pool", e);
+            }
+          }
+        }
+      )
+    );
+    return connectionPool;
   }
 
 }

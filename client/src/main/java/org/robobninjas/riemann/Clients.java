@@ -38,7 +38,7 @@ public class Clients {
     return newCachedThreadPool(
       new ThreadFactoryBuilder()
         .setDaemon(true)
-        .setNameFormat("Riemann Client Thread %1")
+        .setNameFormat("Riemann Client Thread")
         .build());
   }
 
