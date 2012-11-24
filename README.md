@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mgodave/riemann-client.png)](https://travis-ci.org/mgodave/riemann-client)
+
 About
 -----
 
