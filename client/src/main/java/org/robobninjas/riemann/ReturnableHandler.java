@@ -53,7 +53,7 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
         for (WeakReference<ReturnableMessage<?>> returnableReference : returnables) {
           final ReturnableMessage returnable = returnableReference.get();
           if (returnable != null) {
-            returnable.getFuture().cancel(true);
+            returnable.cancel(true);
           }
         }
         returnables.clear();

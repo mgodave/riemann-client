@@ -35,10 +35,10 @@ class ReturnableQuery extends ReturnableMessage<List<Proto.Event>> {
   @Override
   public void handleResult(Proto.Msg msg) {
     if (msg.hasError()) {
-      future.setException(new RiemannClientException(msg.getError()));
+      setException(new RiemannClientException(msg.getError()));
       return;
     }
-    future.set(msg.getEventsList());
+    set(msg.getEventsList());
   }
 
 }

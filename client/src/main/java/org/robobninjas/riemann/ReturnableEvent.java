@@ -33,9 +33,9 @@ class ReturnableEvent extends ReturnableMessage<Boolean> {
   @Override
   public void handleResult(Proto.Msg msg) {
     if (msg.hasError()) {
-      future.setException(new RiemannClientException(msg.getError()));
+      setException(new RiemannClientException(msg.getError()));
     } else {
-      future.set(msg.getOk());
+      set(msg.getOk());
     }
   }
 
