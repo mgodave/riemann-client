@@ -18,10 +18,10 @@
 
 package org.robotninjas.riemann.sample;
 
-import org.robobninjas.riemann.Client;
+import org.robobninjas.riemann.RiemannClient;
 
 public interface ClientFactory {
 
-  Client create(String address, int port);
+  RiemannClient create(String address, int port);
 
 }

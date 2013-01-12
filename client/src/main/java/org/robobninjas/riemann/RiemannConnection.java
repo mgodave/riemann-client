@@ -35,11 +35,11 @@ import static com.aphyr.riemann.Proto.Msg;
 import static java.util.Arrays.asList;
 
 @ThreadSafe
-public class Connection implements Closeable {
+public class RiemannConnection implements Closeable {
 
   private final Channel channel;
 
-  public Connection(Channel channel) {
+  public RiemannConnection(Channel channel) {
     this.channel = channel;
   }
 

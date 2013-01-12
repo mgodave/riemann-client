@@ -19,19 +19,19 @@
 package org.robotninjas.riemann.pool;
 
 import org.apache.commons.pool.BasePoolableObjectFactory;
-import org.robobninjas.riemann.Client;
-import org.robobninjas.riemann.Connection;
+import org.robobninjas.riemann.RiemannClient;
+import org.robobninjas.riemann.RiemannConnection;
 
-class ConnectionFactory extends BasePoolableObjectFactory<Connection> {
+class ConnectionFactory extends BasePoolableObjectFactory<RiemannConnection> {
 
-  private final Client client;
+  private final RiemannClient client;
 
-  public ConnectionFactory(Client client) {
+  public ConnectionFactory(RiemannClient client) {
     this.client = client;
   }
 
   @Override
-  public Connection makeObject() throws Exception {
+  public RiemannConnection makeObject() throws Exception {
     return client.makeConnection();
   }
 }

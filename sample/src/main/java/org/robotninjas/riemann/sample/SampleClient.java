@@ -19,22 +19,22 @@
 package org.robotninjas.riemann.sample;
 
 import com.aphyr.riemann.Proto;
-import org.robobninjas.riemann.Client;
-import org.robobninjas.riemann.Connection;
+import org.robobninjas.riemann.Clients;
+import org.robobninjas.riemann.RiemannClient;
+import org.robobninjas.riemann.RiemannConnection;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Throwables.propagate;
 import static com.google.common.io.Closeables.closeQuietly;
-import static org.robobninjas.riemann.Clients.makeTcpClient;
 
 public class SampleClient {
 
   public static void main(String[] args) {
 
-    final Client client = makeTcpClient("localhost");
-    Connection connection = null;
+    final RiemannClient client = Clients.makeClient("localhost");
+    RiemannConnection connection = null;
 
     try {
 

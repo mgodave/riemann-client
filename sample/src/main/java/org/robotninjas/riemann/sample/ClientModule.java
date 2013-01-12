@@ -23,12 +23,11 @@ import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import org.jboss.netty.channel.socket.DatagramChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioDatagramChannelFactory;
-import org.robobninjas.riemann.Client;
-import org.robobninjas.riemann.UdpClient;
+import org.robobninjas.riemann.*;
+import org.robobninjas.riemann.RiemannClient;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 
 import javax.inject.Singleton;
 import java.util.concurrent.Executor;
@@ -52,7 +51,7 @@ public class ClientModule extends AbstractModule {
     try {
 
       install(new FactoryModuleBuilder()
-        .implement(Client.class, UdpClient.class)
+        .implement(RiemannClient.class, TcpRiemannClient.class)
         .build(ClientFactory.class));
 
       bind(DatagramChannelFactory.class)
@@ -68,13 +67,13 @@ public class ClientModule extends AbstractModule {
   }
 
   @Provides
-  public Client getClient(ClientFactory factory) {
+  public RiemannClient getClient(ClientFactory factory) {
     return factory.create(address, port);
   }
 
   @Provides
   @Singleton
-  public RiemannConnectionPool getConnectionPool(Client client) {
+  public RiemannConnectionPool getConnectionPool(org.robobninjas.riemann.RiemannClient client) {
     final RiemannConnectionPool connectionPool = new RiemannConnectionPool(client);
     Runtime.getRuntime().addShutdownHook(
       new Thread(

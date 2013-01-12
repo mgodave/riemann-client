@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Throwables.propagate;
 import static com.google.common.io.Closeables.closeQuietly;
-import static org.robobninjas.riemann.Clients.makeTcpClient;
+import static makeClient;
 
 public class SampleClient {
 
