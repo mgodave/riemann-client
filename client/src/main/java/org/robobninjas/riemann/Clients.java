@@ -19,7 +19,7 @@
 package org.robobninjas.riemann;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import org.jboss.netty.channel.socket.oio.OioClientSocketChannelFactory;
+import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.concurrent.ExecutorService;
@@ -43,7 +43,7 @@ public class Clients {
   public static TcpRiemannClient makeClient(String address, int port) {
     checkNotNull(address, "Address cannot be null");
     checkArgument((port > 0) && (port < 65535), "Port number must be between 0 and 65535");
-    final OioClientSocketChannelFactory channelFactory = new OioClientSocketChannelFactory(getExecutorService());
+    final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(getExecutorService(), getExecutorService());
     return new TcpRiemannClient(channelFactory, address, port);
   }
 
