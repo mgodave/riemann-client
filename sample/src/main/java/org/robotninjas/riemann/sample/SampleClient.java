@@ -19,10 +19,15 @@
 package org.robotninjas.riemann.sample;
 
 import com.aphyr.riemann.Proto;
+import com.yammer.metrics.Metrics;
+import com.yammer.metrics.core.Meter;
+import com.yammer.metrics.reporting.ConsoleReporter;
+import com.yammer.metrics.reporting.CsvReporter;
 import org.robobninjas.riemann.Clients;
 import org.robobninjas.riemann.RiemannClient;
 import org.robobninjas.riemann.RiemannConnection;
 
+import java.io.File;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -34,19 +39,26 @@ public class SampleClient {
   public static void main(String[] args) {
 
     final RiemannClient client = Clients.makeClient("localhost");
+    final Meter eventMeter = Metrics.newMeter(SampleClient.class, "events", "events", TimeUnit.SECONDS);
+
+    //ConsoleReporter.enable(1, TimeUnit.SECONDS);
+    CsvReporter.enable(new File("/Users/drusek/reports"), 1, TimeUnit.SECONDS);
+
     RiemannConnection connection = null;
-
     try {
-
       connection = client.makeConnection();
-      final Future<Boolean> isOk = connection.sendEvent(
-          Proto.Event
-              .newBuilder()
-              .setMetricF(1000000)
-              .setService("thing")
-              .build());
+      for (; ; ) {
 
-      isOk.get(1, TimeUnit.SECONDS);
+        final Future<Boolean> isOk = connection.sendEvent(
+          Proto.Event
+            .newBuilder()
+            .setMetricF(1000000)
+            .setService("thing")
+            .build());
+
+        isOk.get();
+        eventMeter.mark();
+      }
 
     } catch (Throwable t) {
       propagate(t);

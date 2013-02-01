@@ -102,7 +102,7 @@ public class RiemannConnection implements Closeable {
 
   private static <T> ListenableFuture<T> sendMsg(Channel channel, ReturnableMessage<T> returnable) throws InterruptedException {
     final ChannelFuture writeFuture = channel.write(returnable);
-    writeFuture.sync();
+    //writeFuture.sync();
     return returnable;
   }
 
