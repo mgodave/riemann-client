@@ -38,15 +38,17 @@ public class SampleClient {
 
     try {
 
-      connection = client.makeConnection();
-      final Future<Boolean> isOk = connection.sendEvent(
+      for (; ; ) {
+        connection = client.makeConnection();
+        final Future<Boolean> isOk = connection.sendEvent(
           Proto.Event
-              .newBuilder()
-              .setMetricF(1000000)
-              .setService("thing")
-              .build());
+            .newBuilder()
+            .setMetricF(1000000)
+            .setService("thing")
+            .build());
 
-      isOk.get(1, TimeUnit.SECONDS);
+        isOk.get(1, TimeUnit.SECONDS);
+      }
 
     } catch (Throwable t) {
       propagate(t);
