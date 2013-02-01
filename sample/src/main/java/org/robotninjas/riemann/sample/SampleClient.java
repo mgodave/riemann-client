@@ -26,13 +26,15 @@ import com.yammer.metrics.reporting.CsvReporter;
 import org.robobninjas.riemann.Clients;
 import org.robobninjas.riemann.RiemannClient;
 import org.robobninjas.riemann.RiemannConnection;
+import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.io.File;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Throwables.propagate;
-import static com.google.common.io.Closeables.closeQuietly;
 
 public class SampleClient {
 
@@ -41,32 +43,44 @@ public class SampleClient {
     final RiemannClient client = Clients.makeClient("localhost");
     final Meter eventMeter = Metrics.newMeter(SampleClient.class, "events", "events", TimeUnit.SECONDS);
 
-    //ConsoleReporter.enable(1, TimeUnit.SECONDS);
-    CsvReporter.enable(new File("/Users/drusek/reports"), 1, TimeUnit.SECONDS);
+    ConsoleReporter.enable(1, TimeUnit.SECONDS);
+    //CsvReporter.enable(new File("/Users/drusek/reports"), 1, TimeUnit.SECONDS);
 
-    RiemannConnection connection = null;
-    try {
-      connection = client.makeConnection();
-      for (; ; ) {
+    final RiemannConnectionPool pool = new RiemannConnectionPool(client);
+    final Executor executor = Executors.newCachedThreadPool();
+    for (int i = 0; i < 8; i++) {
+      executor.execute(new Runnable() {
+        @Override public void run() {
+          try {
+            for (; ; ) {
 
-        final Future<Boolean> isOk = connection.sendEvent(
-          Proto.Event
-            .newBuilder()
-            .setMetricF(1000000)
-            .setService("thing")
-            .build());
+              final RiemannConnection connection = pool.borrowObject();
+              final Future<Boolean> isOk = connection.sendEvent(
+                  Proto.Event
+                      .newBuilder()
+                      .setMetricF(1000000)
+                      .setService("thing")
+                      .build());
+              pool.returnObject(connection);
 
-        isOk.get();
-        eventMeter.mark();
-      }
+              isOk.get();
+              eventMeter.mark();
+            }
 
-    } catch (Throwable t) {
-      propagate(t);
-    } finally {
-      closeQuietly(connection);
-      client.shutdown();
+          } catch (Throwable t) {
+            propagate(t);
+          } finally {
+            try {
+              pool.close();
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+            client.shutdown();
+          }
+        }
+      });
+
     }
-
   }
 
 }
