@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ClientLoadTest {
 
-  private static final int WORKER_COUNT = 8;
+  private static final int WORKER_COUNT = 12;
   private static final int ACTIVE_CONNECTIONS = 4;
   private static final int NETTY_WORKER_COUNT = 2;
 
