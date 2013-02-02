@@ -45,9 +45,9 @@ public class SampleClient {
     //CsvReporter.enable(new File("/Users/drusek/reports"), 1, TimeUnit.SECONDS);
 
     final RiemannConnectionPool pool = new RiemannConnectionPool(client);
-    pool.setMaxActive(1);
+    pool.setMaxActive(4);
     final Executor executor = Executors.newCachedThreadPool();
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 10; i++) {
       executor.execute(new Runnable() {
         @Override public void run() {
           try {
