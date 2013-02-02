@@ -47,7 +47,7 @@ public class SampleClient {
     final RiemannConnectionPool pool = new RiemannConnectionPool(client);
     pool.setMaxActive(1);
     final Executor executor = Executors.newCachedThreadPool();
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 4; i++) {
       executor.execute(new Runnable() {
         @Override public void run() {
           try {
