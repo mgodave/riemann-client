@@ -19,9 +19,11 @@
 package org.robobninjas.riemann;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 import javax.annotation.concurrent.ThreadSafe;
+import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -43,8 +45,13 @@ public class Clients {
   public static TcpRiemannClient makeClient(String address, int port) {
     checkNotNull(address, "Address cannot be null");
     checkArgument((port > 0) && (port < 65535), "Port number must be between 0 and 65535");
-    final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(getExecutorService(), getExecutorService());
-    return new TcpRiemannClient(channelFactory, address, port);
+    final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(getExecutorService(), getExecutorService(), 1, 1);
+    final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
+    bootstrap.setPipelineFactory(new TcpClientPipelineFactory());
+    bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
+    bootstrap.setOption("tcpNoDelay", true);
+    bootstrap.setOption("child.tcpNoDelay", true);
+    return new TcpRiemannClient(bootstrap);
   }
 
   public static TcpRiemannClient makeClient(String address) {

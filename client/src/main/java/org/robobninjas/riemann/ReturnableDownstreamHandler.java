@@ -18,7 +18,6 @@
 
 package org.robobninjas.riemann;
 
-import com.aphyr.riemann.Proto;
 import org.jboss.netty.channel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +26,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static org.jboss.netty.channel.Channels.write;
 
-class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHandler {
+class ReturnableDownstreamHandler implements ChannelDownstreamHandler {
 
-  private static final Logger logger = LoggerFactory.getLogger(ReturnableHandler.class);
-  private final ConcurrentLinkedQueue<ReturnableMessage<?>> returnables =
-      new ConcurrentLinkedQueue<ReturnableMessage<?>>();
+  private static final Logger logger = LoggerFactory.getLogger(ReturnableDownstreamHandler.class);
+  private final ConcurrentLinkedQueue<ReturnableMessage<?>> returnables;
+
+  public ReturnableDownstreamHandler(ConcurrentLinkedQueue<ReturnableMessage<?>> returnables) {
+    this.returnables = returnables;
+  }
 
   @Override
   public void handleDownstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
@@ -57,15 +59,5 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
     ctx.sendDownstream(e);
   }
 
-  @Override
-  public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
-    if (e instanceof MessageEvent) {
-      final MessageEvent msgEvent = (MessageEvent) e;
-      final ReturnableMessage<?> returnable = returnables.poll();
-      final Proto.Msg msg = (Proto.Msg) msgEvent.getMessage();
-      returnable.handleResult(msg);
-    }
-    ctx.sendUpstream(e);
-  }
 
 }

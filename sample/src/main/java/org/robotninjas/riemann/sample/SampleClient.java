@@ -19,19 +19,17 @@
 package org.robotninjas.riemann.sample;
 
 import com.aphyr.riemann.Proto;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.yammer.metrics.Metrics;
 import com.yammer.metrics.core.Meter;
 import com.yammer.metrics.reporting.ConsoleReporter;
-import com.yammer.metrics.reporting.CsvReporter;
 import org.robobninjas.riemann.Clients;
 import org.robobninjas.riemann.RiemannClient;
 import org.robobninjas.riemann.RiemannConnection;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
-import java.io.File;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Throwables.propagate;
@@ -48,14 +46,14 @@ public class SampleClient {
 
     final RiemannConnectionPool pool = new RiemannConnectionPool(client);
     final Executor executor = Executors.newCachedThreadPool();
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 1; i++) {
       executor.execute(new Runnable() {
         @Override public void run() {
           try {
             for (; ; ) {
 
               final RiemannConnection connection = pool.borrowObject();
-              final Future<Boolean> isOk = connection.sendEvent(
+              final ListenableFuture<Boolean> isOk = connection.sendEvent(
                   Proto.Event
                       .newBuilder()
                       .setMetricF(1000000)
@@ -65,6 +63,7 @@ public class SampleClient {
 
               isOk.get();
               eventMeter.mark();
+
             }
 
           } catch (Throwable t) {

@@ -19,10 +19,8 @@
 package org.robobninjas.riemann;
 
 import com.google.common.base.Optional;
-import com.google.inject.assistedinject.Assisted;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.socket.ClientSocketChannelFactory;
 
 import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
@@ -40,25 +38,8 @@ public class TcpRiemannClient implements RiemannClient {
   private volatile int maxRetries = DEFAULT_RETRIES;
 
   @Inject
-  public TcpRiemannClient(ClientSocketChannelFactory channelFactory, @Assisted String address, @Assisted int port) {
-    bootstrap = getBootstrap(channelFactory);
-    bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
-  }
-
-  public TcpRiemannClient(ClientSocketChannelFactory channelFactory, String address) {
-    this(channelFactory, address, RiemannClient.DEFAULT_PORT);
-  }
-
-  public TcpRiemannClient(ClientSocketChannelFactory channelFactory) {
-    bootstrap = getBootstrap(channelFactory);
-  }
-
-  private static ClientBootstrap getBootstrap(ClientSocketChannelFactory channelFactory) {
-    final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
-    bootstrap.setPipelineFactory(new TcpClientPipelineFactory());
-    bootstrap.setOption("tcpNoDelay", true);
-    bootstrap.setOption("child.tcpNoDelay", true);
-    return bootstrap;
+  public TcpRiemannClient(ClientBootstrap bootstrap) {
+    this.bootstrap = bootstrap;
   }
 
   public int getMaxRetries() {
