@@ -30,7 +30,7 @@ import org.jboss.netty.handler.codec.protobuf.ProtobufEncoder;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-class TcpClientPipelineFactory implements ChannelPipelineFactory {
+public class TcpClientPipelineFactory implements ChannelPipelineFactory {
   @Override
   public ChannelPipeline getPipeline() throws Exception {
     final ChannelPipeline pipeline = Channels.pipeline();

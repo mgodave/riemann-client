@@ -9,28 +9,31 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sample</artifactId>
+    <artifactId>guice</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.robotninjas.riemann</groupId>
-            <artifactId>guice</artifactId>
+            <artifactId>client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.robotninjas.riemann</groupId>
+            <artifactId>pool</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.robotninjas.riemann</groupId>
+            <artifactId>client</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.robotninjas.riemann</groupId>
+            <artifactId>pool</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-assistedinject</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.metrics</groupId>
-            <artifactId>metrics-core</artifactId>
-            <version>2.1.2</version>
         </dependency>
     </dependencies>
 

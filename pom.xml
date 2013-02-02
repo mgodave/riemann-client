@@ -38,6 +38,7 @@
         <module>client</module>
         <module>pool</module>
         <module>sample</module>
+        <module>guice</module>
     </modules>
 
 </project>

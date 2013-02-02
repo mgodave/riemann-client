@@ -30,7 +30,7 @@ public class RiemannConnectionPool extends GenericObjectPool<RiemannConnection> 
 
   @Inject
   public RiemannConnectionPool(RiemannClient client) {
-    super(new ConnectionFactory(client), 10);
+    super(new ConnectionFactory(client));
     this.client = client;
   }
 
