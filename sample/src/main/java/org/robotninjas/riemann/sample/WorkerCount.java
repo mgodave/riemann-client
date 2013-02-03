@@ -13,5 +13,5 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @BindingAnnotation
 @Retention(RetentionPolicy.RUNTIME)
 @Target({FIELD, METHOD, PARAMETER})
-public @interface WorkerCount {
+@interface WorkerCount {
 }

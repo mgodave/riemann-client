@@ -20,10 +20,7 @@ package org.robobninjas.riemann;
 
 import com.aphyr.riemann.Proto;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.SettableFuture;
 import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.io.Closeable;
@@ -45,64 +42,63 @@ public class RiemannConnection implements Closeable {
 
   public ListenableFuture<Boolean> sendEvent(Event e) throws InterruptedException {
     final Msg.Builder msg = Msg.newBuilder()
-        .addEvents(e);
+      .addEvents(e);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
   public ListenableFuture<Boolean> sendEvents(Event e1, Event e2) throws InterruptedException {
     final Msg.Builder msg = Msg.newBuilder()
-        .addEvents(0, e1)
-        .addEvents(1, e2);
+      .addEvents(0, e1)
+      .addEvents(1, e2);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
   public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3) throws InterruptedException {
     final Msg.Builder msg = Msg.newBuilder()
-        .addEvents(0, e1)
-        .addEvents(1, e2)
-        .addEvents(2, e3);
+      .addEvents(0, e1)
+      .addEvents(1, e2)
+      .addEvents(2, e3);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
   public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4) throws InterruptedException {
     final Msg.Builder msg = Msg.newBuilder()
-        .addEvents(0, e1)
-        .addEvents(1, e2)
-        .addEvents(2, e3)
-        .addEvents(3, e4);
+      .addEvents(0, e1)
+      .addEvents(1, e2)
+      .addEvents(2, e3)
+      .addEvents(3, e4);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
   public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4, Event e5) throws InterruptedException {
     final Msg.Builder msg = Msg.newBuilder()
-        .addEvents(0, e1)
-        .addEvents(1, e2)
-        .addEvents(2, e3)
-        .addEvents(3, e4)
-        .addEvents(4, e5);
+      .addEvents(0, e1)
+      .addEvents(1, e2)
+      .addEvents(2, e3)
+      .addEvents(3, e4)
+      .addEvents(4, e5);
     return sendMsg(channel, new ReturnableEvent(msg));
   }
 
   public ListenableFuture<Boolean> sendEvents(Event... events) throws InterruptedException {
     final Msg.Builder msg = Msg.newBuilder()
-        .addAllEvents(asList(events));
+      .addAllEvents(asList(events));
     return sendMsg(channel, new ReturnableEvent(msg));
   }
 
   public ListenableFuture<List<Proto.Event>> query(String query) throws InterruptedException {
     final Msg.Builder msg = Msg.newBuilder()
-        .setQuery(Proto.Query.newBuilder()
-            .setString(query));
+      .setQuery(Proto.Query.newBuilder()
+        .setString(query));
     return sendMsg(channel, new ReturnableQuery(msg));
   }
 
   private static <T> ListenableFuture<T> sendMsg(Channel channel, ReturnableMessage<T> returnable) throws InterruptedException {
-    final ChannelFuture writeFuture = channel.write(returnable);
-    writeFuture.sync();
+    channel.write(returnable);
     return returnable;
   }
 
@@ -113,30 +109,6 @@ public class RiemannConnection implements Closeable {
 
   protected Channel getChannel() {
     return channel;
-  }
-
-  /**
-   * Simple class which handles cleaning-up the returned futures if the channel
-   * operation was either cancelled or failed to send for some reason.
-   */
-  private static class ChannelFutureBridge implements ChannelFutureListener {
-
-    private final SettableFuture<?> returnableFuture;
-
-    public ChannelFutureBridge(SettableFuture<?> returnableFuture) {
-      this.returnableFuture = returnableFuture;
-    }
-
-    @Override
-    public void operationComplete(ChannelFuture channelFuture) throws Exception {
-      if (channelFuture.isDone() && channelFuture.getCause() != null) {
-        // some failure along the pipeline
-        returnableFuture.setException(channelFuture.getCause());
-      } else if (channelFuture.isDone() && channelFuture.isCancelled()) {
-        // this io operation was canceled
-        returnableFuture.cancel(true);
-      }
-    }
   }
 
 }

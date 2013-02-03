@@ -41,6 +41,7 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
     final ConcurrentLinkedQueue<ReturnableMessage<?>> returnables = Queues.newConcurrentLinkedQueue();
     pipeline.addLast("ureturnable-handler", new ReturnableUpstreamHandler(returnables));
     pipeline.addLast("dreturnable-handler", new ReturnableDownstreamHandler(returnables));
+    pipeline.addLast("buffering-handler", new BufferingWriteHandler());
     return pipeline;
   }
 }
