@@ -9,18 +9,16 @@ import org.robotninjas.riemann.pool.RiemannConnectionPool;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
-public class ClientLoadTestService extends AbstractService {
+public class LoadTestService extends AbstractService {
 
-  private final RiemannConnectionPool pool;
+  private final ClientWorkerFactory workerFactory;
   private final Executor executor;
-  private final Meter eventMeter;
   private final int workers;
 
   @Inject
-  public ClientLoadTestService(RiemannConnectionPool pool, Executor executor, MetricsRegistry registry, @WorkerCount int workers) {
-    this.pool = pool;
+  public LoadTestService(ClientWorkerFactory workerFactory, @WorkExecutor Executor executor, @WorkerCount int workers) {
+    this.workerFactory = workerFactory;
     this.executor = executor;
-    this.eventMeter = registry.newMeter(getClass(), "events", "events", TimeUnit.SECONDS);
     this.workers = workers;
   }
 
@@ -28,7 +26,7 @@ public class ClientLoadTestService extends AbstractService {
   protected void doStart() {
 
     for (int i = 0; i < workers; i++) {
-      executor.execute(new ClientWorker(eventMeter, pool));
+      executor.execute(workerFactory.makeWorker());
     }
     notifyStarted();
 

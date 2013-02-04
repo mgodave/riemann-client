@@ -22,6 +22,7 @@ import org.jboss.netty.channel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static org.jboss.netty.channel.Channels.write;
@@ -29,9 +30,9 @@ import static org.jboss.netty.channel.Channels.write;
 class ReturnableDownstreamHandler implements ChannelDownstreamHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(ReturnableDownstreamHandler.class);
-  private final ConcurrentLinkedQueue<ReturnableMessage<?>> returnables;
+  private final BlockingQueue<ReturnableMessage<?>> returnables;
 
-  public ReturnableDownstreamHandler(ConcurrentLinkedQueue<ReturnableMessage<?>> returnables) {
+  public ReturnableDownstreamHandler(BlockingQueue<ReturnableMessage<?>> returnables) {
     this.returnables = returnables;
   }
 
@@ -41,7 +42,7 @@ class ReturnableDownstreamHandler implements ChannelDownstreamHandler {
       final MessageEvent msgEvent = (MessageEvent) e;
       if (((MessageEvent) e).getMessage() instanceof ReturnableMessage<?>) {
         final ReturnableMessage<?> returnable = (ReturnableMessage<?>) msgEvent.getMessage();
-        returnables.offer(returnable);
+        returnables.put(returnable);
         // strip the returnable and send the protobuf downstream
         write(ctx, e.getFuture(), returnable.getMsg(), ((MessageEvent) e).getRemoteAddress());
         return;

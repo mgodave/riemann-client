@@ -28,20 +28,27 @@ import org.jboss.netty.handler.codec.frame.LengthFieldPrepender;
 import org.jboss.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.jboss.netty.handler.codec.protobuf.ProtobufEncoder;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class TcpClientPipelineFactory implements ChannelPipelineFactory {
+
+  private final int bufferSize;
+
+  public TcpClientPipelineFactory(int bufferSize) {
+    this.bufferSize = bufferSize;
+  }
+
   @Override
   public ChannelPipeline getPipeline() throws Exception {
     final ChannelPipeline pipeline = Channels.pipeline();
+    pipeline.addLast("auto-flusher", new AutoFlushingBufferedWriteHandler(bufferSize));
     pipeline.addLast("frame-encoder", new LengthFieldPrepender(4));
     pipeline.addLast("frame-decoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
     pipeline.addLast("message-encoder", new ProtobufEncoder());
     pipeline.addLast("message-decoder", new ProtobufDecoder(Proto.Msg.getDefaultInstance()));
-    final ConcurrentLinkedQueue<ReturnableMessage<?>> returnables = Queues.newConcurrentLinkedQueue();
+    final BlockingQueue<ReturnableMessage<?>> returnables = Queues.newArrayBlockingQueue(10000);
     pipeline.addLast("ureturnable-handler", new ReturnableUpstreamHandler(returnables));
     pipeline.addLast("dreturnable-handler", new ReturnableDownstreamHandler(returnables));
-    pipeline.addLast("buffering-handler", new BufferingWriteHandler());
     return pipeline;
   }
 }

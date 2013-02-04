@@ -15,22 +15,41 @@ import org.robobninjas.riemann.TcpRiemannClient;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.net.InetSocketAddress;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class RiemannClientModule extends PrivateModule {
 
+  private static final GenericObjectPool.Config DEFAULT_CONFIG = new GenericObjectPool.Config();
+  private static final int DEFAULT_WORKERS = 1;
+  private static final int DEFAULT_BUFFER = 8192;
+
+  static {
+    DEFAULT_CONFIG.maxActive = 1;
+  }
+
   private final String address;
   private final int port;
   private final int numWorkers;
   private final GenericObjectPool.Config poolConfig;
+  private final int bufferSize;
 
-  public RiemannClientModule(String address, int port, int numWorkers, GenericObjectPool.Config poolConfig) {
+  public RiemannClientModule(String address, int port, int numWorkers, GenericObjectPool.Config poolConfig, int bufferSize) {
     this.address = address;
     this.port = port;
     this.numWorkers = numWorkers;
     this.poolConfig = poolConfig;
+    this.bufferSize = bufferSize;
+  }
+
+  public RiemannClientModule(String address, int port, int bufferSize) {
+    this(address, port, DEFAULT_WORKERS, DEFAULT_CONFIG, bufferSize);
+  }
+
+  public RiemannClientModule(String address, int port) {
+    this(address, port, DEFAULT_WORKERS, DEFAULT_CONFIG, DEFAULT_BUFFER);
   }
 
   @Override
@@ -101,7 +120,7 @@ public class RiemannClientModule extends PrivateModule {
   public ClientBootstrap getClientBootstrap(NioClientBossPool boss, NioWorkerPool worker) {
     final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(boss, worker);
     final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
-    bootstrap.setPipelineFactory(new TcpClientPipelineFactory());
+    bootstrap.setPipelineFactory(new TcpClientPipelineFactory(bufferSize));
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     bootstrap.setOption("tcpNoDelay", true);
     return bootstrap;
