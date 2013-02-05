@@ -102,7 +102,7 @@ public class LoadTest {
       final int bufferSize = line.hasOption('s') ? parseInt(line.getOptionValue('s')) : BUFFER_SIZE;
 
       final List<String> otherArgs = line.getArgList();
-      HostAndPort riemannHostAndPort = HostAndPort.fromParts("locahost", 5555);
+      HostAndPort riemannHostAndPort = HostAndPort.fromParts("localhost", 5555);
       if (otherArgs.size() >= 1) {
         riemannHostAndPort = HostAndPort.fromString(otherArgs.get(0));
       }
