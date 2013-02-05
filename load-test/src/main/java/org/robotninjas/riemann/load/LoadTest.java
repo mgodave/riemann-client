@@ -2,6 +2,7 @@ package org.robotninjas.riemann.load;
 
 import com.aphyr.riemann.Proto;
 import com.google.common.base.Supplier;
+import com.google.common.net.HostAndPort;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.yammer.metrics.reporting.ConsoleReporter;
@@ -9,6 +10,7 @@ import org.apache.commons.cli.*;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.robobninjas.riemann.guice.RiemannClientModule;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.parseInt;
@@ -99,13 +101,21 @@ public class LoadTest {
       final int numNettyWorkers = line.hasOption('n') ? parseInt(line.getOptionValue('n')) : NUM_NETTY_WORKERS;
       final int bufferSize = line.hasOption('s') ? parseInt(line.getOptionValue('s')) : BUFFER_SIZE;
 
+      final List<String> otherArgs = line.getArgList();
+      HostAndPort riemannHostAndPort = HostAndPort.fromParts("locahost", 5555);
+      if (otherArgs.size() >= 1) {
+        riemannHostAndPort = HostAndPort.fromString(otherArgs.get(0));
+      }
+
       final LoadTest loadTest =
-          new LoadTest("localhost", 5555, clientWorkers, batchSize, numConnections,
-                       numNettyWorkers, bufferSize, new DefaultEventSupplier());
+          new LoadTest(riemannHostAndPort.getHostText(), riemannHostAndPort.getPort(), clientWorkers,
+              batchSize, numConnections, numNettyWorkers, bufferSize, new DefaultEventSupplier());
 
       loadTest.start();
+
     } catch (ParseException e) {
-      e.printStackTrace();
+      final HelpFormatter formatter = new HelpFormatter();
+      formatter.printHelp("load-test", opts);
     }
 
 
