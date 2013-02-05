@@ -37,7 +37,7 @@
     <modules>
         <module>client</module>
         <module>pool</module>
-        <module>sample</module>
+        <module>load-test</module>
         <module>guice</module>
     </modules>
 

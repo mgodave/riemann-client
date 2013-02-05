@@ -1,5 +1,7 @@
-package org.robotninjas.riemann.sample;
+package org.robotninjas.riemann.load;
 
+import com.aphyr.riemann.Proto;
+import com.google.common.base.Supplier;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.yammer.metrics.reporting.ConsoleReporter;
@@ -24,7 +26,7 @@ public class LoadTest {
 
     final Injector injector = Guice.createInjector(
         new RiemannClientModule("localhost", 5555, NUM_NETTY_WORKERS, poolConfig, BUFFER_SIZE),
-        new LoadTestModule(NUM_CLIENT_WORKERS, BATCH_SIZE));
+        new LoadTestModule(NUM_CLIENT_WORKERS, BATCH_SIZE, new DefaultEventSupplier()));
 
     final ConsoleReporter consoleReporter = injector.getInstance(ConsoleReporter.class);
     Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -35,15 +37,26 @@ public class LoadTest {
     consoleReporter.start(1, TimeUnit.SECONDS);
 
     final LoadTestService loadTestService = injector.getInstance(LoadTestService.class);
-    Runtime.getRuntime().addShutdownHook(new
-
-                                             Thread() {
-                                               @Override public void run() {
-                                                 super.run();
-                                               }
-                                             });
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+      @Override public void run() {
+        loadTestService.stopAndWait();
+      }
+    });
     loadTestService.startAndWait();
 
+  }
+
+  private static class DefaultEventSupplier implements Supplier<Proto.Event> {
+
+    private final Proto.Event.Builder builder = Proto.Event.newBuilder();
+
+    public DefaultEventSupplier() {
+      builder.setMetricF(1000000).setService("thing");
+    }
+
+    @Override public Proto.Event get() {
+      return builder.build();
+    }
   }
 
 }
