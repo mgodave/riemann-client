@@ -10,10 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 public class LoadTest {
 
-  private static final int NUM_CLIENT_WORKERS = 4;
-  private static final int BATCH_SIZE = 200;
-  private static final int NUM_CONNECTIONS = 4;
-  private static final int NUM_NETTY_WORKERS = 4;
+  //TODO use commons-config and commons-cli so I can script this...
+  private static final int NUM_CLIENT_WORKERS = 5;
+  private static final int BATCH_SIZE = 400;
+  private static final int NUM_CONNECTIONS = 5;
+  private static final int NUM_NETTY_WORKERS = 5;
   private static final int BUFFER_SIZE = 16384;
 
   public static void main(String[] args) {
@@ -22,8 +23,8 @@ public class LoadTest {
     poolConfig.maxActive = NUM_CONNECTIONS;
 
     final Injector injector = Guice.createInjector(
-        new RiemannClientModule("localhost", 5555, NUM_CLIENT_WORKERS, poolConfig, BUFFER_SIZE),
-        new LoadTestModule(NUM_NETTY_WORKERS, BATCH_SIZE));
+        new RiemannClientModule("localhost", 5555, NUM_NETTY_WORKERS, poolConfig, BUFFER_SIZE),
+        new LoadTestModule(NUM_CLIENT_WORKERS, BATCH_SIZE));
 
     final ConsoleReporter consoleReporter = injector.getInstance(ConsoleReporter.class);
     Runtime.getRuntime().addShutdownHook(new Thread() {
