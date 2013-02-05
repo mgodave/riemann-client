@@ -123,6 +123,7 @@ public class RiemannClientModule extends PrivateModule {
     bootstrap.setPipelineFactory(new TcpClientPipelineFactory(bufferSize));
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     bootstrap.setOption("tcpNoDelay", true);
+    bootstrap.setOption("child.tcpNoDelay", true);
     return bootstrap;
   }
 

@@ -18,29 +18,30 @@ public class LoadTest {
 
   public static void main(String[] args) {
 
-      final GenericObjectPool.Config poolConfig = new GenericObjectPool.Config();
-      poolConfig.maxActive = NUM_CONNECTIONS;
+    final GenericObjectPool.Config poolConfig = new GenericObjectPool.Config();
+    poolConfig.maxActive = NUM_CONNECTIONS;
 
-      final Injector injector = Guice.createInjector(
-          new RiemannClientModule("localhost", 5555, NUM_CLIENT_WORKERS, poolConfig, BUFFER_SIZE),
-          new LoadTestModule(NUM_NETTY_WORKERS, BATCH_SIZE));
+    final Injector injector = Guice.createInjector(
+        new RiemannClientModule("localhost", 5555, NUM_CLIENT_WORKERS, poolConfig, BUFFER_SIZE),
+        new LoadTestModule(NUM_NETTY_WORKERS, BATCH_SIZE));
 
-      final ConsoleReporter consoleReporter = injector.getInstance(ConsoleReporter.class);
-      Runtime.getRuntime().addShutdownHook(new Thread() {
-        @Override public void run() {
-          consoleReporter.shutdown();
-        }
-      });
-      consoleReporter.start(1, TimeUnit.SECONDS);
+    final ConsoleReporter consoleReporter = injector.getInstance(ConsoleReporter.class);
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+      @Override public void run() {
+        consoleReporter.shutdown();
+      }
+    });
+    consoleReporter.start(1, TimeUnit.SECONDS);
 
-      final LoadTestService loadTestService = injector.getInstance(LoadTestService.class);
-      Runtime.getRuntime().addShutdownHook(new Thread() {
-        @Override
-        public void run() {
-          loadTestService.stopAndWait();
-        }
-      });
-      loadTestService.startAndWait();
+    final LoadTestService loadTestService = injector.getInstance(LoadTestService.class);
+    Runtime.getRuntime().addShutdownHook(new
+
+                                             Thread() {
+                                               @Override public void run() {
+                                                 super.run();
+                                               }
+                                             });
+    loadTestService.startAndWait();
 
   }
 
