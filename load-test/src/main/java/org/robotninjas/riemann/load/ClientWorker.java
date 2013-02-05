@@ -46,8 +46,8 @@ public class ClientWorker implements Runnable {
       while (!Thread.currentThread().isInterrupted()) {
 
         final RiemannConnection connection = pool.borrowObject();
-        final ListenableFuture<Boolean> isOk = connection.sendEvents(events);
 
+        final ListenableFuture<Boolean> isOk = connection.sendEvents(events);
         send.mark(batchSize);
         //final TimerContext ctx = rtt.time();
 
