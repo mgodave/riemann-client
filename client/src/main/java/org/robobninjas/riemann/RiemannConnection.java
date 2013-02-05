@@ -40,14 +40,14 @@ public class RiemannConnection implements Closeable {
     this.channel = channel;
   }
 
-  public ListenableFuture<Boolean> sendEvent(Event e) throws InterruptedException {
+  public ListenableFuture<Boolean> sendEvent(Event e) {
     final Msg.Builder msg = Msg.newBuilder()
       .addEvents(e);
     return sendMsg(channel, new ReturnableEvent(msg));
 
   }
 
-  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2) throws InterruptedException {
+  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2) {
     final Msg.Builder msg = Msg.newBuilder()
       .addEvents(0, e1)
       .addEvents(1, e2);
@@ -55,7 +55,7 @@ public class RiemannConnection implements Closeable {
 
   }
 
-  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3) throws InterruptedException {
+  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3) {
     final Msg.Builder msg = Msg.newBuilder()
       .addEvents(0, e1)
       .addEvents(1, e2)
@@ -64,7 +64,7 @@ public class RiemannConnection implements Closeable {
 
   }
 
-  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4) throws InterruptedException {
+  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4) {
     final Msg.Builder msg = Msg.newBuilder()
       .addEvents(0, e1)
       .addEvents(1, e2)
@@ -74,7 +74,7 @@ public class RiemannConnection implements Closeable {
 
   }
 
-  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4, Event e5) throws InterruptedException {
+  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4, Event e5) {
     final Msg.Builder msg = Msg.newBuilder()
       .addEvents(0, e1)
       .addEvents(1, e2)
@@ -84,20 +84,26 @@ public class RiemannConnection implements Closeable {
     return sendMsg(channel, new ReturnableEvent(msg));
   }
 
-  public ListenableFuture<Boolean> sendEvents(Event... events) throws InterruptedException {
+  public ListenableFuture<Boolean> sendEvents(Event... events) {
     final Msg.Builder msg = Msg.newBuilder()
       .addAllEvents(asList(events));
     return sendMsg(channel, new ReturnableEvent(msg));
   }
 
-  public ListenableFuture<List<Proto.Event>> query(String query) throws InterruptedException {
+  public ListenableFuture<Boolean> sendEvents(Iterable<Event> events) {
+    final Msg.Builder msg = Msg.newBuilder()
+      .addAllEvents(events);
+    return sendMsg(channel, new ReturnableEvent(msg));
+  }
+
+  public ListenableFuture<List<Proto.Event>> query(String query) {
     final Msg.Builder msg = Msg.newBuilder()
       .setQuery(Proto.Query.newBuilder()
         .setString(query));
     return sendMsg(channel, new ReturnableQuery(msg));
   }
 
-  private static <T> ListenableFuture<T> sendMsg(Channel channel, ReturnableMessage<T> returnable) throws InterruptedException {
+  private static <T> ListenableFuture<T> sendMsg(Channel channel, ReturnableMessage<T> returnable) {
     channel.write(returnable);
     return returnable;
   }
