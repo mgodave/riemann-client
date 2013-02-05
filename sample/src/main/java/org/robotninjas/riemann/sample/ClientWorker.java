@@ -22,15 +22,17 @@ public class ClientWorker implements Runnable {
   private final Timer rtt;
   private final RiemannConnectionPool pool;
   private final ArrayList<Proto.Event> events;
+  private final int batchSize;
 
-  @Inject ClientWorker(@SendMeter Meter send, @AckMeter Meter ack, @LatencyTimer Timer rtt, RiemannConnectionPool pool) {
+  @Inject ClientWorker(@SendMeter Meter send, @AckMeter Meter ack, @LatencyTimer Timer rtt, @BatchSize int batchSize, RiemannConnectionPool pool) {
     this.send = send;
     this.ack = ack;
     this.rtt = rtt;
     this.pool = pool;
+    this.batchSize = batchSize;
 
-    events = Lists.newArrayListWithCapacity(100);
-    for (int i = 0; i < 100; i++) {
+    events = Lists.newArrayListWithCapacity(batchSize);
+    for (int i = 0; i < batchSize; i++) {
       events.add(Proto.Event
         .newBuilder()
         .setMetricF(1000000)
@@ -48,7 +50,7 @@ public class ClientWorker implements Runnable {
         final RiemannConnection connection = pool.borrowObject();
         final ListenableFuture<Boolean> isOk = connection.sendEvents(events);
 
-        send.mark(100);
+        send.mark(batchSize);
         //final TimerContext ctx = rtt.time();
 
         pool.returnObject(connection);
@@ -56,7 +58,7 @@ public class ClientWorker implements Runnable {
         Futures.addCallback(isOk, new FutureCallback<Boolean>() {
           @Override
           public void onSuccess(Boolean result) {
-            ack.mark(100);
+            ack.mark(batchSize);
             //ctx.stop();
           }
 

@@ -22,14 +22,17 @@ public class LoadTestModule extends PrivateModule {
   public static final MetricName ACK_RATE_METRIC_NAME = new MetricName(ClientWorker.class, "acks");
   public static final MetricName LATENCY_TIMER_NAME = new MetricName(ClientWorker.class, "rtt");
   private final int workers;
+  private final int batchSize;
 
-  public LoadTestModule(int workers) {
+  public LoadTestModule(int workers, int batchSize) {
     this.workers = workers;
+    this.batchSize = batchSize;
   }
 
   @Override
   protected void configure() {
     bind(Integer.class).annotatedWith(WorkerCount.class).toInstance(workers);
+    bind(Integer.class).annotatedWith(BatchSize.class).toInstance(batchSize);
     bind(ClientWorker.class);
     install(new FactoryModuleBuilder().build(ClientWorkerFactory.class));
     bind(LoadTestService.class);
