@@ -132,6 +132,7 @@ public class RiemannClientModule extends PrivateModule {
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     bootstrap.setOption("tcpNoDelay", true);
     bootstrap.setOption("child.tcpNoDelay", true);
+    configureBootstrap(bootstrap);
     return bootstrap;
   }
 
@@ -143,6 +144,10 @@ public class RiemannClientModule extends PrivateModule {
   @Provides
   public Supplier<Queue<MessageEvent>> getMessageQueueSupplier() {
     return internalGetMessageQueueSupplier();
+  }
+
+  protected void configureBootstrap(ClientBootstrap bootstrap) {
+
   }
 
   protected Supplier<BlockingQueue<ReturnableMessage<?>>> internalGetPromiseQueueSupplier() {
