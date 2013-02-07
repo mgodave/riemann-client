@@ -1,21 +1,22 @@
 package org.robobninjas.riemann.guice;
 
+import com.google.common.base.Supplier;
 import com.google.inject.Exposed;
 import com.google.inject.PrivateModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.jboss.netty.bootstrap.ClientBootstrap;
+import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.socket.nio.NioClientBossPool;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
-import org.robobninjas.riemann.RiemannClient;
-import org.robobninjas.riemann.TcpClientPipelineFactory;
-import org.robobninjas.riemann.TcpRiemannClient;
+import org.robobninjas.riemann.*;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.net.InetSocketAddress;
-import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -33,6 +34,7 @@ public class RiemannClientModule extends PrivateModule {
   private final String address;
   private final int port;
   private final int numWorkers;
+
   private final GenericObjectPool.Config poolConfig;
   private final int bufferSize;
 
@@ -52,10 +54,16 @@ public class RiemannClientModule extends PrivateModule {
     this(address, port, DEFAULT_WORKERS, DEFAULT_CONFIG, DEFAULT_BUFFER);
   }
 
+  public int getBufferSize() {
+    return bufferSize;
+  }
+
   @Override
   protected void configure() {
+    bind(Integer.class).annotatedWith(BufferSize.class).toInstance(bufferSize);
     bind(RiemannClient.class).to(TcpRiemannClient.class);
     expose(RiemannClient.class);
+    bind(TcpClientPipelineFactory.class);
   }
 
   @Provides
@@ -117,14 +125,32 @@ public class RiemannClientModule extends PrivateModule {
   }
 
   @Provides
-  public ClientBootstrap getClientBootstrap(NioClientBossPool boss, NioWorkerPool worker) {
+  public ClientBootstrap getClientBootstrap(NioClientBossPool boss, NioWorkerPool worker, TcpClientPipelineFactory pipelineFactory) {
     final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(boss, worker);
     final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
-    bootstrap.setPipelineFactory(new TcpClientPipelineFactory(bufferSize));
+    bootstrap.setPipelineFactory(pipelineFactory);
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     bootstrap.setOption("tcpNoDelay", true);
     bootstrap.setOption("child.tcpNoDelay", true);
     return bootstrap;
+  }
+
+  @Provides
+  public Supplier<BlockingQueue<ReturnableMessage<?>>> getPromiseQueueSupplier() {
+   return internalGetPromiseQueueSupplier();
+  }
+
+  @Provides
+  public Supplier<Queue<MessageEvent>> getMessageQueueSupplier() {
+    return internalGetMessageQueueSupplier();
+  }
+
+  protected Supplier<BlockingQueue<ReturnableMessage<?>>> internalGetPromiseQueueSupplier() {
+    return new DefaultPromiseQueueSupplier();
+  }
+
+  protected Supplier<Queue<MessageEvent>> internalGetMessageQueueSupplier() {
+    return new DefaultMessageQueueSupplier();
   }
 
 }

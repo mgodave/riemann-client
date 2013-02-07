@@ -41,14 +41,6 @@ public class LoadTestModule extends PrivateModule {
     expose(LoadTestService.class);
   }
 
-
-  @Provides
-  @Exposed
-  @Singleton
-  public MetricsRegistry getMetricsRegistry() {
-    return new MetricsRegistry();
-  }
-
   @Provides
   @Exposed
   @Singleton

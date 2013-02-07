@@ -5,10 +5,10 @@ import com.google.common.base.Supplier;
 import com.google.common.net.HostAndPort;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.palominolabs.metrics.guice.InstrumentationModule;
 import com.yammer.metrics.reporting.ConsoleReporter;
 import org.apache.commons.cli.*;
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.robobninjas.riemann.guice.RiemannClientModule;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -61,7 +61,8 @@ public class LoadTest {
     poolConfig.maxActive = numConnections;
 
     final Injector injector = Guice.createInjector(
-        new RiemannClientModule(address, port, numNettyWorkers, poolConfig, bufferSize),
+        new InstrumentationModule(),
+        new InstrumentedClientModule(address, port, numNettyWorkers, poolConfig, bufferSize),
         new LoadTestModule(clientWorkers, batchSize, eventSupplier));
 
     final ConsoleReporter consoleReporter = injector.getInstance(ConsoleReporter.class);

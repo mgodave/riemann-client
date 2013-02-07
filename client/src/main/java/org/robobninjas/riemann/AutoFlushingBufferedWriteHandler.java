@@ -6,6 +6,7 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.queue.BufferedWriteHandler;
 
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -17,8 +18,8 @@ class AutoFlushingBufferedWriteHandler extends BufferedWriteHandler {
   private final ReentrantLock writeLock = new ReentrantLock();
   private final Condition writeableCondition = writeLock.newCondition();
 
-  public AutoFlushingBufferedWriteHandler(int bufferedSize) {
-    super(true);
+  public AutoFlushingBufferedWriteHandler(Queue<MessageEvent> eventQueue, int bufferedSize) {
+    super(eventQueue, true);
     this.bufferedSize = bufferedSize;
   }
 

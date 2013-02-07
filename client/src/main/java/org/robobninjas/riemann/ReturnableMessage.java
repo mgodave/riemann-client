@@ -20,10 +20,8 @@ package org.robobninjas.riemann;
 
 import com.aphyr.riemann.Proto;
 import com.google.common.util.concurrent.AbstractFuture;
-import com.google.common.util.concurrent.SettableFuture;
-import com.google.protobuf.MessageOrBuilder;
 
-abstract class ReturnableMessage<T> extends AbstractFuture<T> {
+public abstract class ReturnableMessage<T> extends AbstractFuture<T> {
 
   private final Proto.Msg msg;
 
