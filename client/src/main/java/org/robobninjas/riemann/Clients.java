@@ -47,7 +47,7 @@ public class Clients {
     checkArgument((port > 0) && (port < 65535), "Port number must be between 0 and 65535");
     final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(getExecutorService(), getExecutorService(), 1, 1);
     final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
-    bootstrap.setPipelineFactory(new TcpClientPipelineFactory(new DefaultPromiseQueueSupplier(), new DefaultMessageQueueSupplier(), 8192));
+    bootstrap.setPipelineFactory(new TcpClientPipelineFactory(8192));
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     bootstrap.setOption("tcpNoDelay", true);
     bootstrap.setOption("child.tcpNoDelay", true);

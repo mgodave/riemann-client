@@ -1,10 +1,8 @@
 package org.robobninjas.riemann.guice;
 
 import com.google.common.base.Supplier;
-import com.google.inject.Exposed;
-import com.google.inject.PrivateModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
+import com.google.common.collect.Queues;
+import com.google.inject.*;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.MessageEvent;
@@ -16,10 +14,7 @@ import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.net.InetSocketAddress;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class RiemannClientModule extends PrivateModule {
 
@@ -34,7 +29,6 @@ public class RiemannClientModule extends PrivateModule {
   private final String address;
   private final int port;
   private final int numWorkers;
-
   private final GenericObjectPool.Config poolConfig;
   private final int bufferSize;
 
@@ -64,6 +58,9 @@ public class RiemannClientModule extends PrivateModule {
     bind(RiemannClient.class).to(TcpRiemannClient.class);
     expose(RiemannClient.class);
     bind(TcpClientPipelineFactory.class);
+    bindMessageQueue(Key.get(new TypeLiteral<Queue<MessageEvent>>() {}));
+    bindOutstandingMessagesQueue(Key.get(new TypeLiteral<Queue<ReturnableMessage>>() {
+    }));
   }
 
   @Provides
@@ -137,25 +134,42 @@ public class RiemannClientModule extends PrivateModule {
   }
 
   @Provides
-  public Supplier<BlockingQueue<ReturnableMessage<?>>> getPromiseQueueSupplier() {
-   return internalGetPromiseQueueSupplier();
+  public Supplier<Queue<ReturnableMessage>> getPromiseQueueSupplier(final Provider<Queue<ReturnableMessage>> provider) {
+    return new Supplier<Queue<ReturnableMessage>>() {
+      @Override public Queue<ReturnableMessage> get() {
+        return provider.get();
+      }
+    };
   }
 
   @Provides
-  public Supplier<Queue<MessageEvent>> getMessageQueueSupplier() {
-    return internalGetMessageQueueSupplier();
+  public Supplier<Queue<MessageEvent>> getProimseQueueSupplier(final Provider<Queue<MessageEvent>> provider) {
+    return new Supplier<Queue<MessageEvent>>() {
+      @Override public Queue<MessageEvent> get() {
+        return provider.get();
+      }
+    };
+  }
+
+  protected void bindOutstandingMessagesQueue(Key<Queue<ReturnableMessage>> key) {
+    bind(key).toProvider(new Provider<Queue<ReturnableMessage>>() {
+      @Override public Queue<ReturnableMessage> get() {
+        return Queues.newConcurrentLinkedQueue();
+      }
+    });
+  }
+
+  protected void bindMessageQueue(Key<Queue<MessageEvent>> key) {
+    bind(key).toProvider(new Provider<Queue<MessageEvent>>() {
+      @Override public Queue<MessageEvent> get() {
+        return Queues.newConcurrentLinkedQueue();
+      }
+    });
   }
 
   protected void configureBootstrap(ClientBootstrap bootstrap) {
 
   }
 
-  protected Supplier<BlockingQueue<ReturnableMessage<?>>> internalGetPromiseQueueSupplier() {
-    return new DefaultPromiseQueueSupplier();
-  }
-
-  protected Supplier<Queue<MessageEvent>> internalGetMessageQueueSupplier() {
-    return new DefaultMessageQueueSupplier();
-  }
 
 }

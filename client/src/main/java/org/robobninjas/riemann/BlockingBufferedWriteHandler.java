@@ -11,16 +11,20 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-class AutoFlushingBufferedWriteHandler extends BufferedWriteHandler {
+class BlockingBufferedWriteHandler extends BufferedWriteHandler {
 
   private final AtomicLong bufferSize = new AtomicLong();
   private final int bufferedSize;
   private final ReentrantLock writeLock = new ReentrantLock();
   private final Condition writeableCondition = writeLock.newCondition();
 
-  public AutoFlushingBufferedWriteHandler(Queue<MessageEvent> eventQueue, int bufferedSize) {
-    super(eventQueue, true);
+  public BlockingBufferedWriteHandler(boolean consolidate, Queue<MessageEvent> eventQueue, int bufferedSize) {
+    super(eventQueue, consolidate);
     this.bufferedSize = bufferedSize;
+  }
+
+  public BlockingBufferedWriteHandler(Queue<MessageEvent> eventQueue, int bufferedSize) {
+    this(false, eventQueue, bufferedSize);
   }
 
   @Override public void channelInterestChanged(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
@@ -42,7 +46,6 @@ class AutoFlushingBufferedWriteHandler extends BufferedWriteHandler {
     final ChannelBuffer data = (ChannelBuffer) e.getMessage();
     final long newBufferSize = bufferSize.addAndGet(data.readableBytes());
 
-    // Flush the queue if it gets larger than 8KiB.
     if (newBufferSize > bufferedSize) {
       try {
         writeLock.lock();
@@ -56,4 +59,6 @@ class AutoFlushingBufferedWriteHandler extends BufferedWriteHandler {
       bufferSize.set(0);
     }
   }
+
+
 }

@@ -20,6 +20,7 @@ package org.robobninjas.riemann;
 
 import com.aphyr.riemann.Proto;
 import com.google.common.base.Supplier;
+import com.google.common.collect.Queues;
 import com.google.inject.Inject;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -31,16 +32,15 @@ import org.jboss.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.jboss.netty.handler.codec.protobuf.ProtobufEncoder;
 
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
 
 public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
-  private final Supplier<BlockingQueue<ReturnableMessage<?>>> proimiseQueueSupplier;
+  private final Supplier<Queue<ReturnableMessage>> proimiseQueueSupplier;
   private final Supplier<Queue<MessageEvent>> messageQueueSupplier;
   private final int bufferSize;
 
   @Inject
-  public TcpClientPipelineFactory(Supplier<BlockingQueue<ReturnableMessage<?>>> promiseQueueSupplier,
+  public TcpClientPipelineFactory(Supplier<Queue<ReturnableMessage>> promiseQueueSupplier,
                                   Supplier<Queue<MessageEvent>> messageQueueSupplier,
                                   @BufferSize int bufferSize) {
     this.proimiseQueueSupplier = promiseQueueSupplier;
@@ -48,17 +48,35 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
     this.bufferSize = bufferSize;
   }
 
+  public TcpClientPipelineFactory(@BufferSize int bufferSize) {
+    this.proimiseQueueSupplier = new Supplier<Queue<ReturnableMessage>>() {
+      @Override public Queue<ReturnableMessage> get() {
+        return Queues.newConcurrentLinkedQueue();
+      }
+    };
+    this.messageQueueSupplier = new Supplier<Queue<MessageEvent>>() {
+      @Override public Queue<MessageEvent> get() {
+        return Queues.newConcurrentLinkedQueue();
+      }
+    };
+    this.bufferSize = bufferSize;
+  }
+
   @Override
   public ChannelPipeline getPipeline() throws Exception {
+
     final ChannelPipeline pipeline = Channels.pipeline();
-    pipeline.addLast("auto-flusher", new AutoFlushingBufferedWriteHandler(messageQueueSupplier.get(), bufferSize));
+
+    pipeline.addLast("auto-flusher", new BlockingBufferedWriteHandler(messageQueueSupplier.get(), bufferSize));
+
     pipeline.addLast("frame-encoder", new LengthFieldPrepender(4));
     pipeline.addLast("frame-decoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
+
     pipeline.addLast("message-encoder", new ProtobufEncoder());
     pipeline.addLast("message-decoder", new ProtobufDecoder(Proto.Msg.getDefaultInstance()));
-    final BlockingQueue<ReturnableMessage<?>> returnables = proimiseQueueSupplier.get();
-    pipeline.addLast("ureturnable-handler", new ReturnableUpstreamHandler(returnables));
-    pipeline.addLast("dreturnable-handler", new ReturnableDownstreamHandler(returnables));
+
+    pipeline.addLast("returnable-handler", new ReturnableHandler(proimiseQueueSupplier.get()));
+
     return pipeline;
   }
 
