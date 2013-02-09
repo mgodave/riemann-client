@@ -1,9 +1,7 @@
 package org.robotninjas.riemann.load;
 
-import com.google.common.collect.ForwardingConcurrentMap;
 import com.google.common.collect.ForwardingQueue;
 import com.google.common.collect.Queues;
-import com.google.common.util.concurrent.ForwardingBlockingQueue;
 import com.google.inject.Inject;
 import com.yammer.metrics.core.Gauge;
 import com.yammer.metrics.core.MetricName;

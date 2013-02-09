@@ -17,11 +17,11 @@ import static java.lang.Integer.parseInt;
 
 public class LoadTest {
 
-  private static final int NUM_CLIENT_WORKERS = 5;
-  private static final int BATCH_SIZE = 400;
-  private static final int NUM_CONNECTIONS = 5;
-  private static final int NUM_NETTY_WORKERS = 5;
-  private static final int BUFFER_SIZE = 16384;
+  private static final int NUM_CLIENT_WORKERS = 1;
+  private static final int BATCH_SIZE = 500;
+  private static final int NUM_CONNECTIONS = 1;
+  private static final int NUM_NETTY_WORKERS = 1;
+  private static final int BUFFER_SIZE = 32768;
 
   private final String address;
   private final int port;

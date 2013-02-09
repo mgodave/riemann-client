@@ -16,7 +16,7 @@ class BlockingBufferedWriteHandler extends BufferedWriteHandler {
   private final AtomicLong bufferSize = new AtomicLong();
   private final int bufferedSize;
   private final ReentrantLock writeLock = new ReentrantLock();
-  private final Condition writeableCondition = writeLock.newCondition();
+  private final Condition writeable = writeLock.newCondition();
 
   public BlockingBufferedWriteHandler(boolean consolidate, Queue<MessageEvent> eventQueue, int bufferedSize) {
     super(eventQueue, consolidate);
@@ -27,16 +27,19 @@ class BlockingBufferedWriteHandler extends BufferedWriteHandler {
     this(false, eventQueue, bufferedSize);
   }
 
-  @Override public void channelInterestChanged(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
-    super.channelInterestChanged(ctx, e);
+  @Override
+  public void channelInterestChanged(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
     try {
       writeLock.lock();
       if (e.getChannel().isWritable()) {
-        writeableCondition.signalAll();
+        flush();
+        bufferSize.set(0);
+        writeable.signalAll();
       }
     } finally {
       writeLock.unlock();
     }
+    super.channelInterestChanged(ctx, e);
   }
 
   @Override
@@ -46,17 +49,17 @@ class BlockingBufferedWriteHandler extends BufferedWriteHandler {
     final ChannelBuffer data = (ChannelBuffer) e.getMessage();
     final long newBufferSize = bufferSize.addAndGet(data.readableBytes());
 
-    if (newBufferSize > bufferedSize) {
-      try {
-        writeLock.lock();
+    try {
+      writeLock.lock();
+      if (newBufferSize > bufferedSize) {
         while (!e.getChannel().isWritable()) {
-          writeableCondition.await();
+          writeable.await();
         }
-      } finally {
-        writeLock.unlock();
+        flush();
+        bufferSize.set(0);
       }
-      flush();
-      bufferSize.set(0);
+    } finally {
+      writeLock.unlock();
     }
   }
 
