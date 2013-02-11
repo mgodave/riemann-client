@@ -1,6 +1,7 @@
-package org.robotninjas.riemann.sample;
+package org.robotninjas.riemann.load;
 
 import com.aphyr.riemann.Proto;
+import com.google.common.base.Supplier;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -24,7 +25,8 @@ public class ClientWorker implements Runnable {
   private final ArrayList<Proto.Event> events;
   private final int batchSize;
 
-  @Inject ClientWorker(@SendMeter Meter send, @AckMeter Meter ack, @LatencyTimer Timer rtt, @BatchSize int batchSize, RiemannConnectionPool pool) {
+  @Inject ClientWorker(@SendMeter Meter send, @AckMeter Meter ack, @LatencyTimer Timer rtt, @BatchSize int batchSize,
+                       RiemannConnectionPool pool, @EventSupplier Supplier<Proto.Event> eventSupplier) {
     this.send = send;
     this.ack = ack;
     this.rtt = rtt;
@@ -33,11 +35,7 @@ public class ClientWorker implements Runnable {
 
     events = Lists.newArrayListWithCapacity(batchSize);
     for (int i = 0; i < batchSize; i++) {
-      events.add(Proto.Event
-        .newBuilder()
-        .setMetricF(1000000)
-        .setService("thing")
-        .build());
+      events.add(eventSupplier.get());
     }
   }
 
@@ -48,8 +46,8 @@ public class ClientWorker implements Runnable {
       while (!Thread.currentThread().isInterrupted()) {
 
         final RiemannConnection connection = pool.borrowObject();
-        final ListenableFuture<Boolean> isOk = connection.sendEvents(events);
 
+        final ListenableFuture<Boolean> isOk = connection.sendEvents(events);
         send.mark(batchSize);
         //final TimerContext ctx = rtt.time();
 

@@ -1,10 +1,9 @@
-package org.robotninjas.riemann.sample;
+package org.robotninjas.riemann.load;
 
+import com.aphyr.riemann.Proto;
+import com.google.common.base.Supplier;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.google.inject.Exposed;
-import com.google.inject.PrivateModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
+import com.google.inject.*;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.yammer.metrics.core.*;
 import com.yammer.metrics.reporting.ConsoleReporter;
@@ -23,27 +22,23 @@ public class LoadTestModule extends PrivateModule {
   public static final MetricName LATENCY_TIMER_NAME = new MetricName(ClientWorker.class, "rtt");
   private final int workers;
   private final int batchSize;
+  private final Supplier<Proto.Event> eventSupplier;
 
-  public LoadTestModule(int workers, int batchSize) {
+  public LoadTestModule(int workers, int batchSize, Supplier<Proto.Event> eventSupplier) {
     this.workers = workers;
     this.batchSize = batchSize;
+    this.eventSupplier = eventSupplier;
   }
 
   @Override
   protected void configure() {
     bind(Integer.class).annotatedWith(WorkerCount.class).toInstance(workers);
     bind(Integer.class).annotatedWith(BatchSize.class).toInstance(batchSize);
+    bind(new TypeLiteral<Supplier<Proto.Event>>() {}).annotatedWith(EventSupplier.class).toInstance(eventSupplier);
     bind(ClientWorker.class);
     install(new FactoryModuleBuilder().build(ClientWorkerFactory.class));
     bind(LoadTestService.class);
     expose(LoadTestService.class);
-  }
-
-  @Provides
-  @Exposed
-  @Singleton
-  public MetricsRegistry getMetricsRegistry() {
-    return new MetricsRegistry();
   }
 
   @Provides

@@ -1,4 +1,4 @@
-package org.robotninjas.riemann.sample;
+package org.robotninjas.riemann.load;
 
 public interface ClientWorkerFactory {
   ClientWorker makeWorker();

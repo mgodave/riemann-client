@@ -1,4 +1,4 @@
-package org.robotninjas.riemann.sample;
+package org.robobninjas.riemann;
 
 import com.google.inject.BindingAnnotation;
 
@@ -10,8 +10,8 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
 
-@BindingAnnotation
+@com.google.inject.BindingAnnotation
 @Retention(RetentionPolicy.RUNTIME)
 @Target({FIELD, METHOD, PARAMETER})
-@interface WorkExecutor {
+public @interface BufferSize {
 }

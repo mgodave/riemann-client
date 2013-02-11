@@ -1,24 +1,20 @@
 package org.robobninjas.riemann.guice;
 
-import com.google.inject.Exposed;
-import com.google.inject.PrivateModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
+import com.google.common.base.Supplier;
+import com.google.common.collect.Queues;
+import com.google.inject.*;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.jboss.netty.bootstrap.ClientBootstrap;
+import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.socket.nio.NioClientBossPool;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
-import org.robobninjas.riemann.RiemannClient;
-import org.robobninjas.riemann.TcpClientPipelineFactory;
-import org.robobninjas.riemann.TcpRiemannClient;
+import org.robobninjas.riemann.*;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.net.InetSocketAddress;
-import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Queue;
+import java.util.concurrent.*;
 
 public class RiemannClientModule extends PrivateModule {
 
@@ -52,10 +48,19 @@ public class RiemannClientModule extends PrivateModule {
     this(address, port, DEFAULT_WORKERS, DEFAULT_CONFIG, DEFAULT_BUFFER);
   }
 
+  public int getBufferSize() {
+    return bufferSize;
+  }
+
   @Override
   protected void configure() {
+    bind(Integer.class).annotatedWith(BufferSize.class).toInstance(bufferSize);
     bind(RiemannClient.class).to(TcpRiemannClient.class);
     expose(RiemannClient.class);
+    bind(TcpClientPipelineFactory.class);
+    bindMessageQueue(Key.get(new TypeLiteral<Queue<MessageEvent>>() {}));
+    bindOutstandingMessagesQueue(Key.get(new TypeLiteral<Queue<ReturnableMessage>>() {
+    }));
   }
 
   @Provides
@@ -117,14 +122,54 @@ public class RiemannClientModule extends PrivateModule {
   }
 
   @Provides
-  public ClientBootstrap getClientBootstrap(NioClientBossPool boss, NioWorkerPool worker) {
+  public ClientBootstrap getClientBootstrap(NioClientBossPool boss, NioWorkerPool worker, TcpClientPipelineFactory pipelineFactory) {
     final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(boss, worker);
     final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
-    bootstrap.setPipelineFactory(new TcpClientPipelineFactory(bufferSize));
+    bootstrap.setPipelineFactory(pipelineFactory);
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     bootstrap.setOption("tcpNoDelay", true);
     bootstrap.setOption("child.tcpNoDelay", true);
+    configureBootstrap(bootstrap);
     return bootstrap;
   }
+
+  @Provides
+  public Supplier<Queue<ReturnableMessage>> getPromiseQueueSupplier(final Provider<Queue<ReturnableMessage>> provider) {
+    return new Supplier<Queue<ReturnableMessage>>() {
+      @Override public Queue<ReturnableMessage> get() {
+        return provider.get();
+      }
+    };
+  }
+
+  @Provides
+  public Supplier<Queue<MessageEvent>> getProimseQueueSupplier(final Provider<Queue<MessageEvent>> provider) {
+    return new Supplier<Queue<MessageEvent>>() {
+      @Override public Queue<MessageEvent> get() {
+        return provider.get();
+      }
+    };
+  }
+
+  protected void bindOutstandingMessagesQueue(Key<Queue<ReturnableMessage>> key) {
+    bind(key).toProvider(new Provider<Queue<ReturnableMessage>>() {
+      @Override public Queue<ReturnableMessage> get() {
+        return Queues.newConcurrentLinkedQueue();
+      }
+    });
+  }
+
+  protected void bindMessageQueue(Key<Queue<MessageEvent>> key) {
+    bind(key).toProvider(new Provider<Queue<MessageEvent>>() {
+      @Override public Queue<MessageEvent> get() {
+        return Queues.newConcurrentLinkedQueue();
+      }
+    });
+  }
+
+  protected void configureBootstrap(ClientBootstrap bootstrap) {
+
+  }
+
 
 }

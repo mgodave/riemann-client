@@ -6,32 +6,40 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.queue.BufferedWriteHandler;
 
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-class AutoFlushingBufferedWriteHandler extends BufferedWriteHandler {
+class BlockingBufferedWriteHandler extends BufferedWriteHandler {
 
   private final AtomicLong bufferSize = new AtomicLong();
   private final int bufferedSize;
   private final ReentrantLock writeLock = new ReentrantLock();
-  private final Condition writeableCondition = writeLock.newCondition();
+  private final Condition writeable = writeLock.newCondition();
 
-  public AutoFlushingBufferedWriteHandler(int bufferedSize) {
-    super(true);
+  public BlockingBufferedWriteHandler(boolean consolidate, Queue<MessageEvent> eventQueue, int bufferedSize) {
+    super(eventQueue, consolidate);
     this.bufferedSize = bufferedSize;
   }
 
-  @Override public void channelInterestChanged(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
-    super.channelInterestChanged(ctx, e);
+  public BlockingBufferedWriteHandler(Queue<MessageEvent> eventQueue, int bufferedSize) {
+    this(false, eventQueue, bufferedSize);
+  }
+
+  @Override
+  public void channelInterestChanged(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
     try {
       writeLock.lock();
       if (e.getChannel().isWritable()) {
-        writeableCondition.signalAll();
+        flush();
+        bufferSize.set(0);
+        writeable.signalAll();
       }
     } finally {
       writeLock.unlock();
     }
+    super.channelInterestChanged(ctx, e);
   }
 
   @Override
@@ -41,18 +49,19 @@ class AutoFlushingBufferedWriteHandler extends BufferedWriteHandler {
     final ChannelBuffer data = (ChannelBuffer) e.getMessage();
     final long newBufferSize = bufferSize.addAndGet(data.readableBytes());
 
-    // Flush the queue if it gets larger than 8KiB.
-    if (newBufferSize > bufferedSize) {
-      try {
-        writeLock.lock();
+    try {
+      writeLock.lock();
+      if (newBufferSize > bufferedSize) {
         while (!e.getChannel().isWritable()) {
-          writeableCondition.await();
+          writeable.await();
         }
-      } finally {
-        writeLock.unlock();
+        flush();
+        bufferSize.set(0);
       }
-      flush();
-      bufferSize.set(0);
+    } finally {
+      writeLock.unlock();
     }
   }
+
+
 }

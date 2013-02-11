@@ -1,13 +1,9 @@
-package org.robotninjas.riemann.sample;
+package org.robotninjas.riemann.load;
 
 import com.google.common.util.concurrent.AbstractService;
 import com.google.inject.Inject;
-import com.yammer.metrics.core.Meter;
-import com.yammer.metrics.core.MetricsRegistry;
-import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
 
 public class LoadTestService extends AbstractService {
 
