@@ -6,8 +6,48 @@ About
 This is a simple Java client for [Riemann](https://github.com/aphyr/riemann). It is based on [Netty](http://netty.io) and uses
 [Guava](http://code.google.com/p/guava-libraries/) futures for results. The code is also JSR305 compatible; I prefer to use Guice.
 
-Sample Usage
-------------
+Get It
+------
+
+```xml
+
+<repository>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+    <id>central</id>
+    <name>bintray</name>
+    <url>http://dl.bintray.com/content/mgodave/robotninjas</url>
+</repository>
+
+<dependency>
+    <groupId>org.robotninjas.riemann</groupId>
+    <artifactId>client</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<dependency>
+    <groupId>org.robotninjas.riemann</groupId>
+    <artifactId>pool</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<dependency>
+    <groupId>org.robotninjas.riemann</groupId>
+    <artifactId>guice</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<dependency>
+    <groupId>org.robotninjas.riemann</groupId>
+    <artifactId>load-test</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+```
+
+Use It
+------
 
 ```java
 package org.robobninjas.riemann;
@@ -61,51 +101,12 @@ public class SampleClient {
 }
 ```
 
-Guice
------
+Note on JSR330
+--------------
 
 Both of the client implementations have constructors annotated with the @Inject annotation. These constructors are
 also make use the Guice's AssistedInject extension and annotate the appropriate constructor arguments. The beautiful 
 thing about annotations is that you do not need to include the dependency if you are not using them.
 
-Using
------
-
-```xml
-
-<repository>
-    <snapshots>
-        <enabled>false</enabled>
-    </snapshots>
-    <id>central</id>
-    <name>bintray</name>
-    <url></url>
-</repository>
-
-<dependency>
-    <groupId>org.robotninjas.riemann</groupId>
-    <artifactId>client</artifactId>
-    <version>1.0.0</version>
-</dependency>
-
-<dependency>
-    <groupId>org.robotninjas.riemann</groupId>
-    <artifactId>pool</artifactId>
-    <version>1.0.0</version>
-</dependency>
-
-<dependency>
-    <groupId>org.robotninjas.riemann</groupId>
-    <artifactId>guice</artifactId>
-    <version>1.0.0</version>
-</dependency>
-
-<dependency>
-    <groupId>org.robotninjas.riemann</groupId>
-    <artifactId>load-test </artifactId>
-    <version>1.0.0</version>
-</dependency>
-
-```
 
 
