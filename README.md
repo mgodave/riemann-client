@@ -79,7 +79,7 @@ Using
     </snapshots>
     <id>central</id>
     <name>bintray</name>
-    <url></url>
+    <url>http://dl.bintray.com/content/mgodave/robotninjas</url>
 </repository>
 
 <dependency>
