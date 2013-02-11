@@ -102,7 +102,7 @@ Using
 
 <dependency>
     <groupId>org.robotninjas.riemann</groupId>
-    <artifactId>load-test</artifactId>
+    <artifactId>load-test </artifactId>
     <version>1.0.0</version>
 </dependency>
 

@@ -1,2 +1,9 @@
-language: java
+--- 
+env: 
+  global: 
+  - secure: |-
+      sTsx9xSXDHmKm0BCfyV1Z2fbTA2ybV2IWWhGsz+ndHy6Mim6r0gT9YgoeXGj
+      deFzkDUdXfC9fC8d8Gg7/8VUHUAlGDrfPstiMsQN2bYmYAvPwoqEjNBg99mh
+      qzhZrNH+FA4psRyd/1OXQa2ENyWKEtHHitVd4ScUM/lN64tt9m0=
 jdk: openjdk7
+language: java
