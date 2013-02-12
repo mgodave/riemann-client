@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.robotninjas.riemann</groupId>
     <artifactId>riemann-java</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Riemann Client</name>
@@ -23,7 +23,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/mgodave/riemann-client.git</connection>
-        <developerConnection>scm:git@github.com:mgodave/riemann-client.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:mgodave/riemann-client.git</developerConnection>
         <url>https://github.com/mgodave/riemann-client</url>
     </scm>
 
