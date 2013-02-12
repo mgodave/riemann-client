@@ -54,11 +54,13 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
         return Queues.newConcurrentLinkedQueue();
       }
     };
-    this.messageQueueSupplier = new Supplier<Queue<MessageEvent>>() {
-      @Override public Queue<MessageEvent> get() {
-        return Queues.newConcurrentLinkedQueue();
-      }
-    };
+    this.messageQueueSupplier = new
+
+        Supplier<Queue<MessageEvent>>() {
+          @Override public Queue<MessageEvent> get() {
+            return Queues.newConcurrentLinkedQueue();
+          }
+        };
     this.bufferSize = bufferSize;
   }
 
@@ -67,7 +69,11 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
     final ChannelPipeline pipeline = Channels.pipeline();
 
-    pipeline.addLast("auto-flusher", new BlockingBufferedWriteHandler(messageQueueSupplier.get(), bufferSize));
+    //pipeline.addLast("auto-flusher", new BlockingBufferedWriteHandler(messageQueueSupplier.get(), bufferSize));
+    pipeline.addLast("blocking-writer", new BlockingWriteHandler());
+
+    //final OrderedDownstreamThreadPoolExecutor executor = new OrderedDownstreamThreadPoolExecutor(2);
+    //pipeline.addLast("execution-handler", new ExecutionHandler(executor, true, false));
 
     pipeline.addLast("frame-encoder", new LengthFieldPrepender(4));
     pipeline.addLast("frame-decoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
@@ -79,5 +85,6 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
     return pipeline;
   }
+
 
 }
