@@ -28,11 +28,11 @@ public class RiemannPubSubClient {
     this.resultExecutor = resultExecutor;
   }
 
-  public RiemannPubSubConnection makeConnection(String query, boolean subscribe) throws InterruptedException {
+  public RiemannPubSubConnection makeConnection(String query, boolean subscribe, QueryResultListener listener) throws InterruptedException {
     final URI uri = URI.create(baseUri.toString() + "/?query=" + query + (subscribe ? "&subscribe=true" : ""));
     final WebSocketClientHandshaker handshaker = handshakerFactory.newHandshaker(uri, WebSocketVersion.V13, null, false, null);
     final ClientBootstrap bootstrap = bootstrapSupplier.get();
-    final RiemannPubSubConnection connection = new RiemannPubSubConnection(resultExecutor);
+    final RiemannPubSubConnection connection = new RiemannPubSubConnection(resultExecutor, listener);
     bootstrap.setPipelineFactory(new WebSocketClientPipelineFactory(handshaker, connection));
     final ChannelFuture connect = bootstrap.connect(new InetSocketAddress(uri.getHost(), uri.getPort()));
     connect.sync();
@@ -47,8 +47,8 @@ public class RiemannPubSubClient {
     return connection;
   }
 
-  public RiemannPubSubConnection makeConnection(String query) throws InterruptedException {
-    return makeConnection(query, false);
+  public RiemannPubSubConnection makeConnection(String query, QueryResultListener listener) throws InterruptedException {
+    return makeConnection(query, false, listener);
   }
 
 }

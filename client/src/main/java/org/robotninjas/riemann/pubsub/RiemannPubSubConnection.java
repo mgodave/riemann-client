@@ -13,9 +13,10 @@ public class RiemannPubSubConnection implements QueryResultListener {
   private final Executor resultExecutor;
   private Optional<Channel> channel = Optional.absent();
 
-  public RiemannPubSubConnection(Executor resultExecutor) {
-    listeners = Lists.newCopyOnWriteArrayList();
+  public RiemannPubSubConnection(Executor resultExecutor, QueryResultListener listener) {
+    this.listeners = Lists.newCopyOnWriteArrayList();
     this.resultExecutor = resultExecutor;
+    addQueryListener(listener);
   }
 
   public void init(Channel channel) {
