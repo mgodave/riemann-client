@@ -49,11 +49,13 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
   }
 
   public TcpClientPipelineFactory(@BufferSize int bufferSize) {
+
     this.proimiseQueueSupplier = new Supplier<Queue<ReturnableMessage>>() {
       @Override public Queue<ReturnableMessage> get() {
         return Queues.newConcurrentLinkedQueue();
       }
     };
+
     this.messageQueueSupplier = new
 
         Supplier<Queue<MessageEvent>>() {
@@ -61,6 +63,7 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
             return Queues.newConcurrentLinkedQueue();
           }
         };
+
     this.bufferSize = bufferSize;
   }
 

@@ -1,16 +1,16 @@
 package org.robobninjas.riemann;
 
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.*;
-import org.jboss.netty.channel.socket.nio.NioSocketChannelConfig;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.channel.SimpleChannelHandler;
 
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class BlockingWriteHandler extends SimpleChannelHandler {
 
-  private final AtomicLong bufferSize = new AtomicLong();
   private final ReentrantLock writeLock = new ReentrantLock();
   private final Condition writeable = writeLock.newCondition();
 
@@ -19,7 +19,6 @@ public class BlockingWriteHandler extends SimpleChannelHandler {
     try {
       writeLock.lock();
       if (e.getChannel().isWritable()) {
-        bufferSize.set(0);
         writeable.signalAll();
       }
     } finally {
@@ -30,18 +29,16 @@ public class BlockingWriteHandler extends SimpleChannelHandler {
 
   @Override
   public void writeRequested(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-    super.writeRequested(ctx, e);
-
-    final ChannelBuffer data = (ChannelBuffer) e.getMessage();
-
-    try {
-      writeLock.lock();
-      while (!e.getChannel().isWritable()) {
-        writeable.await();
+    if (!e.getChannel().isWritable()) {
+      try {
+        writeLock.lock();
+        while (!e.getChannel().isWritable()) {
+          writeable.await();
+        }
+      } finally {
+        writeLock.unlock();
       }
-      bufferSize.set(0);
-    } finally {
-      writeLock.unlock();
     }
+    super.writeRequested(ctx, e);
   }
 }
