@@ -30,7 +30,6 @@ class WebSocketClientHandler extends SimpleChannelHandler {
     Channel ch = ctx.getChannel();
     if (!handshaker.isHandshakeComplete()) {
       handshaker.finishHandshake(ch, (HttpResponse) e.getMessage());
-      System.out.println("WebSocket Client connected!");
       return;
     }
 
@@ -45,10 +44,8 @@ class WebSocketClientHandler extends SimpleChannelHandler {
       TextWebSocketFrame textFrame = (TextWebSocketFrame) frame;
       listener.handleResult(textFrame.getText());
     } else if (frame instanceof CloseWebSocketFrame) {
-      System.out.println("WebSocket Client received closing");
       ch.close();
     } else if (frame instanceof PingWebSocketFrame) {
-      System.out.println("WebSocket Client received ping, response with pong");
       ch.write(new PongWebSocketFrame(frame.getBinaryData()));
     }
   }
