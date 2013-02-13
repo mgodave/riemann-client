@@ -1,4 +1,4 @@
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
 import com.google.inject.BindingAnnotation;
 

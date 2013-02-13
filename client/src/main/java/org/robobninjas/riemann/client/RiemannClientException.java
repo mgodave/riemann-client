@@ -16,7 +16,7 @@
 
 */
 
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
 public class RiemannClientException extends Exception {
 

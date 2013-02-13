@@ -1,10 +1,9 @@
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
 import com.aphyr.riemann.Proto;
 import org.jboss.netty.channel.*;
 
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static org.jboss.netty.channel.Channels.write;
 

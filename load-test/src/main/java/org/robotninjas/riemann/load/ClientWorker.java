@@ -9,7 +9,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.inject.Inject;
 import com.yammer.metrics.core.Meter;
 import com.yammer.metrics.core.Timer;
-import org.robobninjas.riemann.RiemannConnection;
+import org.robobninjas.riemann.client.RiemannConnection;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.util.ArrayList;

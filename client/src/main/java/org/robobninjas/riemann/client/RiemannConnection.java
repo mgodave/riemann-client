@@ -16,7 +16,7 @@
 
 */
 
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
 import com.aphyr.riemann.Proto;
 import com.google.common.util.concurrent.ListenableFuture;

@@ -16,35 +16,32 @@
 
 */
 
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
-import com.aphyr.riemann.Proto;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.util.concurrent.ExecutorService;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.concurrent.Executors.newCachedThreadPool;
-import static org.robobninjas.riemann.RiemannClient.DEFAULT_PORT;
 
 @ThreadSafe
 public class Clients {
 
   private static ExecutorService getExecutorService() {
     return newCachedThreadPool(
-      new ThreadFactoryBuilder()
-        .setDaemon(true)
-        .setNameFormat("Riemann RiemannClient Thread")
-        .build());
+        new ThreadFactoryBuilder()
+            .setDaemon(true)
+            .setNameFormat("Riemann RiemannClient Thread")
+            .build());
   }
 
-  public static TcpRiemannClient makeClient(String address, int port) {
+  public static RiemannTcpClient makeClient(String address, int port) {
     checkNotNull(address, "Address cannot be null");
     checkArgument((port > 0) && (port < 65535), "Port number must be between 0 and 65535");
     final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(getExecutorService(), getExecutorService(), 1, 1);
@@ -53,29 +50,16 @@ public class Clients {
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     bootstrap.setOption("tcpNoDelay", true);
     bootstrap.setOption("child.tcpNoDelay", true);
-    return new TcpRiemannClient(bootstrap);
+    return new RiemannTcpClient(bootstrap);
   }
 
-  public static TcpRiemannClient makeClient(String address) {
-    return makeClient(address, DEFAULT_PORT);
+  public static RiemannTcpClient makeClient(String address) {
+    return makeClient(address, RiemannClient.DEFAULT_PORT);
   }
 
-  public static TcpRiemannClient makeClient() {
+  public static RiemannTcpClient makeClient() {
     return makeClient("localhost");
   }
 
-//  public static TcpRiemannClient makeClient(URI uri) {
-//    final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(getExecutorService(), getExecutorService(), 1, 1);
-//    final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
-//    bootstrap.setPipelineFactory(new WebSocketClientPipelineFactory(8192, uri));
-//    bootstrap.setOption("remoteAddress", new InetSocketAddress(uri.getHost(), uri.getPort()));
-//    bootstrap.setOption("tcpNoDelay", true);
-//    bootstrap.setOption("child.tcpNoDelay", true);
-//    return new TcpRiemannClient(bootstrap);
-//  }
-//
-//  public static void main(String[] args) throws InterruptedException {
-//    RiemannConnection conn = Clients.makeClient(URI.create("ws://localhost:5556/index?query=*")).makeConnection();
-//  }
 
 }

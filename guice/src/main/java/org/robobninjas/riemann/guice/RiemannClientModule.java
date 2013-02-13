@@ -9,7 +9,7 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.socket.nio.NioClientBossPool;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
-import org.robobninjas.riemann.*;
+import org.robobninjas.riemann.client.*;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.net.InetSocketAddress;
@@ -55,7 +55,7 @@ public class RiemannClientModule extends PrivateModule {
   @Override
   protected void configure() {
     bind(Integer.class).annotatedWith(BufferSize.class).toInstance(bufferSize);
-    bind(RiemannClient.class).to(TcpRiemannClient.class);
+    bind(RiemannClient.class).to(RiemannTcpClient.class);
     expose(RiemannClient.class);
     bind(TcpClientPipelineFactory.class);
     bindMessageQueue(Key.get(new TypeLiteral<Queue<MessageEvent>>() {}));

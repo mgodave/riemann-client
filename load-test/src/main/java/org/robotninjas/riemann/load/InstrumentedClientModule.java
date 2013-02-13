@@ -3,12 +3,10 @@ package org.robotninjas.riemann.load;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.robobninjas.riemann.ReturnableMessage;
+import org.robobninjas.riemann.client.ReturnableMessage;
 import org.robobninjas.riemann.guice.RiemannClientModule;
 
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class InstrumentedClientModule extends RiemannClientModule {
 

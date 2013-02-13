@@ -16,7 +16,7 @@
 
 */
 
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
 import com.google.common.base.Optional;
 import org.jboss.netty.bootstrap.ClientBootstrap;
@@ -30,7 +30,7 @@ import static com.google.common.base.Throwables.propagate;
 import static com.google.common.base.Throwables.propagateIfInstanceOf;
 
 @ThreadSafe
-public class TcpRiemannClient implements RiemannClient {
+public class RiemannTcpClient implements RiemannClient {
 
   private static final int DEFAULT_RETRIES = 0;
 
@@ -38,7 +38,7 @@ public class TcpRiemannClient implements RiemannClient {
   private volatile int maxRetries = DEFAULT_RETRIES;
 
   @Inject
-  public TcpRiemannClient(ClientBootstrap bootstrap) {
+  public RiemannTcpClient(ClientBootstrap bootstrap) {
     this.bootstrap = bootstrap;
   }
 

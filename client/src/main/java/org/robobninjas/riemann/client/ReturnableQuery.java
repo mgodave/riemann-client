@@ -16,27 +16,29 @@
 
 */
 
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
 import com.aphyr.riemann.Proto;
-import com.google.common.util.concurrent.AbstractFuture;
 
-public abstract class ReturnableMessage<T> extends AbstractFuture<T> {
+import java.util.List;
 
-  private final Proto.Msg msg;
+class ReturnableQuery extends ReturnableMessage<List<Proto.Event>> {
 
-  public ReturnableMessage(Proto.Msg msg) {
-    this.msg = msg;
+  public ReturnableQuery(Proto.Msg msg) {
+    super(msg);
   }
 
-  public ReturnableMessage(Proto.Msg.Builder builder) {
-    this(builder.build());
+  public ReturnableQuery(Proto.Msg.Builder builder) {
+    super(builder);
   }
 
-  public Proto.Msg getMsg() {
-    return msg;
+  @Override
+  public void handleResult(Proto.Msg msg) {
+    if (msg.hasError()) {
+      setException(new RiemannClientException(msg.getError()));
+      return;
+    }
+    set(msg.getEventsList());
   }
-
-  public abstract void handleResult(Proto.Msg msg);
 
 }

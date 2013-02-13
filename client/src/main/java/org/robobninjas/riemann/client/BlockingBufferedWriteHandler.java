@@ -1,4 +1,4 @@
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;

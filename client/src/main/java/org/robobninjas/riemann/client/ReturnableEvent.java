@@ -16,15 +16,27 @@
 
 */
 
-package org.robobninjas.riemann;
+package org.robobninjas.riemann.client;
 
-public interface RiemannClient {
+import com.aphyr.riemann.Proto;
 
-  public static final int DEFAULT_PORT = 5555;
+class ReturnableEvent extends ReturnableMessage<Boolean> {
 
-  RiemannConnection makeConnection() throws InterruptedException;
-  RiemannConnection makeConnection(String address, int port) throws InterruptedException;
-  RiemannConnection makeConnection(String address) throws InterruptedException;
-  void shutdown();
+  public ReturnableEvent(Proto.Msg msg) {
+    super(msg);
+  }
+
+  public ReturnableEvent(Proto.Msg.Builder builder) {
+    super(builder);
+  }
+
+  @Override
+  public void handleResult(Proto.Msg msg) {
+    if (msg.hasError()) {
+      setException(new RiemannClientException(msg.getError()));
+    } else {
+      set(msg.getOk());
+    }
+  }
 
 }
