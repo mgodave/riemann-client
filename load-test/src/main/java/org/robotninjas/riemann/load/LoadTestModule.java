@@ -8,6 +8,7 @@ import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.yammer.metrics.core.*;
 import com.yammer.metrics.reporting.ConsoleReporter;
 import com.yammer.metrics.reporting.CsvReporter;
+import org.robotninjas.riemann.load.annotations.*;
 
 import java.io.File;
 import java.util.concurrent.Executor;

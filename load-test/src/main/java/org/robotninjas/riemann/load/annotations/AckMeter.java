@@ -1,4 +1,4 @@
-package org.robotninjas.riemann.load;
+package org.robotninjas.riemann.load.annotations;
 
 import com.google.inject.BindingAnnotation;
 
@@ -13,5 +13,5 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @BindingAnnotation
 @Retention(RetentionPolicy.RUNTIME)
 @Target({FIELD, METHOD, PARAMETER})
-public @interface EventSupplier {
+public @interface AckMeter {
 }

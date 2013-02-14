@@ -2,6 +2,8 @@ package org.robotninjas.riemann.load;
 
 import com.google.common.util.concurrent.AbstractService;
 import com.google.inject.Inject;
+import org.robotninjas.riemann.load.annotations.WorkExecutor;
+import org.robotninjas.riemann.load.annotations.WorkerCount;
 
 import java.util.concurrent.Executor;
 

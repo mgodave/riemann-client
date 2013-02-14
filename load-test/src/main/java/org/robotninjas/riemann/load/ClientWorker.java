@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import com.yammer.metrics.core.Meter;
 import com.yammer.metrics.core.Timer;
 import org.robotninjas.riemann.client.RiemannConnection;
+import org.robotninjas.riemann.load.annotations.*;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.util.ArrayList;
