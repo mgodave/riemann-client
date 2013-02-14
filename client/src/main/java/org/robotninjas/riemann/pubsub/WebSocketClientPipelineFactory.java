@@ -1,5 +1,6 @@
 package org.robotninjas.riemann.pubsub;
 
+import com.google.inject.Inject;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;

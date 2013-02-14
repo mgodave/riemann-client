@@ -16,12 +16,27 @@
 
 */
 
-package org.robobninjas.riemann.client;
+package org.robotninjas.riemann.client;
 
-public class RiemannClientException extends Exception {
+import com.aphyr.riemann.Proto;
+import com.google.common.util.concurrent.AbstractFuture;
 
-  public RiemannClientException(String message) {
-    super(message);
+public abstract class ReturnableMessage<T> extends AbstractFuture<T> {
+
+  private final Proto.Msg msg;
+
+  public ReturnableMessage(Proto.Msg msg) {
+    this.msg = msg;
   }
+
+  public ReturnableMessage(Proto.Msg.Builder builder) {
+    this(builder.build());
+  }
+
+  public Proto.Msg getMsg() {
+    return msg;
+  }
+
+  public abstract void handleResult(Proto.Msg msg);
 
 }

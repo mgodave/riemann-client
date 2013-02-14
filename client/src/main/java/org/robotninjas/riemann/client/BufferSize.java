@@ -1,6 +1,4 @@
-package org.robobninjas.riemann.client;
-
-import com.google.inject.BindingAnnotation;
+package org.robotninjas.riemann.client;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

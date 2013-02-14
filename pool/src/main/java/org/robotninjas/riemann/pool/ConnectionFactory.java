@@ -19,8 +19,8 @@
 package org.robotninjas.riemann.pool;
 
 import org.apache.commons.pool.BasePoolableObjectFactory;
-import org.robobninjas.riemann.client.RiemannClient;
-import org.robobninjas.riemann.client.RiemannConnection;
+import org.robotninjas.riemann.client.RiemannClient;
+import org.robotninjas.riemann.client.RiemannConnection;
 
 class ConnectionFactory extends BasePoolableObjectFactory<RiemannConnection> {
 

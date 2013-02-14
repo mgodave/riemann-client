@@ -16,7 +16,7 @@
 
 */
 
-package org.robobninjas.riemann.client;
+package org.robotninjas.riemann.client;
 
 public interface RiemannClient {
 

@@ -19,8 +19,8 @@
 package org.robotninjas.riemann.pool;
 
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.robobninjas.riemann.client.RiemannClient;
-import org.robobninjas.riemann.client.RiemannConnection;
+import org.robotninjas.riemann.client.RiemannClient;
+import org.robotninjas.riemann.client.RiemannConnection;
 
 import javax.inject.Inject;
 

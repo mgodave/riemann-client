@@ -16,27 +16,12 @@
 
 */
 
-package org.robobninjas.riemann.client;
+package org.robotninjas.riemann.client;
 
-import com.aphyr.riemann.Proto;
+public class RiemannClientException extends Exception {
 
-class ReturnableEvent extends ReturnableMessage<Boolean> {
-
-  public ReturnableEvent(Proto.Msg msg) {
-    super(msg);
-  }
-
-  public ReturnableEvent(Proto.Msg.Builder builder) {
-    super(builder);
-  }
-
-  @Override
-  public void handleResult(Proto.Msg msg) {
-    if (msg.hasError()) {
-      setException(new RiemannClientException(msg.getError()));
-    } else {
-      set(msg.getOk());
-    }
+  public RiemannClientException(String message) {
+    super(message);
   }
 
 }
