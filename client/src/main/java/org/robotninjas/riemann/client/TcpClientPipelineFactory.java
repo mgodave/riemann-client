@@ -37,18 +37,15 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
   private final Supplier<Queue<ReturnableMessage>> proimiseQueueSupplier;
   private final Supplier<Queue<MessageEvent>> messageQueueSupplier;
-  private final int bufferSize;
 
   @Inject
   public TcpClientPipelineFactory(Supplier<Queue<ReturnableMessage>> promiseQueueSupplier,
-                                  Supplier<Queue<MessageEvent>> messageQueueSupplier,
-                                  @BufferSize int bufferSize) {
+                                  Supplier<Queue<MessageEvent>> messageQueueSupplier) {
     this.proimiseQueueSupplier = promiseQueueSupplier;
     this.messageQueueSupplier = messageQueueSupplier;
-    this.bufferSize = bufferSize;
   }
 
-  public TcpClientPipelineFactory(@BufferSize int bufferSize) {
+  public TcpClientPipelineFactory() {
 
     this.proimiseQueueSupplier = new Supplier<Queue<ReturnableMessage>>() {
       @Override public Queue<ReturnableMessage> get() {
@@ -64,7 +61,6 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
           }
         };
 
-    this.bufferSize = bufferSize;
   }
 
   @Override
@@ -72,11 +68,7 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
     final ChannelPipeline pipeline = Channels.pipeline();
 
-    //pipeline.addLast("auto-flusher", new BlockingBufferedWriteHandler(messageQueueSupplier.get(), bufferSize));
     pipeline.addLast("blocking-writer", new BlockingWriteHandler());
-
-    //final OrderedDownstreamThreadPoolExecutor executor = new OrderedDownstreamThreadPoolExecutor(2);
-    //pipeline.addLast("execution-handler", new ExecutionHandler(executor, true, false));
 
     pipeline.addLast("frame-encoder", new LengthFieldPrepender(4));
     pipeline.addLast("frame-decoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
