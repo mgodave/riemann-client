@@ -21,7 +21,6 @@ public class LoadTest {
   private static final int BATCH_SIZE = 500;
   private static final int NUM_CONNECTIONS = 1;
   private static final int NUM_NETTY_WORKERS = 1;
-  private static final int BUFFER_SIZE = 32768;
 
   private final String address;
   private final int port;
@@ -29,21 +28,20 @@ public class LoadTest {
   private final int batchSize;
   private final int numConnections;
   private final int numNettyWorkers;
-  private final int bufferSize;
   private final Supplier<Proto.Event> eventSupplier;
 
   public LoadTest(String address, int port) {
     this(address, port, NUM_CLIENT_WORKERS, BATCH_SIZE, NUM_CONNECTIONS,
-        NUM_NETTY_WORKERS, BUFFER_SIZE, new DefaultEventSupplier());
+        NUM_NETTY_WORKERS, new DefaultEventSupplier());
   }
 
   public LoadTest(String address, int port, int clientWorkers) {
     this(address, port, clientWorkers, BATCH_SIZE, NUM_CONNECTIONS,
-        NUM_NETTY_WORKERS, BUFFER_SIZE, new DefaultEventSupplier());
+        NUM_NETTY_WORKERS, new DefaultEventSupplier());
   }
 
   public LoadTest(String address, int port, int clientWorkers, int batchSize, int numConnections,
-                  int numNettyWorkers, int bufferSize, Supplier<Proto.Event> eventSupplier) {
+                  int numNettyWorkers, Supplier<Proto.Event> eventSupplier) {
 
     this.address = address;
     this.port = port;
@@ -51,7 +49,6 @@ public class LoadTest {
     this.batchSize = batchSize;
     this.numConnections = numConnections;
     this.numNettyWorkers = numNettyWorkers;
-    this.bufferSize = bufferSize;
     this.eventSupplier = eventSupplier;
   }
 
@@ -62,7 +59,7 @@ public class LoadTest {
 
     final Injector injector = Guice.createInjector(
         new InstrumentationModule(),
-        new InstrumentedClientModule(address, port, numNettyWorkers, poolConfig, bufferSize),
+        new InstrumentedClientModule(address, port, numNettyWorkers, poolConfig),
         new LoadTestModule(clientWorkers, batchSize, eventSupplier));
 
     final ConsoleReporter consoleReporter = injector.getInstance(ConsoleReporter.class);
@@ -100,7 +97,6 @@ public class LoadTest {
       final int batchSize = line.hasOption('b') ? parseInt(line.getOptionValue('b')) : BATCH_SIZE;
       final int numConnections = line.hasOption('c') ? parseInt(line.getOptionValue('c')) : NUM_CONNECTIONS;
       final int numNettyWorkers = line.hasOption('n') ? parseInt(line.getOptionValue('n')) : NUM_NETTY_WORKERS;
-      final int bufferSize = line.hasOption('s') ? parseInt(line.getOptionValue('s')) : BUFFER_SIZE;
 
       final List<String> otherArgs = line.getArgList();
       HostAndPort riemannHostAndPort = HostAndPort.fromParts("localhost", 5555);
@@ -110,7 +106,7 @@ public class LoadTest {
 
       final LoadTest loadTest =
           new LoadTest(riemannHostAndPort.getHostText(), riemannHostAndPort.getPort(), clientWorkers,
-              batchSize, numConnections, numNettyWorkers, bufferSize, new DefaultEventSupplier());
+              batchSize, numConnections, numNettyWorkers, new DefaultEventSupplier());
 
       loadTest.start();
 

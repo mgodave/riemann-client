@@ -10,8 +10,8 @@ import java.util.Queue;
 
 public class InstrumentedClientModule extends RiemannClientModule {
 
-  public InstrumentedClientModule(String address, int port, int numWorkers, GenericObjectPool.Config poolConfig, int bufferSize) {
-    super(address, port, numWorkers, poolConfig, bufferSize);
+  public InstrumentedClientModule(String address, int port, int numWorkers, GenericObjectPool.Config poolConfig) {
+    super(address, port, numWorkers, poolConfig);
   }
 
   @Override protected void bindOutstandingMessagesQueue(Key<Queue<ReturnableMessage>> key) {
