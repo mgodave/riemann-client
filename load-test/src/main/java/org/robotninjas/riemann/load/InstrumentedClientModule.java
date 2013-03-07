@@ -3,10 +3,12 @@ package org.robotninjas.riemann.load;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.robotninjas.riemann.client.ReturnableMessage;
+import org.jboss.netty.channel.MessageEvent;
 import org.robobninjas.riemann.guice.RiemannClientModule;
+import org.robotninjas.riemann.client.ReturnableMessage;
 
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 
 public class InstrumentedClientModule extends RiemannClientModule {
 
@@ -14,9 +16,15 @@ public class InstrumentedClientModule extends RiemannClientModule {
     super(address, port, numWorkers, poolConfig);
   }
 
-  @Override protected void bindOutstandingMessagesQueue(Key<Queue<ReturnableMessage>> key) {
+  @Override
+  protected void bindOutstandingMessagesQueue(Key<BlockingQueue<ReturnableMessage>> key) {
     bind(key).to(new TypeLiteral<InstrumentedBlockingQueue<ReturnableMessage>>() {
     });
   }
 
+  @Override
+  protected void bindSendBufferQueue(Key<Queue<MessageEvent>> key) {
+    bind(key).to(new TypeLiteral<InstrumentedQueue<MessageEvent>>() {
+    });
+  }
 }

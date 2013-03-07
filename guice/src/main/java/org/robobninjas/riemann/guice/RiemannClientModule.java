@@ -9,12 +9,18 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.socket.nio.NioClientBossPool;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
-import org.robotninjas.riemann.client.*;
+import org.robotninjas.riemann.client.ReturnableMessage;
+import org.robotninjas.riemann.client.RiemannClient;
+import org.robotninjas.riemann.client.RiemannTcpClient;
+import org.robotninjas.riemann.client.TcpClientPipelineFactory;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.net.InetSocketAddress;
 import java.util.Queue;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RiemannClientModule extends PrivateModule {
 
@@ -46,8 +52,9 @@ public class RiemannClientModule extends PrivateModule {
     bind(RiemannClient.class).to(RiemannTcpClient.class);
     expose(RiemannClient.class);
     bind(TcpClientPipelineFactory.class);
-    bindMessageQueue(Key.get(new TypeLiteral<Queue<MessageEvent>>() {}));
-    bindOutstandingMessagesQueue(Key.get(new TypeLiteral<Queue<ReturnableMessage>>() {
+    bindSendBufferQueue(Key.get(new TypeLiteral<Queue<MessageEvent>>() {
+    }));
+    bindOutstandingMessagesQueue(Key.get(new TypeLiteral<BlockingQueue<ReturnableMessage>>() {
     }));
   }
 
@@ -115,41 +122,45 @@ public class RiemannClientModule extends PrivateModule {
     final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
     bootstrap.setPipelineFactory(pipelineFactory);
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
-    //bootstrap.setOption("tcpNoDelay", true);
-    //bootstrap.setOption("child.tcpNoDelay", true);
+    bootstrap.setOption("tcpNoDelay", true);
+    bootstrap.setOption("child.tcpNoDelay", true);
     configureBootstrap(bootstrap);
     return bootstrap;
   }
 
   @Provides
-  public Supplier<Queue<ReturnableMessage>> getPromiseQueueSupplier(final Provider<Queue<ReturnableMessage>> provider) {
-    return new Supplier<Queue<ReturnableMessage>>() {
-      @Override public Queue<ReturnableMessage> get() {
+  public Supplier<BlockingQueue<ReturnableMessage>> getPromiseQueueSupplier(final Provider<BlockingQueue<ReturnableMessage>> provider) {
+    return new Supplier<BlockingQueue<ReturnableMessage>>() {
+      @Override
+      public BlockingQueue<ReturnableMessage> get() {
         return provider.get();
       }
     };
   }
 
   @Provides
-  public Supplier<Queue<MessageEvent>> getProimseQueueSupplier(final Provider<Queue<MessageEvent>> provider) {
+  public Supplier<Queue<MessageEvent>> getSendBufferQueueSupplier(final Provider<Queue<MessageEvent>> provider) {
     return new Supplier<Queue<MessageEvent>>() {
-      @Override public Queue<MessageEvent> get() {
+      @Override
+      public Queue<MessageEvent> get() {
         return provider.get();
       }
     };
   }
 
-  protected void bindOutstandingMessagesQueue(Key<Queue<ReturnableMessage>> key) {
-    bind(key).toProvider(new Provider<Queue<ReturnableMessage>>() {
-      @Override public Queue<ReturnableMessage> get() {
-        return Queues.newConcurrentLinkedQueue();
+  protected void bindOutstandingMessagesQueue(Key<BlockingQueue<ReturnableMessage>> key) {
+    bind(key).toProvider(new Provider<BlockingQueue<ReturnableMessage>>() {
+      @Override
+      public BlockingQueue<ReturnableMessage> get() {
+        return Queues.newArrayBlockingQueue(10000);
       }
     });
   }
 
-  protected void bindMessageQueue(Key<Queue<MessageEvent>> key) {
+  protected void bindSendBufferQueue(Key<Queue<MessageEvent>> key) {
     bind(key).toProvider(new Provider<Queue<MessageEvent>>() {
-      @Override public Queue<MessageEvent> get() {
+      @Override
+      public Queue<MessageEvent> get() {
         return Queues.newConcurrentLinkedQueue();
       }
     });

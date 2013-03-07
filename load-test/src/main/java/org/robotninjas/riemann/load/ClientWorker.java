@@ -9,6 +9,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.inject.Inject;
 import com.yammer.metrics.core.Meter;
 import com.yammer.metrics.core.Timer;
+import com.yammer.metrics.core.TimerContext;
 import org.robotninjas.riemann.client.RiemannConnection;
 import org.robotninjas.riemann.load.annotations.*;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
@@ -50,7 +51,8 @@ public class ClientWorker implements Runnable {
 
         final ListenableFuture<Boolean> isOk = connection.sendEvents(events);
         send.mark(batchSize);
-        //final TimerContext ctx = rtt.time();
+        //send.mark();
+        final TimerContext ctx = rtt.time();
 
         pool.returnObject(connection);
 
@@ -58,7 +60,8 @@ public class ClientWorker implements Runnable {
           @Override
           public void onSuccess(Boolean result) {
             ack.mark(batchSize);
-            //ctx.stop();
+            //ack.mark();
+            ctx.stop();
           }
 
           @Override

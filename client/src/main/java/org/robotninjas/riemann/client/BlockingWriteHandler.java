@@ -4,12 +4,15 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class BlockingWriteHandler extends SimpleChannelHandler {
 
+  private final Logger log = LoggerFactory.getLogger(getClass());
   private final ReentrantLock writeLock = new ReentrantLock();
   private final Condition writeable = writeLock.newCondition();
 
@@ -18,6 +21,7 @@ public class BlockingWriteHandler extends SimpleChannelHandler {
     try {
       writeLock.lock();
       if (e.getChannel().isWritable()) {
+        //log.debug("Writeable");
         writeable.signalAll();
       }
     } finally {
@@ -32,6 +36,7 @@ public class BlockingWriteHandler extends SimpleChannelHandler {
       try {
         writeLock.lock();
         while (!e.getChannel().isWritable()) {
+          //log.debug("Blocked");
           writeable.await();
         }
       } finally {

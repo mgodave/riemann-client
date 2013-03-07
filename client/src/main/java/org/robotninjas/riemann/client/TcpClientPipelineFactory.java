@@ -22,44 +22,49 @@ import com.aphyr.riemann.Proto;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Queues;
 import com.google.inject.Inject;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.Channels;
-import org.jboss.netty.channel.MessageEvent;
+import com.yammer.metrics.Metrics;
+import com.yammer.metrics.core.Meter;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.frame.LengthFieldBasedFrameDecoder;
 import org.jboss.netty.handler.codec.frame.LengthFieldPrepender;
 import org.jboss.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.jboss.netty.handler.codec.protobuf.ProtobufEncoder;
+import org.jboss.netty.handler.execution.ExecutionHandler;
+import org.jboss.netty.handler.execution.OrderedDownstreamThreadPoolExecutor;
 
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
-  private final Supplier<Queue<ReturnableMessage>> proimiseQueueSupplier;
-  private final Supplier<Queue<MessageEvent>> messageQueueSupplier;
+  private final Supplier<BlockingQueue<ReturnableMessage>> proimiseQueueSupplier;
+  private final Supplier<Queue<MessageEvent>> sendBufferSupplier;
 
   @Inject
-  public TcpClientPipelineFactory(Supplier<Queue<ReturnableMessage>> promiseQueueSupplier,
-                                  Supplier<Queue<MessageEvent>> messageQueueSupplier) {
+  public TcpClientPipelineFactory(Supplier<BlockingQueue<ReturnableMessage>> promiseQueueSupplier,
+                                  Supplier<Queue<MessageEvent>> sendBufferSupplier) {
     this.proimiseQueueSupplier = promiseQueueSupplier;
-    this.messageQueueSupplier = messageQueueSupplier;
+    this.sendBufferSupplier = sendBufferSupplier;
   }
 
   public TcpClientPipelineFactory() {
 
-    this.proimiseQueueSupplier = new Supplier<Queue<ReturnableMessage>>() {
-      @Override public Queue<ReturnableMessage> get() {
-        return Queues.newConcurrentLinkedQueue();
+    this.proimiseQueueSupplier = new Supplier<BlockingQueue<ReturnableMessage>>() {
+      @Override
+      public BlockingQueue<ReturnableMessage> get() {
+        return Queues.newArrayBlockingQueue(1000);
       }
     };
 
-    this.messageQueueSupplier = new
-
-        Supplier<Queue<MessageEvent>>() {
-          @Override public Queue<MessageEvent> get() {
-            return Queues.newConcurrentLinkedQueue();
-          }
-        };
+    this.sendBufferSupplier = new Supplier<Queue<MessageEvent>>() {
+      @Override
+      public Queue<MessageEvent> get() {
+        return Queues.newConcurrentLinkedQueue();
+      }
+    };
 
   }
 
@@ -68,7 +73,19 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
     final ChannelPipeline pipeline = Channels.pipeline();
 
+    final Meter throughput = Metrics.newMeter(getClass(), "throughput-meter", "bytes", TimeUnit.SECONDS);
+    pipeline.addLast("throughput-meter", new SimpleChannelDownstreamHandler() {
+      @Override
+      public void writeRequested(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
+        throughput.mark(((ChannelBuffer) e.getMessage()).readableBytes());
+        super.writeRequested(ctx, e);
+      }
+    });
+
     pipeline.addLast("blocking-writer", new BlockingWriteHandler());
+
+    pipeline.addLast("execution-handler", new ExecutionHandler(new OrderedDownstreamThreadPoolExecutor(1), true, false));
+    pipeline.addLast("cached-writer", new CachedWriteHandler(new LinkedBlockingQueue<MessageEvent>(1000), true));
 
     pipeline.addLast("frame-encoder", new LengthFieldPrepender(4));
     pipeline.addLast("frame-decoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));

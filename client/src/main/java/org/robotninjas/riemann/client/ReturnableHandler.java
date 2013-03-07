@@ -3,15 +3,15 @@ package org.robotninjas.riemann.client;
 import com.aphyr.riemann.Proto;
 import org.jboss.netty.channel.*;
 
-import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 
 import static org.jboss.netty.channel.Channels.write;
 
 class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHandler {
 
-  private final Queue<ReturnableMessage> returnables;
+  private final BlockingQueue<ReturnableMessage> returnables;
 
-  public ReturnableHandler(Queue<ReturnableMessage> returnables) {
+  public ReturnableHandler(BlockingQueue<ReturnableMessage> returnables) {
     this.returnables = returnables;
   }
 
@@ -21,7 +21,7 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
       final MessageEvent msgEvent = (MessageEvent) e;
       if (((MessageEvent) e).getMessage() instanceof ReturnableMessage<?>) {
         final ReturnableMessage returnable = (ReturnableMessage<?>) msgEvent.getMessage();
-        returnables.offer(returnable);
+        returnables.put(returnable);
         // strip the returnable and send the protobuf downstream
         write(ctx, e.getFuture(), returnable.getMsg(), ((MessageEvent) e).getRemoteAddress());
         return;
@@ -49,4 +49,5 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
     }
     ctx.sendUpstream(e);
   }
+
 }
