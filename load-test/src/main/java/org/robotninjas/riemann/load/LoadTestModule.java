@@ -35,7 +35,8 @@ public class LoadTestModule extends PrivateModule {
   protected void configure() {
     bind(Integer.class).annotatedWith(WorkerCount.class).toInstance(workers);
     bind(Integer.class).annotatedWith(BatchSize.class).toInstance(batchSize);
-    bind(new TypeLiteral<Supplier<Proto.Event>>() {}).annotatedWith(EventSupplier.class).toInstance(eventSupplier);
+    bind(new TypeLiteral<Supplier<Proto.Event>>() {
+    }).annotatedWith(EventSupplier.class).toInstance(eventSupplier);
     bind(ClientWorker.class);
     install(new FactoryModuleBuilder().build(ClientWorkerFactory.class));
     bind(LoadTestService.class);

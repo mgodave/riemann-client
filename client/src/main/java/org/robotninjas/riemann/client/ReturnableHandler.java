@@ -21,9 +21,16 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
       final MessageEvent msgEvent = (MessageEvent) e;
       if (((MessageEvent) e).getMessage() instanceof ReturnableMessage<?>) {
         final ReturnableMessage returnable = (ReturnableMessage<?>) msgEvent.getMessage();
-        returnables.put(returnable);
         // strip the returnable and send the protobuf downstream
         write(ctx, e.getFuture(), returnable.getMsg(), ((MessageEvent) e).getRemoteAddress());
+        e.getFuture().addListener(new ChannelFutureListener() {
+          @Override
+          public void operationComplete(ChannelFuture future) throws Exception {
+            if (future.isSuccess()) {
+              returnables.put(returnable);
+            }
+          }
+        });
         return;
       }
     } else if (e instanceof ChannelStateEvent) {

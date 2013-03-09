@@ -167,7 +167,8 @@ public class RiemannClientModule extends PrivateModule {
   }
 
   protected void configureBootstrap(ClientBootstrap bootstrap) {
-
+    bootstrap.setOption("writeBufferHighWaterMark", 65536 * 2);
+    bootstrap.setOption("tcpNoDelay", true);
   }
 
 

@@ -35,10 +35,10 @@ public class Clients {
 
   private static ExecutorService getExecutorService() {
     return newCachedThreadPool(
-        new ThreadFactoryBuilder()
-            .setDaemon(true)
-            .setNameFormat("Riemann RiemannClient Thread")
-            .build());
+      new ThreadFactoryBuilder()
+        .setDaemon(true)
+        .setNameFormat("Riemann RiemannClient Thread")
+        .build());
   }
 
   public static RiemannTcpClient makeClient(String address, int port) {

@@ -15,22 +15,23 @@ public class RiemannPubSub {
 
   private static ExecutorService getExecutorService() {
     return newCachedThreadPool(
-        new ThreadFactoryBuilder()
-            .setDaemon(true)
-            .setNameFormat("Riemann RiemannClient Thread")
-            .build());
+      new ThreadFactoryBuilder()
+        .setDaemon(true)
+        .setNameFormat("Riemann RiemannClient Thread")
+        .build());
   }
 
   public static RiemannPubSubClient makeClient(String host, int port) {
     return new RiemannPubSubClient(
-        host, port,
-        new WebSocketClientHandshakerFactory(),
-        new Supplier<ClientBootstrap>() {
-          @Override public ClientBootstrap get() {
-            return new ClientBootstrap(new NioClientSocketChannelFactory(getExecutorService(), getExecutorService()));
-          }
-        },
-        MoreExecutors.sameThreadExecutor());
+      host, port,
+      new WebSocketClientHandshakerFactory(),
+      new Supplier<ClientBootstrap>() {
+        @Override
+        public ClientBootstrap get() {
+          return new ClientBootstrap(new NioClientSocketChannelFactory(getExecutorService(), getExecutorService()));
+        }
+      },
+      MoreExecutors.sameThreadExecutor());
   }
 
   public static void main(String[] args) {

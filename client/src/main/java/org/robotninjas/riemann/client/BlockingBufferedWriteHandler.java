@@ -30,9 +30,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Emulates buffered write operation.  This handler stores all write requests
- * into an unbounded {@link java.util.Queue} and flushes them to the downstream when
- * {@link #flush()} method is called.
+ * Emulates buffered write operation.  This handler stores all write requests into an unbounded {@link java.util.Queue}
+ * and flushes them to the downstream when {@link #flush()} method is called.
  * <p/>
  * Here is an example that demonstrates the usage:
  * <pre>
@@ -53,22 +52,22 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * bufferedWriter.flush();
  * </pre>
  * <p/>
- * <h3>Auto-flush</h3>
- * The write request queue is automatically flushed when the associated
- * {@link org.jboss.netty.channel.Channel} is disconnected or closed.  However, it does not flush the
- * queue otherwise.  It means you have to call {@link #flush()} before the size
- * of the queue increases too much.  You can implement your own auto-flush
- * strategy by extending this handler:
+ * <h3>Auto-flush</h3> The write request queue is automatically flushed when the associated {@link
+ * org.jboss.netty.channel.Channel} is disconnected or closed.  However, it does not flush the queue otherwise.  It
+ * means you have to call {@link #flush()} before the size of the queue increases too much.  You can implement your own
+ * auto-flush strategy by extending this handler:
  * <pre>
  * public class AutoFlusher extends {@link BlockingBufferedWriteHandler} {
  *
  *     private final AtomicLong bufferSize = new AtomicLong();
  *
  *     {@literal @Override}
- *     public void writeRequested({@link org.jboss.netty.channel.ChannelHandlerContext} ctx, {@link org.jboss.netty.channel.MessageEvent} e) {
+ *     public void writeRequested({@link org.jboss.netty.channel.ChannelHandlerContext} ctx, {@link
+ * org.jboss.netty.channel.MessageEvent} e) {
  *         super.writeRequested(ctx, e);
  *
- *         {@link org.jboss.netty.buffer.ChannelBuffer} data = ({@link org.jboss.netty.buffer.ChannelBuffer}) e.getMessage();
+ *         {@link org.jboss.netty.buffer.ChannelBuffer} data = ({@link org.jboss.netty.buffer.ChannelBuffer})
+ * e.getMessage();
  *         int newBufferSize = bufferSize.addAndGet(data.readableBytes());
  *
  *         // Flush the queue if it gets larger than 8KiB.
@@ -82,9 +81,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p/>
  * <h3>Consolidate on flush</h3>
  * <p/>
- * If there are two or more write requests in the queue and all their message
- * type is {@link org.jboss.netty.buffer.ChannelBuffer}, they can be merged into a single write request
- * to save the number of system calls.
+ * If there are two or more write requests in the queue and all their message type is {@link
+ * org.jboss.netty.buffer.ChannelBuffer}, they can be merged into a single write request to save the number of system
+ * calls.
  * <pre>
  * BEFORE consolidation:            AFTER consolidation:
  * +-------+-------+-------+        +-------------+
@@ -92,20 +91,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * | "789" | "456" | "123" |------//| "123456789" |
  * +-------+-------+-------+        +-------------+
  * </pre>
- * This feature is disabled by default.  You can override the default when you
- * create this handler or call {@link #flush(boolean)}.  If you specified
- * {@code true} when you call the constructor, calling {@link #flush()} will
- * always consolidate the queue.  Otherwise, you have to call
- * {@link #flush(boolean)} with {@code true} to enable this feature for each
- * flush.
+ * This feature is disabled by default.  You can override the default when you create this handler or call {@link
+ * #flush(boolean)}.  If you specified {@code true} when you call the constructor, calling {@link #flush()} will always
+ * consolidate the queue.  Otherwise, you have to call {@link #flush(boolean)} with {@code true} to enable this feature
+ * for each flush.
  * <p/>
- * The disadvantage of consolidation is that the {@link org.jboss.netty.channel.ChannelFuture} and its
- * {@link org.jboss.netty.channel.ChannelFutureListener}s associated with the original write requests
- * might be notified later than when they are actually written out.  They will
- * always be notified when the consolidated write request is fully written.
+ * The disadvantage of consolidation is that the {@link org.jboss.netty.channel.ChannelFuture} and its {@link
+ * org.jboss.netty.channel.ChannelFutureListener}s associated with the original write requests might be notified later
+ * than when they are actually written out.  They will always be notified when the consolidated write request is fully
+ * written.
  * <p/>
- * The following example implements the consolidation strategy that reduces
- * the number of write requests based on the writability of a channel:
+ * The following example implements the consolidation strategy that reduces the number of write requests based on the
+ * writability of a channel:
  * <pre>
  * public class ConsolidatingAutoFlusher extends {@link BlockingBufferedWriteHandler} {
  *
@@ -115,7 +112,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *     }
  *
  *     {@literal @Override}
- *     public void channelOpen({@link org.jboss.netty.channel.ChannelHandlerContext} ctx, {@link org.jboss.netty.channel.ChannelStateEvent} e) throws Exception {
+ *     public void channelOpen({@link org.jboss.netty.channel.ChannelHandlerContext} ctx, {@link
+ * org.jboss.netty.channel.ChannelStateEvent} e) throws Exception {
  *         {@link org.jboss.netty.channel.ChannelConfig} cfg = e.getChannel().getConfig();
  *         if (cfg instanceof {@link org.jboss.netty.channel.socket.nio.NioSocketChannelConfig}) {
  *             // Lower the watermark to increase the chance of consolidation.
@@ -125,7 +123,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *     }
  *
  *     {@literal @Override}
- *     public void writeRequested({@link org.jboss.netty.channel.ChannelHandlerContext} ctx, {@link org.jboss.netty.channel.MessageEvent} e) throws Exception {
+ *     public void writeRequested({@link org.jboss.netty.channel.ChannelHandlerContext} ctx, {@link
+ * org.jboss.netty.channel.MessageEvent} e) throws Exception {
  *         super.writeRequested(ctx, et);
  *         if (e.getChannel().isWritable()) {
  *             flush();
@@ -134,7 +133,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  *     {@literal @Override}
  *     public void channelInterestChanged(
- *             {@link org.jboss.netty.channel.ChannelHandlerContext} ctx, {@link org.jboss.netty.channel.ChannelStateEvent} e) throws Exception {
+ *             {@link org.jboss.netty.channel.ChannelHandlerContext} ctx, {@link org.jboss.netty.channel.ChannelStateEvent}
+ * e) throws Exception {
  *         if (e.getChannel().isWritable()) {
  *             flush();
  *         }
@@ -144,11 +144,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p/>
  * <h3>Prioritized Writes</h3>
  * <p/>
- * You can implement prioritized writes by specifying an unbounded priority
- * queue in the constructor of this handler.  It will be required to design
- * the proper strategy to determine how often {@link #flush()} should be called.
- * For example, you could call {@link #flush()} periodically, using
- * {@link org.jboss.netty.util.HashedWheelTimer} every second.
+ * You can implement prioritized writes by specifying an unbounded priority queue in the constructor of this handler. It
+ * will be required to design the proper strategy to determine how often {@link #flush()} should be called. For example,
+ * you could call {@link #flush()} periodically, using {@link org.jboss.netty.util.HashedWheelTimer} every second.
  *
  * @apiviz.landmark
  */

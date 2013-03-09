@@ -11,7 +11,8 @@ public class DefaultEventSupplier implements Supplier<Proto.Event> {
     builder.setMetricF(1000000).setService("thing");
   }
 
-  @Override public Proto.Event get() {
+  @Override
+  public Proto.Event get() {
     return builder.build();
   }
 }

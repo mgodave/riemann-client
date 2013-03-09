@@ -23,8 +23,11 @@ public interface RiemannClient {
   public static final int DEFAULT_PORT = 5555;
 
   RiemannConnection makeConnection() throws InterruptedException;
+
   RiemannConnection makeConnection(String address, int port) throws InterruptedException;
+
   RiemannConnection makeConnection(String address) throws InterruptedException;
+
   void shutdown();
 
 }

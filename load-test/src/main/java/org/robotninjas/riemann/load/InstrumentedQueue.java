@@ -19,13 +19,15 @@ public class InstrumentedQueue<E> extends ForwardingQueue<E> {
   @Inject
   public InstrumentedQueue(MetricsRegistry registy) {
     sizeGauge = registy.newGauge(new MetricName(getClass(), "buffered-sends", uuid.toString()), new Gauge<Integer>() {
-      @Override public Integer value() {
+      @Override
+      public Integer value() {
         return size();
       }
     });
   }
 
-  @Override protected Queue<E> delegate() {
+  @Override
+  protected Queue<E> delegate() {
     return backing;
   }
 

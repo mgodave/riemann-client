@@ -2,7 +2,7 @@ package org.robotninjas.riemann.load;
 
 import com.aphyr.riemann.Proto;
 import com.google.common.base.Supplier;
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -14,8 +14,6 @@ import org.robotninjas.riemann.client.RiemannConnection;
 import org.robotninjas.riemann.load.annotations.*;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
-import java.util.ArrayList;
-
 import static com.google.common.base.Throwables.propagate;
 
 public class ClientWorker implements Runnable {
@@ -24,25 +22,31 @@ public class ClientWorker implements Runnable {
   private final Meter ack;
   private final Timer rtt;
   private final RiemannConnectionPool pool;
-  private final ArrayList<Proto.Event> events;
   private final int batchSize;
+  private final Supplier<Proto.Event> eventSupplier;
 
-  @Inject ClientWorker(@SendMeter Meter send, @AckMeter Meter ack, @LatencyTimer Timer rtt, @BatchSize int batchSize,
-                       RiemannConnectionPool pool, @EventSupplier Supplier<Proto.Event> eventSupplier) {
+  @Inject
+  ClientWorker(@SendMeter Meter send, @AckMeter Meter ack, @LatencyTimer Timer rtt, @BatchSize int batchSize,
+               RiemannConnectionPool pool, @EventSupplier Supplier<Proto.Event> eventSupplier) {
     this.send = send;
     this.ack = ack;
     this.rtt = rtt;
     this.pool = pool;
     this.batchSize = batchSize;
+    this.eventSupplier = eventSupplier;
 
-    events = Lists.newArrayListWithCapacity(batchSize);
-    for (int i = 0; i < batchSize; i++) {
-      events.add(eventSupplier.get());
-    }
   }
 
   @Override
   public void run() {
+
+    ImmutableList.Builder<Proto.Event> eventsBuilder = ImmutableList.builder();
+    for (int i = 0; i < batchSize; i++) {
+      eventsBuilder.add(eventSupplier.get());
+    }
+
+    final ImmutableList<Proto.Event> events = eventsBuilder.build();
+
     try {
 
       while (!Thread.currentThread().isInterrupted()) {
@@ -50,8 +54,8 @@ public class ClientWorker implements Runnable {
         final RiemannConnection connection = pool.borrowObject();
 
         final ListenableFuture<Boolean> isOk = connection.sendEvents(events);
-        send.mark(batchSize);
-        //send.mark();
+        //send.mark(batchSize);
+        send.mark();
         final TimerContext ctx = rtt.time();
 
         pool.returnObject(connection);

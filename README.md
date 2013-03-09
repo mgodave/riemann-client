@@ -8,6 +8,29 @@ This is a simple Java client for [Riemann](https://github.com/aphyr/riemann). It
 
 The current "stable" version is 1.0.0
 
+This client sets up a netty pipeline with the following stages:
+
+* ReturnableHandler
+* ProtobufEncoder
+* FrameEncoder
+* BlockingWriteHandler
+
+When data is sent, objects of type ReturnableMessage are sent down the pipeline. A ReturnableMessage is an AbstracFuture
+with a payload. The ReturnableHandler strips the future from the payload and sends the payload further down the pipeline.
+The future is enqueued and later mated with and ack from Riemann corresponding to this message. The payload is a protobuf message of type Msg
+so the ProtobufEncoder encodes this message into a ChannelBuffer and passes it on. The encoded protobuf message is then
+framed with a two byte length field by the FrameEncoder. Lastly, the framed message is passed to the BlockingWriteHandler.
+The BlockingWriteHandler is a buffer for outgoing messages. If the channel is writeable the message is written directly to
+the channel sink (the socket) and sent, otherwise it is enqueued until the channel becomes writeable again. Once the channel
+is able to accept data again the buffer is flushed and all subsequent writes are forwarded on to the sink until the channel
+once again becomes saturated and buffering begins again. The buffer is a BlockingQueue with a set, configurable, capacity.
+When the buffer is full writes to the channel will block until it becomes writeable again. This has the effect of applying
+a liberal amount of back pressure to a client which is producing enough data to saturate the connection. The back pressure
+extends all of the way back from Riemann: Riemann, if saturated, will not be able to accept new data off the connection. The
+receive buffer on riemann's interface will become full and it will begin to drop packets. Un-acked packets will cause the
+client's send buffer to fill. Netty's NIO write buffer will fill. The BlockingWriteHandler will fill it's buffer. The client
+will block. And on and on...
+
 Get It
 ------
 

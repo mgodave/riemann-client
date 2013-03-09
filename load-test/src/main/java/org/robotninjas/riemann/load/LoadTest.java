@@ -18,7 +18,7 @@ import static java.lang.Integer.parseInt;
 public class LoadTest {
 
   private static final int NUM_CLIENT_WORKERS = 1;
-  private static final int BATCH_SIZE = 500;
+  private static final int BATCH_SIZE = 50;
   private static final int NUM_CONNECTIONS = 1;
   private static final int NUM_NETTY_WORKERS = 1;
 
@@ -32,12 +32,12 @@ public class LoadTest {
 
   public LoadTest(String address, int port) {
     this(address, port, NUM_CLIENT_WORKERS, BATCH_SIZE, NUM_CONNECTIONS,
-        NUM_NETTY_WORKERS, new DefaultEventSupplier());
+      NUM_NETTY_WORKERS, new DefaultEventSupplier());
   }
 
   public LoadTest(String address, int port, int clientWorkers) {
     this(address, port, clientWorkers, BATCH_SIZE, NUM_CONNECTIONS,
-        NUM_NETTY_WORKERS, new DefaultEventSupplier());
+      NUM_NETTY_WORKERS, new DefaultEventSupplier());
   }
 
   public LoadTest(String address, int port, int clientWorkers, int batchSize, int numConnections,
@@ -58,13 +58,14 @@ public class LoadTest {
     poolConfig.maxActive = numConnections;
 
     final Injector injector = Guice.createInjector(
-        new InstrumentationModule(),
-        new InstrumentedClientModule(address, port, numNettyWorkers, poolConfig),
-        new LoadTestModule(clientWorkers, batchSize, eventSupplier));
+      new InstrumentationModule(),
+      new InstrumentedClientModule(address, port, numNettyWorkers, poolConfig),
+      new LoadTestModule(clientWorkers, batchSize, eventSupplier));
 
     final ConsoleReporter consoleReporter = injector.getInstance(ConsoleReporter.class);
     Runtime.getRuntime().addShutdownHook(new Thread() {
-      @Override public void run() {
+      @Override
+      public void run() {
         consoleReporter.shutdown();
       }
     });
@@ -72,7 +73,8 @@ public class LoadTest {
 
     final LoadTestService loadTestService = injector.getInstance(LoadTestService.class);
     Runtime.getRuntime().addShutdownHook(new Thread() {
-      @Override public void run() {
+      @Override
+      public void run() {
         loadTestService.stopAndWait();
       }
     });
@@ -105,8 +107,8 @@ public class LoadTest {
       }
 
       final LoadTest loadTest =
-          new LoadTest(riemannHostAndPort.getHostText(), riemannHostAndPort.getPort(), clientWorkers,
-              batchSize, numConnections, numNettyWorkers, new DefaultEventSupplier());
+        new LoadTest(riemannHostAndPort.getHostText(), riemannHostAndPort.getPort(), clientWorkers,
+          batchSize, numConnections, numNettyWorkers, new DefaultEventSupplier());
 
       loadTest.start();
 

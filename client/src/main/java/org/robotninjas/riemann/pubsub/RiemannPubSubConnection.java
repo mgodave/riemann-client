@@ -23,9 +23,11 @@ public class RiemannPubSubConnection implements QueryResultListener {
     this.channel = Optional.of(channel);
   }
 
-  @Override public void handleResult(final String result) {
+  @Override
+  public void handleResult(final String result) {
     resultExecutor.execute(new Runnable() {
-      @Override public void run() {
+      @Override
+      public void run() {
         for (QueryResultListener listener : listeners) {
           listener.handleResult(result);
         }

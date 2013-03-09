@@ -30,8 +30,6 @@ import org.jboss.netty.handler.codec.frame.LengthFieldBasedFrameDecoder;
 import org.jboss.netty.handler.codec.frame.LengthFieldPrepender;
 import org.jboss.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.jboss.netty.handler.codec.protobuf.ProtobufEncoder;
-import org.jboss.netty.handler.execution.ExecutionHandler;
-import org.jboss.netty.handler.execution.OrderedDownstreamThreadPoolExecutor;
 
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
@@ -76,16 +74,21 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
     final Meter throughput = Metrics.newMeter(getClass(), "throughput-meter", "bytes", TimeUnit.SECONDS);
     pipeline.addLast("throughput-meter", new SimpleChannelDownstreamHandler() {
       @Override
-      public void writeRequested(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-        throughput.mark(((ChannelBuffer) e.getMessage()).readableBytes());
+      public void writeRequested(ChannelHandlerContext ctx, final MessageEvent e) throws Exception {
         super.writeRequested(ctx, e);
+        e.getFuture().addListener(new ChannelFutureListener() {
+          @Override
+          public void operationComplete(ChannelFuture future) throws Exception {
+            throughput.mark(((ChannelBuffer) e.getMessage()).readableBytes());
+          }
+        });
       }
     });
 
-    pipeline.addLast("blocking-writer", new BlockingWriteHandler());
+    //pipeline.addLast("blocking-writer", new BlockingWriteHandler());
 
-    pipeline.addLast("execution-handler", new ExecutionHandler(new OrderedDownstreamThreadPoolExecutor(1), true, false));
-    pipeline.addLast("cached-writer", new CachedWriteHandler(new LinkedBlockingQueue<MessageEvent>(1000), true));
+    //pipeline.addLast("execution-handler", new ExecutionHandler(new OrderedDownstreamThreadPoolExecutor(1), true, false));
+    pipeline.addLast("cached-writer", new CachedWriteHandler(new LinkedBlockingQueue<MessageEvent>(50), true));
 
     pipeline.addLast("frame-encoder", new LengthFieldPrepender(4));
     pipeline.addLast("frame-decoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
