@@ -61,6 +61,8 @@ usage: ./load-test.sh [options] [host:port]
 Reports are deposited in the CWD by default unless -r is specified. The tool uses Coda's Metrics Lib and the CsvReporter.
 The csv files are all self documenting.
 
+A copy of 2.0.2-SNAPSHOT is located [here](https://dl.dropbox.com/u/21344046/load-test-2.0.1-SNAPSHOT-bundle.tar.gz)
+
 Get It
 ------
 
