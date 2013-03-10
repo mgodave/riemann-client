@@ -40,7 +40,7 @@ There is a Riemann load test tool included in this repo. To build it:
 cd $CLIENT_HOME
 mvn clean install
 cd load-test
-mvn assembly-single
+mvn assembly:single
 ```
 
 There will be a tarball under in the target directory, this is a standalone version of the tool. To run, extract the tarball
