@@ -10,7 +10,6 @@ import org.jboss.netty.channel.socket.nio.NioClientBossPool;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.robotninjas.riemann.client.ReturnableMessage;
-import org.robotninjas.riemann.client.RiemannClient;
 import org.robotninjas.riemann.client.RiemannTcpClient;
 import org.robotninjas.riemann.client.TcpClientPipelineFactory;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
@@ -49,8 +48,8 @@ public class RiemannClientModule extends PrivateModule {
 
   @Override
   protected void configure() {
-    bind(RiemannClient.class).to(RiemannTcpClient.class);
-    expose(RiemannClient.class);
+    bind(RiemannTcpClient.class);
+    expose(RiemannTcpClient.class);
     bind(TcpClientPipelineFactory.class);
     bindSendBufferQueue(Key.get(new TypeLiteral<Queue<MessageEvent>>() {
     }));
@@ -61,7 +60,7 @@ public class RiemannClientModule extends PrivateModule {
   @Provides
   @Exposed
   @Singleton
-  public RiemannConnectionPool getConnectionPool(RiemannClient client) {
+  public RiemannConnectionPool getConnectionPool(RiemannTcpClient client) {
     final RiemannConnectionPool pool = new RiemannConnectionPool(client, poolConfig);
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override
@@ -167,8 +166,7 @@ public class RiemannClientModule extends PrivateModule {
   }
 
   protected void configureBootstrap(ClientBootstrap bootstrap) {
-    bootstrap.setOption("writeBufferHighWaterMark", 65536 * 2);
-    bootstrap.setOption("tcpNoDelay", true);
+
   }
 
 

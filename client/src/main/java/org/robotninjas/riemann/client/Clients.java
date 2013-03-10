@@ -20,7 +20,9 @@ package org.robotninjas.riemann.client;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.jboss.netty.bootstrap.ClientBootstrap;
+import org.jboss.netty.bootstrap.ConnectionlessBootstrap;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
+import org.jboss.netty.channel.socket.nio.NioDatagramChannelFactory;
 
 import javax.annotation.concurrent.ThreadSafe;
 import java.net.InetSocketAddress;
@@ -41,7 +43,7 @@ public class Clients {
         .build());
   }
 
-  public static RiemannTcpClient makeClient(String address, int port) {
+  public static RiemannTcpClient makeTcpClient(String address, int port) {
     checkNotNull(address, "Address cannot be null");
     checkArgument((port > 0) && (port < 65535), "Port number must be between 0 and 65535");
     final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(getExecutorService(), getExecutorService(), 1, 1);
@@ -53,12 +55,30 @@ public class Clients {
     return new RiemannTcpClient(bootstrap);
   }
 
-  public static RiemannTcpClient makeClient(String address) {
-    return makeClient(address, RiemannClient.DEFAULT_PORT);
+  public static RiemannTcpClient makeTcpClient(String address) {
+    return makeTcpClient(address, RiemannClient.DEFAULT_PORT);
   }
 
-  public static RiemannTcpClient makeClient() {
-    return makeClient("localhost");
+  public static RiemannTcpClient makeTcpClient() {
+    return makeTcpClient("localhost");
+  }
+
+  public static RiemannUdpClient makeUdpClient(String address, int port) {
+    checkNotNull(address, "Address cannot be null");
+    checkArgument((port > 0) && (port < 65535), "Port number must be between 0 and 65535");
+    final NioDatagramChannelFactory channelFactory = new NioDatagramChannelFactory(getExecutorService());
+    final ConnectionlessBootstrap bootstrap = new ConnectionlessBootstrap(channelFactory);
+    bootstrap.setPipelineFactory(new TcpClientPipelineFactory());
+    bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
+    return new RiemannUdpClient(bootstrap);
+  }
+
+  public static RiemannUdpClient makeUdpClient(String address) {
+    return makeUdpClient(address, RiemannClient.DEFAULT_PORT);
+  }
+
+  public static RiemannUdpClient makeUdpClient() {
+    return makeUdpClient("localhost");
   }
 
 

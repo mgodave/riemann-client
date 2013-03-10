@@ -9,6 +9,8 @@ import com.yammer.metrics.core.*;
 import com.yammer.metrics.reporting.ConsoleReporter;
 import com.yammer.metrics.reporting.CsvReporter;
 import org.robotninjas.riemann.load.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.concurrent.Executor;
@@ -21,14 +23,17 @@ public class LoadTestModule extends PrivateModule {
   public static final MetricName SEND_RATE_METRIC_NAME = new MetricName(ClientWorker.class, "sends");
   public static final MetricName ACK_RATE_METRIC_NAME = new MetricName(ClientWorker.class, "acks");
   public static final MetricName LATENCY_TIMER_NAME = new MetricName(ClientWorker.class, "rtt");
+  private final Logger logger = LoggerFactory.getLogger(getClass());
   private final int workers;
   private final int batchSize;
   private final Supplier<Proto.Event> eventSupplier;
+  private final File reportdir;
 
-  public LoadTestModule(int workers, int batchSize, Supplier<Proto.Event> eventSupplier) {
+  public LoadTestModule(int workers, int batchSize, Supplier<Proto.Event> eventSupplier, File reportdir) {
     this.workers = workers;
     this.batchSize = batchSize;
     this.eventSupplier = eventSupplier;
+    this.reportdir = reportdir;
   }
 
   @Override
@@ -90,7 +95,7 @@ public class LoadTestModule extends PrivateModule {
   @Exposed
   @Singleton
   public CsvReporter getCsvReporter(MetricsRegistry registry) {
-    return new CsvReporter(registry, new File(""));
+    return new CsvReporter(registry, reportdir);
   }
 
 }

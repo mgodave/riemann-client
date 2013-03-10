@@ -38,6 +38,8 @@ import java.util.concurrent.TimeUnit;
 
 public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
+  public static final String RETURNABLE_HANDLER = "returnable-handler";
+
   private final Supplier<BlockingQueue<ReturnableMessage>> proimiseQueueSupplier;
   private final Supplier<Queue<MessageEvent>> sendBufferSupplier;
 
@@ -85,9 +87,6 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
       }
     });
 
-    //pipeline.addLast("blocking-writer", new BlockingWriteHandler());
-
-    //pipeline.addLast("execution-handler", new ExecutionHandler(new OrderedDownstreamThreadPoolExecutor(1), true, false));
     pipeline.addLast("cached-writer", new CachedWriteHandler(new LinkedBlockingQueue<MessageEvent>(50), true));
 
     pipeline.addLast("frame-encoder", new LengthFieldPrepender(4));
@@ -96,7 +95,7 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
     pipeline.addLast("message-encoder", new ProtobufEncoder());
     pipeline.addLast("message-decoder", new ProtobufDecoder(Proto.Msg.getDefaultInstance()));
 
-    pipeline.addLast("returnable-handler", new ReturnableHandler(proimiseQueueSupplier.get()));
+    pipeline.addLast(RETURNABLE_HANDLER, new ReturnableHandler(proimiseQueueSupplier.get()));
 
     return pipeline;
   }
