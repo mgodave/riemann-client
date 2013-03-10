@@ -31,6 +31,36 @@ receive buffer on riemann's interface will become full and it will begin to drop
 client's send buffer to fill. Netty's NIO write buffer will fill. The BlockingWriteHandler will fill it's buffer. The client
 will block. And on and on...
 
+Load Test Tool
+--------------
+
+There is a Riemann load test tool included in this repo. To build it:
+
+```bash
+cd $CLIENT_HOME
+mvn clean install
+cd load-test
+mvn assembly-single
+```
+
+There will be a tarball under in the target directory, this is a standalone version of the tool. To run, extract the tarball
+and run ./bin/load-test.sh -h
+
+The options available are:
+
+```
+usage: ./load-test.sh [options] [host:port]
+ -b,--batch-size <arg>       number of Events to send in each Msg
+ -c,--connections <arg>      number of concurrent connections
+ -n,--netty-workers <arg>    number of netty worker threads
+ -r,--reports-dir <arg>      base directory for generated reports
+ -s,--buffer-size <arg>      netty pipeline buffer size in bytes
+ -w,--client-workers <arg>   number of client workers
+```
+
+Reports are deposited in the CWD by default unless -r is specified. The tool uses Coda's Metrics Lib and the CsvReporter.
+The csv files are all self documenting.
+
 Get It
 ------
 
