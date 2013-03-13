@@ -108,12 +108,12 @@ public class LoadTest {
   public static void main(String[] args) {
 
     final Options opts = new Options();
-    opts.addOption("w", "client-workers", true, "number of client workers");
-    opts.addOption("b", "batch-size", true, "number of Events to send in each Msg");
-    opts.addOption("c", "connections", true, "number of concurrent connections");
-    opts.addOption("n", "netty-workers", true, "number of netty worker threads");
-    opts.addOption("s", "buffer-size", true, "netty pipeline buffer size in bytes");
-    opts.addOption("r", "reports-dir", true, "base directory for generated reports");
+    opts.addOption("w", "client-workers", true, "number of client workers, default is 1");
+    opts.addOption("b", "batch-size", true, "number of Events to send in each Msg, default is 1");
+    opts.addOption("c", "connections", true, "number of concurrent connections, if not specified then equal to -w");
+    opts.addOption("n", "netty-workers", true, "number of netty worker threads, if not specified then equal to -w");
+    opts.addOption("s", "buffer-size", true, "netty pipeline buffer size in bytes, default is 1");
+    opts.addOption("r", "reports-dir", true, "base directory for generated reports, default is ./<timestamp>");
 
     try {
 
@@ -122,8 +122,8 @@ public class LoadTest {
 
       final int clientWorkers = line.hasOption('w') ? parseInt(line.getOptionValue('w')) : NUM_CLIENT_WORKERS;
       final int batchSize = line.hasOption('b') ? parseInt(line.getOptionValue('b')) : BATCH_SIZE;
-      final int numConnections = line.hasOption('c') ? parseInt(line.getOptionValue('c')) : NUM_CONNECTIONS;
-      final int numNettyWorkers = line.hasOption('n') ? parseInt(line.getOptionValue('n')) : NUM_NETTY_WORKERS;
+      final int numConnections = line.hasOption('c') ? parseInt(line.getOptionValue('c')) : clientWorkers;
+      final int numNettyWorkers = line.hasOption('n') ? parseInt(line.getOptionValue('n')) : clientWorkers;
       final String reportdir = line.getOptionValue("r", DEFAULT_REPORTDIR);
 
       final List<String> otherArgs = line.getArgList();
