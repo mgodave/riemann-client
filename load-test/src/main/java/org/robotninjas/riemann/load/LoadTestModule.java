@@ -22,6 +22,7 @@ public class LoadTestModule extends PrivateModule {
 
   public static final MetricName SEND_RATE_METRIC_NAME = new MetricName(ClientWorker.class, "sends");
   public static final MetricName ACK_RATE_METRIC_NAME = new MetricName(ClientWorker.class, "acks");
+  public static final MetricName EVENT_ACK_RATE_METRIC_NAME = new MetricName(ClientWorker.class, "event-acks");
   public static final MetricName LATENCY_TIMER_NAME = new MetricName(ClientWorker.class, "rtt");
   private final Logger logger = LoggerFactory.getLogger(getClass());
   private final int workers;
@@ -82,6 +83,12 @@ public class LoadTestModule extends PrivateModule {
   @SendMeter
   public Meter getSendMeter(MetricsRegistry registry) {
     return registry.newMeter(SEND_RATE_METRIC_NAME, "send", TimeUnit.SECONDS);
+  }
+
+  @Provides
+  @EventAckMeter
+  public Meter getEventAckMeter(MetricsRegistry registry) {
+    return registry.newMeter(EVENT_ACK_RATE_METRIC_NAME, "send", TimeUnit.SECONDS);
   }
 
   @Provides

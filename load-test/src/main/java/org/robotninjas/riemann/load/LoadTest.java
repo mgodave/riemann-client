@@ -102,6 +102,7 @@ public class LoadTest {
       }
     });
     loadTestService.startAndWait();
+
   }
 
   public static void main(String[] args) {
