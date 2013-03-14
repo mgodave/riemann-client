@@ -18,7 +18,7 @@ public class InstrumentedBlockingQueue<E> extends ForwardingBlockingQueue<E> {
 
   @Inject
   public InstrumentedBlockingQueue(MetricsRegistry registy) {
-    sizeGauge = registy.newGauge(new MetricName(getClass(), "outstanding-sends"), new Gauge<Integer>() {
+    sizeGauge = registy.newGauge(new MetricName(getClass(), "unacked"), new Gauge<Integer>() {
       @Override
       public Integer value() {
         return size();

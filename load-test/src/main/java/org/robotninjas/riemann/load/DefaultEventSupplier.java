@@ -8,7 +8,7 @@ public class DefaultEventSupplier implements Supplier<Proto.Event> {
   private final Proto.Event.Builder builder = Proto.Event.newBuilder();
 
   public DefaultEventSupplier() {
-    builder.setMetricF(1000000).setService("thing");
+    builder.setMetricF(1).setService("load-test");
   }
 
   @Override

@@ -73,7 +73,7 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
 
     final ChannelPipeline pipeline = Channels.pipeline();
 
-    final Meter throughput = Metrics.newMeter(getClass(), "throughput-meter", "bytes", TimeUnit.SECONDS);
+    final Meter throughput = Metrics.newMeter(getClass(), "throughput", "bytes", TimeUnit.SECONDS);
     pipeline.addLast("throughput-meter", new SimpleChannelDownstreamHandler() {
       @Override
       public void writeRequested(ChannelHandlerContext ctx, final MessageEvent e) throws Exception {

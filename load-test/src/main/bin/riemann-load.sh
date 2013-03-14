@@ -17,6 +17,8 @@ if [ "$JAVA_OPTIONS" = "" ] ; then
     -d64"
 fi
 
+#-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:+UseCompressedOops"
+
 # Launch the application
 cd $PREFIX
 
