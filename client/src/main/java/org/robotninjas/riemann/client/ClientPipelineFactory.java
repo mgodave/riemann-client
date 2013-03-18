@@ -36,7 +36,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class TcpClientPipelineFactory implements ChannelPipelineFactory {
+public class ClientPipelineFactory implements ChannelPipelineFactory {
 
   public static final String RETURNABLE_HANDLER = "returnable-handler";
 
@@ -44,13 +44,13 @@ public class TcpClientPipelineFactory implements ChannelPipelineFactory {
   private final Supplier<Queue<MessageEvent>> sendBufferSupplier;
 
   @Inject
-  public TcpClientPipelineFactory(Supplier<BlockingQueue<ReturnableMessage>> promiseQueueSupplier,
-                                  Supplier<Queue<MessageEvent>> sendBufferSupplier) {
+  public ClientPipelineFactory(Supplier<BlockingQueue<ReturnableMessage>> promiseQueueSupplier,
+                               Supplier<Queue<MessageEvent>> sendBufferSupplier) {
     this.proimiseQueueSupplier = promiseQueueSupplier;
     this.sendBufferSupplier = sendBufferSupplier;
   }
 
-  public TcpClientPipelineFactory() {
+  public ClientPipelineFactory() {
 
     this.proimiseQueueSupplier = new Supplier<BlockingQueue<ReturnableMessage>>() {
       @Override

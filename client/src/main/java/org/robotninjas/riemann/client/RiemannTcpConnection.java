@@ -29,73 +29,45 @@ import java.util.List;
 
 import static com.aphyr.riemann.Proto.Event;
 import static com.aphyr.riemann.Proto.Msg;
-import static java.util.Arrays.asList;
 
 @ThreadSafe
-public class AsyncRiemannConnection implements RiemannConnection {
+public class RiemannTcpConnection implements RiemannConnection {
 
   private final Channel channel;
   private final ClientBootstrap bootstrap;
 
-  public AsyncRiemannConnection(Channel channel, ClientBootstrap bootstrap) {
+  public RiemannTcpConnection(Channel channel, ClientBootstrap bootstrap) {
     this.channel = channel;
     this.bootstrap = bootstrap;
   }
 
-  public ListenableFuture<Boolean> sendEvent(Event e) {
+  public ListenableFuture<Boolean> sendWithAck(Event e) {
     final Msg.Builder msg = Msg.newBuilder()
       .addEvents(e);
     return sendMsg(channel, new ReturnableEvent(msg));
-
   }
 
-  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2) {
+  public void send(Event e) {
     final Msg.Builder msg = Msg.newBuilder()
-      .addEvents(0, e1)
-      .addEvents(1, e2);
-    return sendMsg(channel, new ReturnableEvent(msg));
-
+      .addEvents(e);
+    sendMsg(channel, new ReturnableEvent(msg));
   }
 
-  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3) {
-    final Msg.Builder msg = Msg.newBuilder()
-      .addEvents(0, e1)
-      .addEvents(1, e2)
-      .addEvents(2, e3);
-    return sendMsg(channel, new ReturnableEvent(msg));
-
-  }
-
-  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4) {
-    final Msg.Builder msg = Msg.newBuilder()
-      .addEvents(0, e1)
-      .addEvents(1, e2)
-      .addEvents(2, e3)
-      .addEvents(3, e4);
-    return sendMsg(channel, new ReturnableEvent(msg));
-
-  }
-
-  public ListenableFuture<Boolean> sendEvents(Event e1, Event e2, Event e3, Event e4, Event e5) {
-    final Msg.Builder msg = Msg.newBuilder()
-      .addEvents(0, e1)
-      .addEvents(1, e2)
-      .addEvents(2, e3)
-      .addEvents(3, e4)
-      .addEvents(4, e5);
-    return sendMsg(channel, new ReturnableEvent(msg));
-  }
-
-  public ListenableFuture<Boolean> sendEvents(Event... events) {
-    final Msg.Builder msg = Msg.newBuilder()
-      .addAllEvents(asList(events));
-    return sendMsg(channel, new ReturnableEvent(msg));
-  }
-
-  public ListenableFuture<Boolean> sendEvents(Iterable<Event> events) {
+  public ListenableFuture<Boolean> sendWithAck(Iterable<Event> events) {
     final Msg.Builder msg = Msg.newBuilder()
       .addAllEvents(events);
     return sendMsg(channel, new ReturnableEvent(msg));
+  }
+
+  @Override
+  public boolean isOpen() {
+    return channel.isOpen();
+  }
+
+  public void send(Iterable<Event> events) {
+    final Msg.Builder msg = Msg.newBuilder()
+      .addAllEvents(events);
+    sendMsg(channel, new ReturnableEvent(msg));
   }
 
   public ListenableFuture<List<Proto.Event>> query(String query) {

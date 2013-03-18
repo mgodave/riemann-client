@@ -4,7 +4,6 @@ import com.aphyr.riemann.Proto;
 import com.google.common.base.Supplier;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.inject.*;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.yammer.metrics.core.*;
 import com.yammer.metrics.reporting.ConsoleReporter;
 import com.yammer.metrics.reporting.CsvReporter;
@@ -44,7 +43,6 @@ public class LoadTestModule extends PrivateModule {
     bind(new TypeLiteral<Supplier<Proto.Event>>() {
     }).annotatedWith(EventSupplier.class).toInstance(eventSupplier);
     bind(ClientWorker.class);
-    install(new FactoryModuleBuilder().build(ClientWorkerFactory.class));
     bind(LoadTestService.class);
     expose(LoadTestService.class);
   }
@@ -65,6 +63,16 @@ public class LoadTestModule extends PrivateModule {
       }
     });
     return executor;
+  }
+
+  @Provides
+  public Supplier<ClientWorker> getClientWorkerSupplier(final Provider<ClientWorker> provider) {
+    return new Supplier<ClientWorker>() {
+      @Override
+      public ClientWorker get() {
+        return provider.get();
+      }
+    };
   }
 
   @Provides

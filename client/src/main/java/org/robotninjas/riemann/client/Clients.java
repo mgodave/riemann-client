@@ -48,7 +48,7 @@ public class Clients {
     checkArgument((port > 0) && (port < 65535), "Port number must be between 0 and 65535");
     final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(getExecutorService(), getExecutorService(), 1, 1);
     final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
-    bootstrap.setPipelineFactory(new TcpClientPipelineFactory());
+    bootstrap.setPipelineFactory(new ClientPipelineFactory());
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     bootstrap.setOption("tcpNoDelay", true);
     bootstrap.setOption("child.tcpNoDelay", true);
@@ -68,7 +68,7 @@ public class Clients {
     checkArgument((port > 0) && (port < 65535), "Port number must be between 0 and 65535");
     final NioDatagramChannelFactory channelFactory = new NioDatagramChannelFactory(getExecutorService());
     final ConnectionlessBootstrap bootstrap = new ConnectionlessBootstrap(channelFactory);
-    bootstrap.setPipelineFactory(new TcpClientPipelineFactory());
+    bootstrap.setPipelineFactory(new ClientPipelineFactory());
     bootstrap.setOption("remoteAddress", new InetSocketAddress(address, port));
     return new RiemannUdpClient(bootstrap);
   }

@@ -19,13 +19,13 @@
 package org.robotninjas.riemann.pool;
 
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.robotninjas.riemann.client.AsyncRiemannConnection;
+import org.robotninjas.riemann.client.RiemannTcpConnection;
 import org.robotninjas.riemann.client.RiemannClient;
 import org.robotninjas.riemann.client.RiemannTcpClient;
 
 import javax.inject.Inject;
 
-public class RiemannConnectionPool extends GenericObjectPool<AsyncRiemannConnection> {
+public class RiemannConnectionPool extends GenericObjectPool<RiemannTcpConnection> {
 
   private final RiemannClient client;
 
@@ -45,5 +45,7 @@ public class RiemannConnectionPool extends GenericObjectPool<AsyncRiemannConnect
     super.close();
     client.shutdown();
   }
+
+
 
 }

@@ -1,7 +1,12 @@
 package org.robotninjas.riemann.load;
 
+import com.google.common.collect.Queues;
+import com.google.inject.Inject;
 import com.google.inject.Key;
-import com.google.inject.TypeLiteral;
+import com.google.inject.Provider;
+import com.yammer.metrics.core.Gauge;
+import com.yammer.metrics.core.MetricName;
+import com.yammer.metrics.core.MetricsRegistry;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.MessageEvent;
@@ -19,13 +24,37 @@ public class InstrumentedClientModule extends RiemannClientModule {
 
   @Override
   protected void bindOutstandingMessagesQueue(Key<BlockingQueue<ReturnableMessage>> key) {
-    bind(key).to(new TypeLiteral<InstrumentedBlockingQueue<ReturnableMessage>>() {
+    bind(key).toProvider(new Provider<BlockingQueue<ReturnableMessage>>() {
+      @Inject MetricsRegistry registry = null;
+      @Override
+      public BlockingQueue<ReturnableMessage> get() {
+        final BlockingQueue<ReturnableMessage> queue = Queues.newLinkedBlockingQueue();
+        registry.newGauge(new MetricName(getClass(), "unacked"), new Gauge<Integer>() {
+          @Override
+          public Integer value() {
+            return queue.size();
+          }
+        });
+        return queue;
+      }
     });
   }
 
   @Override
   protected void bindSendBufferQueue(Key<Queue<MessageEvent>> key) {
-    bind(key).to(new TypeLiteral<InstrumentedQueue<MessageEvent>>() {
+    bind(key).toProvider(new Provider<Queue<MessageEvent>>() {
+      @Inject MetricsRegistry registry = null;
+      @Override
+      public Queue<MessageEvent> get() {
+        final Queue<MessageEvent> queue = Queues.newConcurrentLinkedQueue();
+        registry.newGauge(new MetricName(getClass(), "buffered-sends"), new Gauge<Integer>() {
+          @Override
+          public Integer value() {
+            return queue.size();
+          }
+        });
+        return queue;
+      }
     });
   }
 

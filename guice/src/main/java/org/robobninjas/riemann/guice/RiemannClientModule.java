@@ -9,9 +9,9 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.socket.nio.NioClientBossPool;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
+import org.robotninjas.riemann.client.ClientPipelineFactory;
 import org.robotninjas.riemann.client.ReturnableMessage;
 import org.robotninjas.riemann.client.RiemannTcpClient;
-import org.robotninjas.riemann.client.TcpClientPipelineFactory;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
 import java.net.InetSocketAddress;
@@ -50,11 +50,12 @@ public class RiemannClientModule extends PrivateModule {
   protected void configure() {
     bind(RiemannTcpClient.class);
     expose(RiemannTcpClient.class);
-    bind(TcpClientPipelineFactory.class);
+    bind(ClientPipelineFactory.class);
     bindSendBufferQueue(Key.get(new TypeLiteral<Queue<MessageEvent>>() {
     }));
     bindOutstandingMessagesQueue(Key.get(new TypeLiteral<BlockingQueue<ReturnableMessage>>() {
     }));
+
   }
 
   @Provides
@@ -116,7 +117,7 @@ public class RiemannClientModule extends PrivateModule {
   }
 
   @Provides
-  public ClientBootstrap getClientBootstrap(NioClientBossPool boss, NioWorkerPool worker, TcpClientPipelineFactory pipelineFactory) {
+  public ClientBootstrap getClientBootstrap(NioClientBossPool boss, NioWorkerPool worker, ClientPipelineFactory pipelineFactory) {
     final NioClientSocketChannelFactory channelFactory = new NioClientSocketChannelFactory(boss, worker);
     final ClientBootstrap bootstrap = new ClientBootstrap(channelFactory);
     bootstrap.setPipelineFactory(pipelineFactory);

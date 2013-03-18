@@ -10,7 +10,7 @@ import com.google.inject.Inject;
 import com.yammer.metrics.core.Meter;
 import com.yammer.metrics.core.Timer;
 import com.yammer.metrics.core.TimerContext;
-import org.robotninjas.riemann.client.AsyncRiemannConnection;
+import org.robotninjas.riemann.client.RiemannTcpConnection;
 import org.robotninjas.riemann.load.annotations.*;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
@@ -54,9 +54,9 @@ public class ClientWorker implements Runnable {
 
       while (!Thread.currentThread().isInterrupted()) {
 
-        final AsyncRiemannConnection connection = pool.borrowObject();
+        final RiemannTcpConnection connection = pool.borrowObject();
 
-        final ListenableFuture<Boolean> isOk = connection.sendEvents(events);
+        final ListenableFuture<Boolean> isOk = connection.sendWithAck(events);
         send.mark();
         final TimerContext ctx = rtt.time();
 

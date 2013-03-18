@@ -19,14 +19,14 @@ public class RiemannUdpClient implements RiemannClient {
   }
 
   @Override
-  public FireAndForgetRiemannConnection makeConnection() throws InterruptedException {
+  public RiemannUdpConnection makeConnection() throws InterruptedException {
 
     Optional<Exception> lastException = Optional.absent();
     for (int i = 0; i <= maxRetries; ++i) {
       try {
         final ChannelFuture channelFuture = bootstrap.connect();
         channelFuture.sync();
-        return new FireAndForgetRiemannConnection(channelFuture.getChannel(), bootstrap);
+        return new RiemannUdpConnection(channelFuture.getChannel(), bootstrap);
       } catch (Exception e) {
         propagateIfInstanceOf(e, InterruptedException.class);
         lastException = Optional.of(e);
@@ -41,13 +41,13 @@ public class RiemannUdpClient implements RiemannClient {
   }
 
   @Override
-  public FireAndForgetRiemannConnection makeConnection(String address, int port) throws InterruptedException {
+  public RiemannUdpConnection makeConnection(String address, int port) throws InterruptedException {
     Optional<Exception> lastException = Optional.absent();
     for (int i = 0; i <= maxRetries; ++i) {
       try {
         final ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(address, port));
         channelFuture.sync();
-        return new FireAndForgetRiemannConnection(channelFuture.getChannel(), bootstrap);
+        return new RiemannUdpConnection(channelFuture.getChannel(), bootstrap);
       } catch (Exception e) {
         propagateIfInstanceOf(e, InterruptedException.class);
         lastException = Optional.of(e);
@@ -62,7 +62,7 @@ public class RiemannUdpClient implements RiemannClient {
   }
 
   @Override
-  public FireAndForgetRiemannConnection makeConnection(String address) throws InterruptedException {
+  public RiemannUdpConnection makeConnection(String address) throws InterruptedException {
     return makeConnection(address, DEFAULT_PORT);
   }
 

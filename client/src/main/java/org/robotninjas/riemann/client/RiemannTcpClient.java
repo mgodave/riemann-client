@@ -51,14 +51,14 @@ public class RiemannTcpClient implements RiemannClient {
   }
 
   @Override
-  public AsyncRiemannConnection makeConnection(String address, int port) throws InterruptedException {
+  public RiemannTcpConnection makeConnection(String address, int port) throws InterruptedException {
 
     Optional<Exception> lastException = Optional.absent();
     for (int i = 0; i <= maxRetries; ++i) {
       try {
         final ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(address, port));
         channelFuture.sync();
-        return new AsyncRiemannConnection(channelFuture.getChannel(), bootstrap);
+        return new RiemannTcpConnection(channelFuture.getChannel(), bootstrap);
       } catch (Exception e) {
         propagateIfInstanceOf(e, InterruptedException.class);
         lastException = Optional.of(e);
@@ -73,19 +73,19 @@ public class RiemannTcpClient implements RiemannClient {
   }
 
   @Override
-  public AsyncRiemannConnection makeConnection(String address) throws InterruptedException {
+  public RiemannTcpConnection makeConnection(String address) throws InterruptedException {
     return makeConnection(address, DEFAULT_PORT);
   }
 
   @Override
-  public AsyncRiemannConnection makeConnection() throws InterruptedException {
+  public RiemannTcpConnection makeConnection() throws InterruptedException {
 
     Optional<Exception> lastException = Optional.absent();
     for (int i = 0; i <= maxRetries; ++i) {
       try {
         final ChannelFuture channelFuture = bootstrap.connect();
         channelFuture.sync();
-        return new AsyncRiemannConnection(channelFuture.getChannel(), bootstrap);
+        return new RiemannTcpConnection(channelFuture.getChannel(), bootstrap);
       } catch (Exception e) {
         propagateIfInstanceOf(e, InterruptedException.class);
         lastException = Optional.of(e);

@@ -32,6 +32,8 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
           }
         });
         return;
+      } else {
+        ctx.sendDownstream(e);
       }
     } else if (e instanceof ChannelStateEvent) {
       final ChannelStateEvent stateEvent = (ChannelStateEvent) e;
