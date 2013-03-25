@@ -80,25 +80,25 @@ Get It
 <dependency>
     <groupId>org.robotninjas.riemann</groupId>
     <artifactId>client</artifactId>
-    <version>1.0.0</version>
+    <version>3.0.0</version>
 </dependency>
 
 <dependency>
     <groupId>org.robotninjas.riemann</groupId>
     <artifactId>pool</artifactId>
-    <version>1.0.0</version>
+    <version>3.0.0</version>
 </dependency>
 
 <dependency>
     <groupId>org.robotninjas.riemann</groupId>
     <artifactId>guice</artifactId>
-    <version>1.0.0</version>
+    <version>3.0.0</version>
 </dependency>
 
 <dependency>
     <groupId>org.robotninjas.riemann</groupId>
     <artifactId>load-test</artifactId>
-    <version>1.0.0</version>
+    <version>3.0.0</version>
 </dependency>
 
 ```
