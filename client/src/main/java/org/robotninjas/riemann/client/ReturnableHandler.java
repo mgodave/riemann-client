@@ -4,12 +4,15 @@ import com.aphyr.riemann.Proto;
 import org.jboss.netty.channel.*;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import static org.jboss.netty.channel.Channels.write;
 
 class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHandler {
 
   private final BlockingQueue<ReturnableMessage> returnables;
+  private final Executor executor = Executors.newSingleThreadExecutor();
 
   public ReturnableHandler(BlockingQueue<ReturnableMessage> returnables) {
     this.returnables = returnables;
@@ -23,14 +26,7 @@ class ReturnableHandler implements ChannelUpstreamHandler, ChannelDownstreamHand
         final ReturnableMessage returnable = (ReturnableMessage<?>) msgEvent.getMessage();
         // strip the returnable and send the protobuf downstream
         write(ctx, e.getFuture(), returnable.getMsg(), ((MessageEvent) e).getRemoteAddress());
-        e.getFuture().addListener(new ChannelFutureListener() {
-          @Override
-          public void operationComplete(ChannelFuture future) throws Exception {
-            if (future.isSuccess()) {
-              returnables.put(returnable);
-            }
-          }
-        });
+        returnables.put(returnable);
         return;
       } else {
         ctx.sendDownstream(e);

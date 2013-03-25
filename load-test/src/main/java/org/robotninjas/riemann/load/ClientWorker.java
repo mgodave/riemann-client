@@ -14,6 +14,8 @@ import org.robotninjas.riemann.client.RiemannTcpConnection;
 import org.robotninjas.riemann.load.annotations.*;
 import org.robotninjas.riemann.pool.RiemannConnectionPool;
 
+import java.util.concurrent.Executor;
+
 import static com.google.common.base.Throwables.propagate;
 
 public class ClientWorker implements Runnable {
@@ -25,10 +27,12 @@ public class ClientWorker implements Runnable {
   private final RiemannConnectionPool pool;
   private final int batchSize;
   private final Supplier<Proto.Event> eventSupplier;
+  private final Executor ackExecutor;
 
   @Inject
   ClientWorker(@SendMeter Meter send, @AckMeter Meter ack, @LatencyTimer Timer rtt, @EventAckMeter Meter eventAck,
-               @BatchSize int batchSize, RiemannConnectionPool pool, @EventSupplier Supplier<Proto.Event> eventSupplier) {
+               @BatchSize int batchSize, RiemannConnectionPool pool, @EventSupplier Supplier<Proto.Event> eventSupplier,
+               @AckExecutor Executor ackExecutor) {
 
     this.send = send;
     this.ack = ack;
@@ -37,6 +41,7 @@ public class ClientWorker implements Runnable {
     this.pool = pool;
     this.batchSize = batchSize;
     this.eventSupplier = eventSupplier;
+    this.ackExecutor = ackExecutor;
 
   }
 
@@ -73,7 +78,7 @@ public class ClientWorker implements Runnable {
           @Override
           public void onFailure(Throwable t) {
           }
-        });
+        }, ackExecutor);
 
       }
 

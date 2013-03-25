@@ -2,6 +2,7 @@ package org.robotninjas.riemann.load;
 
 import com.aphyr.riemann.Proto;
 import com.google.common.base.Supplier;
+import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.inject.*;
 import com.yammer.metrics.core.*;
@@ -12,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class LoadTestModule extends PrivateModule {
 
@@ -63,6 +61,15 @@ public class LoadTestModule extends PrivateModule {
       }
     });
     return executor;
+  }
+
+  @Provides
+  @Exposed
+  @Singleton
+  @AckExecutor
+  public Executor getAckExecutor() {
+    //return new ThreadPoolExecutor(1, 1, 60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), new ThreadPoolExecutor.CallerRunsPolicy());
+    return MoreExecutors.sameThreadExecutor();
   }
 
   @Provides
