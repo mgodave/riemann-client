@@ -6,7 +6,7 @@ About
 This is a simple Java client for [Riemann](https://github.com/aphyr/riemann). It is based on [Netty](http://netty.io) and uses
 [Guava](http://code.google.com/p/guava-libraries/) futures for results. The code is also JSR305 compatible; I prefer to use Guice.
 
-The current "stable" version is 1.0.0
+The current "stable" version is 3.0.0
 
 This client sets up a netty pipeline with the following stages:
 
