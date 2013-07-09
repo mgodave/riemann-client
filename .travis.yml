@@ -7,3 +7,6 @@ env:
       qzhZrNH+FA4psRyd/1OXQa2ENyWKEtHHitVd4ScUM/lN64tt9m0=
 jdk: openjdk7
 language: java
+before_script:
+   - "wget http://aphyr.com/riemann/riemann_0.2.2_all.deb"
+   - "sudo dpkg -i riemann_0.2.2_all.deb"
