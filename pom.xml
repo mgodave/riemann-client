@@ -37,6 +37,7 @@
         <module>pool</module>
         <module>load-test</module>
         <module>guice</module>
+        <module>spring</module>
         <!--<module>metrics</module>-->
     </modules>
 
