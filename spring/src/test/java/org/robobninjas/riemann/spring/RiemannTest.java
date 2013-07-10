@@ -100,7 +100,7 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
                 if (tcpConnection == null) {
                     tcpConnection = makeConnection();
                 }
-                if (pubSubConnection != null) {
+                if (pubSubConnection == null) {
                     pubSubConnection = continuousQuery();
                 }
                 break;
@@ -123,20 +123,20 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
         }
     }
 
-    @Test(timeOut = 50000)
+    @Test(timeOut = 60000)
     public void testSendWithAck() throws InterruptedException {
 
         boolean success = sendWithAck();
         assertThat(success).isEqualTo(Boolean.TRUE);
     }
 
-    @Test(dependsOnMethods = {"testSendWithAck" }, timeOut = 50000)
+    @Test(dependsOnMethods = {"testSendWithAck" }, timeOut = 60000)
     public void testQuery() throws InterruptedException {
         List<Proto.Event> events = query();
         assertThat(Iterables.getOnlyElement(events).getMetricD()).isEqualTo(5.3);
     }
 
-    @Test(dependsOnMethods = {"testSendWithAck" }, timeOut = 50000)
+    @Test(dependsOnMethods = {"testSendWithAck" }, timeOut = 60000)
     public void testContinuousQuery() throws InterruptedException {
         String event = events.take();
         assertThat(event).contains("5.3");
@@ -189,7 +189,7 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
 
     private RiemannPubSubConnection continuousQuery() {
         try {
-            return this.pubSubClient.makeConnection(queryString(), true, this);
+            return this.pubSubClient.makeConnection("true", true, this);
         } catch (InterruptedException e) {
             throw Throwables.propagate(e);
         } catch (URISyntaxException e) {

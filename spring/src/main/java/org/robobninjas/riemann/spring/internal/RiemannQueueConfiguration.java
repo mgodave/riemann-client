@@ -29,7 +29,7 @@ import java.util.concurrent.BlockingQueue;
 @Configuration
 public class RiemannQueueConfiguration {
 
-    //@Bean
+    @Bean
     public Supplier<BlockingQueue<ReturnableMessage>> promiseQueueSupplier() {
         return new Supplier<BlockingQueue<ReturnableMessage>>() {
             @Override
@@ -39,12 +39,12 @@ public class RiemannQueueConfiguration {
         };
     }
 
-    //@Bean
+    @Bean
     public Queue<MessageEvent> sendBufferQueue() {
         return Queues.newConcurrentLinkedQueue();
     }
 
-    //@Bean
+    @Bean
     public BlockingQueue<ReturnableMessage> outstandingMessagesQueue() {
         return Queues.newArrayBlockingQueue(10000);
     }
