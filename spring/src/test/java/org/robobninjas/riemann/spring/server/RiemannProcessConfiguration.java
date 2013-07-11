@@ -32,7 +32,7 @@ import java.nio.file.Paths;
  * @since 3.0.1
  */
 @Configuration
-public class RiemannProcessConfig {
+public class RiemannProcessConfiguration {
 
     @Value("${cosmo.riemann.config-resource}")
     private String riemannConfigResourcePath;

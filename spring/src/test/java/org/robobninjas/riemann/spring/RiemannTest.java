@@ -22,7 +22,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Queues;
 import org.robobninjas.riemann.json.RiemannEventObjectMapper;
 import org.robobninjas.riemann.spring.server.RiemannProcess;
-import org.robobninjas.riemann.spring.server.RiemannProcessConfig;
+import org.robobninjas.riemann.spring.server.RiemannProcessConfiguration;
 import org.robotninjas.riemann.client.RiemannTcpClient;
 import org.robotninjas.riemann.client.RiemannTcpConnection;
 import org.robotninjas.riemann.pubsub.QueryResultListener;
@@ -71,7 +71,7 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
      */
     @Configuration
     @PropertySource("org/robobninjas/riemann/spring/riemann-test.properties")
-    @Import({ RiemannProcessConfig.class,
+    @Import({ RiemannProcessConfiguration.class,
               RiemannTcpClientConfiguration.class ,
               RiemannWebsocketClientConfiguration.class })
     static class Config {
