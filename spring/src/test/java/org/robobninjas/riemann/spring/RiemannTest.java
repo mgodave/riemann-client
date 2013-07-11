@@ -189,7 +189,7 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
 
     private RiemannPubSubConnection continuousQuery() {
         try {
-            return this.pubSubClient.makeConnection("true", true, this);
+            return this.pubSubClient.makeConnection(queryString(), true, this);
         } catch (InterruptedException e) {
             throw Throwables.propagate(e);
         } catch (URISyntaxException e) {
