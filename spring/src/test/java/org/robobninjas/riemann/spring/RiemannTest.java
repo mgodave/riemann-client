@@ -20,8 +20,9 @@ import com.aphyr.riemann.Proto;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Queues;
+import org.robobninjas.riemann.json.RiemannEventObjectMapper;
 import org.robobninjas.riemann.spring.server.RiemannProcess;
-import org.robobninjas.riemann.spring.server.RiemannProcessConfig;
+import org.robobninjas.riemann.spring.server.RiemannProcessConfiguration;
 import org.robotninjas.riemann.client.RiemannTcpClient;
 import org.robotninjas.riemann.client.RiemannTcpConnection;
 import org.robotninjas.riemann.pubsub.QueryResultListener;
@@ -70,7 +71,7 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
      */
     @Configuration
     @PropertySource("org/robobninjas/riemann/spring/riemann-test.properties")
-    @Import({ RiemannProcessConfig.class,
+    @Import({ RiemannProcessConfiguration.class,
               RiemannTcpClientConfiguration.class ,
               RiemannWebsocketClientConfiguration.class })
     static class Config {
@@ -137,9 +138,10 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
     }
 
     @Test(dependsOnMethods = {"testSendWithAck" }, timeOut = 60000)
-    public void testContinuousQuery() throws InterruptedException {
-        String event = events.take();
-        assertThat(event).contains("5.3");
+    public void testContinuousQuery() throws InterruptedException, IOException {
+        String json = events.take();
+        RiemannEventObjectMapper mapper = new RiemannEventObjectMapper();
+        assertThat(mapper.readEvent(json).getMetricD()).isEqualTo(5.3);
     }
 
     private List<Proto.Event> query() throws InterruptedException {
@@ -189,7 +191,7 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
 
     private RiemannPubSubConnection continuousQuery() {
         try {
-            return this.pubSubClient.makeConnection("true", true, this);
+            return this.pubSubClient.makeConnection(queryString(), true, this);
         } catch (InterruptedException e) {
             throw Throwables.propagate(e);
         } catch (URISyntaxException e) {
