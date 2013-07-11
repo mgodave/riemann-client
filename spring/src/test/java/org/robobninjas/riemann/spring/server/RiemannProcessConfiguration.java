@@ -14,38 +14,36 @@
  * limitations under the License.
  ******************************************************************************/
 
-package org.robobninjas.riemann.spring.internal;
+package org.robobninjas.riemann.spring.server;
 
-import com.google.common.base.Supplier;
-import com.google.common.collect.Queues;
-import org.jboss.netty.channel.MessageEvent;
-import org.robotninjas.riemann.client.ReturnableMessage;
+import com.google.common.io.Resources;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+/**
+ * A spring bean that starts and stops the riemann process.
+ *
+ * @author Itai Frenkel
+ * @since 3.0.1
+ */
 @Configuration
-public class RiemannQueueConfiguration {
+public class RiemannProcessConfiguration {
 
-    @Bean
-    public Supplier<BlockingQueue<ReturnableMessage>> promiseQueueSupplier() {
-        return new Supplier<BlockingQueue<ReturnableMessage>>() {
-            @Override
-            public BlockingQueue<ReturnableMessage> get() {
-                return Queues.newArrayBlockingQueue(10000);
-            }
-        };
+    @Value("${cosmo.riemann.config-resource}")
+    private String riemannConfigResourcePath;
+
+    @Bean(destroyMethod = "close")
+    public RiemannProcess riemann() {
+        return new RiemannProcess(getConfig());
     }
 
-    @Bean
-    public Queue<MessageEvent> sendBufferQueue() {
-        return Queues.newConcurrentLinkedQueue();
-    }
-
-    @Bean
-    public BlockingQueue<ReturnableMessage> outstandingMessagesQueue() {
-        return Queues.newArrayBlockingQueue(10000);
+    private Path getConfig() {
+        final URL resource = Resources.getResource(riemannConfigResourcePath);
+        return Paths.get(resource.getPath());
     }
 }

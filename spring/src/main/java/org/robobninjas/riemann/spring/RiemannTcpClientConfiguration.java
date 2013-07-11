@@ -22,7 +22,6 @@ import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.robobninjas.riemann.spring.internal.RiemannConnectionPoolConfiguration;
 import org.robobninjas.riemann.spring.internal.RiemannNioConfiguration;
-import org.robobninjas.riemann.spring.internal.RiemannQueueConfiguration;
 import org.robotninjas.riemann.client.ClientPipelineFactory;
 import org.robotninjas.riemann.client.RiemannTcpClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,6 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 @Configuration
 @Import( {
-    RiemannQueueConfiguration.class,
     RiemannNioConfiguration.class,
     RiemannConnectionPoolConfiguration.class})
 public class RiemannTcpClientConfiguration {
