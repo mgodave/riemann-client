@@ -71,9 +71,7 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
      */
     @Configuration
     @PropertySource("org/robobninjas/riemann/spring/riemann-test.properties")
-    @Import({ RiemannProcessConfiguration.class,
-              RiemannTcpClientConfiguration.class ,
-              RiemannWebsocketClientConfiguration.class })
+    @Import({ RiemannTestConfiguration.class })
     static class Config {
         @Bean
         public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -94,24 +92,9 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
     private RiemannPubSubConnection pubSubConnection;
 
     @PostConstruct
-    public void establishConnection() throws InterruptedException {
-        final int maxRetries = 10;
-        for (int i = 1; i <= maxRetries; i++) {
-            try {
-                if (tcpConnection == null) {
-                    tcpConnection = makeConnection();
-                }
-                if (pubSubConnection == null) {
-                    pubSubConnection = continuousQuery();
-                }
-                break;
-            } catch (Exception e) {
-                if (i == maxRetries) {
-                    throw Throwables.propagate(e);
-                }
-                Thread.sleep(1000);
-            }
-        }
+    public void establishConnection() {
+       tcpConnection = makeConnection();
+       pubSubConnection = continuousQuery();
     }
 
     @PreDestroy
