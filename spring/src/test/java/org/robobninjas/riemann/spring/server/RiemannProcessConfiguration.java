@@ -34,7 +34,7 @@ import java.nio.file.Paths;
 @Configuration
 public class RiemannProcessConfiguration {
 
-    @Value("${cosmo.riemann.config-resource}")
+    @Value("${riemann.server.config-resource}")
     private String riemannConfigResourcePath;
 
     @Bean(destroyMethod = "close")
