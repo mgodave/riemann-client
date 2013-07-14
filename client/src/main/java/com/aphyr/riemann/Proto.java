@@ -4,72 +4,137 @@
 package com.aphyr.riemann;
 
 public final class Proto {
-  private Proto() {
-  }
-
+  private Proto() {}
   public static void registerAllExtensions(
-    com.google.protobuf.ExtensionRegistry registry) {
+      com.google.protobuf.ExtensionRegistry registry) {
   }
-
   public interface StateOrBuilder
-    extends com.google.protobuf.MessageOrBuilder {
+      extends com.google.protobuf.MessageOrBuilder {
 
     // optional int64 time = 1;
+    /**
+     * <code>optional int64 time = 1;</code>
+     */
     boolean hasTime();
-
+    /**
+     * <code>optional int64 time = 1;</code>
+     */
     long getTime();
 
     // optional string state = 2;
+    /**
+     * <code>optional string state = 2;</code>
+     */
     boolean hasState();
-
-    String getState();
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    java.lang.String getState();
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getStateBytes();
 
     // optional string service = 3;
+    /**
+     * <code>optional string service = 3;</code>
+     */
     boolean hasService();
-
-    String getService();
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    java.lang.String getService();
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getServiceBytes();
 
     // optional string host = 4;
+    /**
+     * <code>optional string host = 4;</code>
+     */
     boolean hasHost();
-
-    String getHost();
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    java.lang.String getHost();
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getHostBytes();
 
     // optional string description = 5;
+    /**
+     * <code>optional string description = 5;</code>
+     */
     boolean hasDescription();
-
-    String getDescription();
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    java.lang.String getDescription();
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getDescriptionBytes();
 
     // optional bool once = 6;
+    /**
+     * <code>optional bool once = 6;</code>
+     */
     boolean hasOnce();
-
+    /**
+     * <code>optional bool once = 6;</code>
+     */
     boolean getOnce();
 
     // repeated string tags = 7;
-    java.util.List<String> getTagsList();
-
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    java.util.List<java.lang.String>
+    getTagsList();
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
     int getTagsCount();
-
-    String getTags(int index);
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    java.lang.String getTags(int index);
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getTagsBytes(int index);
 
     // optional float ttl = 8;
+    /**
+     * <code>optional float ttl = 8;</code>
+     */
     boolean hasTtl();
-
+    /**
+     * <code>optional float ttl = 8;</code>
+     */
     float getTtl();
   }
-
+  /**
+   * Protobuf type {@code State}
+   */
   public static final class State extends
-    com.google.protobuf.GeneratedMessage
-    implements StateOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements StateOrBuilder {
     // Use State.newBuilder() to construct.
-    private State(Builder builder) {
+    private State(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-
-    private State(boolean noInit) {
-    }
+    private State(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
     private static final State defaultInstance;
-
     public static State getDefaultInstance() {
       return defaultInstance;
     }
@@ -78,25 +143,133 @@ public final class Proto {
       return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private State(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              time_ = input.readInt64();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              state_ = input.readBytes();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              service_ = input.readBytes();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              host_ = input.readBytes();
+              break;
+            }
+            case 42: {
+              bitField0_ |= 0x00000010;
+              description_ = input.readBytes();
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000020;
+              once_ = input.readBool();
+              break;
+            }
+            case 58: {
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+                tags_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000040;
+              }
+              tags_.add(input.readBytes());
+              break;
+            }
+            case 69: {
+              bitField0_ |= 0x00000040;
+              ttl_ = input.readFloat();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+          tags_ = new com.google.protobuf.UnmodifiableLazyStringList(tags_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.aphyr.riemann.Proto.internal_static_State_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internalGetFieldAccessorTable() {
-      return com.aphyr.riemann.Proto.internal_static_State_fieldAccessorTable;
+        internalGetFieldAccessorTable() {
+      return com.aphyr.riemann.Proto.internal_static_State_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.aphyr.riemann.Proto.State.class, com.aphyr.riemann.Proto.State.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<State> PARSER =
+        new com.google.protobuf.AbstractParser<State>() {
+      public State parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new State(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<State> getParserForType() {
+      return PARSER;
     }
 
     private int bitField0_;
     // optional int64 time = 1;
     public static final int TIME_FIELD_NUMBER = 1;
     private long time_;
-
+    /**
+     * <code>optional int64 time = 1;</code>
+     */
     public boolean hasTime() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-
+    /**
+     * <code>optional int64 time = 1;</code>
+     */
     public long getTime() {
       return time_;
     }
@@ -104,31 +277,39 @@ public final class Proto {
     // optional string state = 2;
     public static final int STATE_FIELD_NUMBER = 2;
     private java.lang.Object state_;
-
+    /**
+     * <code>optional string state = 2;</code>
+     */
     public boolean hasState() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-
-    public String getState() {
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    public java.lang.String getState() {
       java.lang.Object ref = state_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           state_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getStateBytes() {
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getStateBytes() {
       java.lang.Object ref = state_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         state_ = b;
         return b;
       } else {
@@ -139,31 +320,39 @@ public final class Proto {
     // optional string service = 3;
     public static final int SERVICE_FIELD_NUMBER = 3;
     private java.lang.Object service_;
-
+    /**
+     * <code>optional string service = 3;</code>
+     */
     public boolean hasService() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-
-    public String getService() {
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    public java.lang.String getService() {
       java.lang.Object ref = service_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           service_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getServiceBytes() {
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getServiceBytes() {
       java.lang.Object ref = service_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         service_ = b;
         return b;
       } else {
@@ -174,31 +363,39 @@ public final class Proto {
     // optional string host = 4;
     public static final int HOST_FIELD_NUMBER = 4;
     private java.lang.Object host_;
-
+    /**
+     * <code>optional string host = 4;</code>
+     */
     public boolean hasHost() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
-
-    public String getHost() {
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    public java.lang.String getHost() {
       java.lang.Object ref = host_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           host_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getHostBytes() {
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getHostBytes() {
       java.lang.Object ref = host_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         host_ = b;
         return b;
       } else {
@@ -209,31 +406,39 @@ public final class Proto {
     // optional string description = 5;
     public static final int DESCRIPTION_FIELD_NUMBER = 5;
     private java.lang.Object description_;
-
+    /**
+     * <code>optional string description = 5;</code>
+     */
     public boolean hasDescription() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
-
-    public String getDescription() {
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    public java.lang.String getDescription() {
       java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           description_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getDescriptionBytes() {
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDescriptionBytes() {
       java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         description_ = b;
         return b;
       } else {
@@ -244,11 +449,15 @@ public final class Proto {
     // optional bool once = 6;
     public static final int ONCE_FIELD_NUMBER = 6;
     private boolean once_;
-
+    /**
+     * <code>optional bool once = 6;</code>
+     */
     public boolean hasOnce() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
-
+    /**
+     * <code>optional bool once = 6;</code>
+     */
     public boolean getOnce() {
       return once_;
     }
@@ -256,28 +465,45 @@ public final class Proto {
     // repeated string tags = 7;
     public static final int TAGS_FIELD_NUMBER = 7;
     private com.google.protobuf.LazyStringList tags_;
-
-    public java.util.List<String>
-    getTagsList() {
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    public java.util.List<java.lang.String>
+        getTagsList() {
       return tags_;
     }
-
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
     public int getTagsCount() {
       return tags_.size();
     }
-
-    public String getTags(int index) {
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    public java.lang.String getTags(int index) {
       return tags_.get(index);
+    }
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTagsBytes(int index) {
+      return tags_.getByteString(index);
     }
 
     // optional float ttl = 8;
     public static final int TTL_FIELD_NUMBER = 8;
     private float ttl_;
-
+    /**
+     * <code>optional float ttl = 8;</code>
+     */
     public boolean hasTtl() {
       return ((bitField0_ & 0x00000040) == 0x00000040);
     }
-
+    /**
+     * <code>optional float ttl = 8;</code>
+     */
     public float getTtl() {
       return ttl_;
     }
@@ -292,9 +518,7 @@ public final class Proto {
       tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       ttl_ = 0F;
     }
-
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
@@ -304,7 +528,7 @@ public final class Proto {
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-      throws java.io.IOException {
+                        throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt64(1, time_);
@@ -334,7 +558,6 @@ public final class Proto {
     }
 
     private int memoizedSerializedSize = -1;
-
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
@@ -383,123 +606,94 @@ public final class Proto {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     protected java.lang.Object writeReplace()
-      throws java.io.ObjectStreamException {
+        throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
     public static com.aphyr.riemann.Proto.State parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.State parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.State parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.State parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.State parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.State parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.State parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.State parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.State parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.State parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    public static Builder newBuilder() {
-      return Builder.create();
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
-
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(com.aphyr.riemann.Proto.State prototype) {
       return newBuilder().mergeFrom(prototype);
     }
-
-    public Builder toBuilder() {
-      return newBuilder(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
+    /**
+     * Protobuf type {@code State}
+     */
     public static final class Builder extends
-      com.google.protobuf.GeneratedMessage.Builder<Builder>
-      implements com.aphyr.riemann.Proto.StateOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.aphyr.riemann.Proto.StateOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.aphyr.riemann.Proto.internal_static_State_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-        return com.aphyr.riemann.Proto.internal_static_State_fieldAccessorTable;
+          internalGetFieldAccessorTable() {
+        return com.aphyr.riemann.Proto.internal_static_State_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.aphyr.riemann.Proto.State.class, com.aphyr.riemann.Proto.State.Builder.class);
       }
 
       // Construct using com.aphyr.riemann.Proto.State.newBuilder()
@@ -507,16 +701,15 @@ public final class Proto {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-
       private static Builder create() {
         return new Builder();
       }
@@ -547,8 +740,8 @@ public final class Proto {
       }
 
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
-        return com.aphyr.riemann.Proto.State.getDescriptor();
+          getDescriptorForType() {
+        return com.aphyr.riemann.Proto.internal_static_State_descriptor;
       }
 
       public com.aphyr.riemann.Proto.State getDefaultInstanceForType() {
@@ -559,16 +752,6 @@ public final class Proto {
         com.aphyr.riemann.Proto.State result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      private com.aphyr.riemann.Proto.State buildParsed()
-        throws com.google.protobuf.InvalidProtocolBufferException {
-        com.aphyr.riemann.Proto.State result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
         }
         return result;
       }
@@ -603,7 +786,7 @@ public final class Proto {
         result.once_ = once_;
         if (((bitField0_ & 0x00000040) == 0x00000040)) {
           tags_ = new com.google.protobuf.UnmodifiableLazyStringList(
-            tags_);
+              tags_);
           bitField0_ = (bitField0_ & ~0x00000040);
         }
         result.tags_ = tags_;
@@ -618,7 +801,7 @@ public final class Proto {
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.aphyr.riemann.Proto.State) {
-          return mergeFrom((com.aphyr.riemann.Proto.State) other);
+          return mergeFrom((com.aphyr.riemann.Proto.State)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -631,16 +814,24 @@ public final class Proto {
           setTime(other.getTime());
         }
         if (other.hasState()) {
-          setState(other.getState());
+          bitField0_ |= 0x00000002;
+          state_ = other.state_;
+          onChanged();
         }
         if (other.hasService()) {
-          setService(other.getService());
+          bitField0_ |= 0x00000004;
+          service_ = other.service_;
+          onChanged();
         }
         if (other.hasHost()) {
-          setHost(other.getHost());
+          bitField0_ |= 0x00000008;
+          host_ = other.host_;
+          onChanged();
         }
         if (other.hasDescription()) {
-          setDescription(other.getDescription());
+          bitField0_ |= 0x00000010;
+          description_ = other.description_;
+          onChanged();
         }
         if (other.hasOnce()) {
           setOnce(other.getOnce());
@@ -667,25 +858,729 @@ public final class Proto {
       }
 
       public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.aphyr.riemann.Proto.State parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.aphyr.riemann.Proto.State) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // optional int64 time = 1;
+      private long time_ ;
+      /**
+       * <code>optional int64 time = 1;</code>
+       */
+      public boolean hasTime() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>optional int64 time = 1;</code>
+       */
+      public long getTime() {
+        return time_;
+      }
+      /**
+       * <code>optional int64 time = 1;</code>
+       */
+      public Builder setTime(long value) {
+        bitField0_ |= 0x00000001;
+        time_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 time = 1;</code>
+       */
+      public Builder clearTime() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        time_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      // optional string state = 2;
+      private java.lang.Object state_ = "";
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public boolean hasState() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public java.lang.String getState() {
+        java.lang.Object ref = state_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          state_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getStateBytes() {
+        java.lang.Object ref = state_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          state_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public Builder setState(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        state_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public Builder clearState() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        state_ = getDefaultInstance().getState();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public Builder setStateBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        state_ = value;
+        onChanged();
+        return this;
+      }
+
+      // optional string service = 3;
+      private java.lang.Object service_ = "";
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public boolean hasService() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public java.lang.String getService() {
+        java.lang.Object ref = service_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          service_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getServiceBytes() {
+        java.lang.Object ref = service_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          service_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public Builder setService(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        service_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public Builder clearService() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        service_ = getDefaultInstance().getService();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public Builder setServiceBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        service_ = value;
+        onChanged();
+        return this;
+      }
+
+      // optional string host = 4;
+      private java.lang.Object host_ = "";
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public boolean hasHost() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public java.lang.String getHost() {
+        java.lang.Object ref = host_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          host_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getHostBytes() {
+        java.lang.Object ref = host_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          host_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public Builder setHost(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        host_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public Builder clearHost() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        host_ = getDefaultInstance().getHost();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public Builder setHostBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        host_ = value;
+        onChanged();
+        return this;
+      }
+
+      // optional string description = 5;
+      private java.lang.Object description_ = "";
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public boolean hasDescription() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public java.lang.String getDescription() {
+        java.lang.Object ref = description_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          description_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDescriptionBytes() {
+        java.lang.Object ref = description_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          description_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public Builder setDescription(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        description_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public Builder clearDescription() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        description_ = getDefaultInstance().getDescription();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public Builder setDescriptionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        description_ = value;
+        onChanged();
+        return this;
+      }
+
+      // optional bool once = 6;
+      private boolean once_ ;
+      /**
+       * <code>optional bool once = 6;</code>
+       */
+      public boolean hasOnce() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>optional bool once = 6;</code>
+       */
+      public boolean getOnce() {
+        return once_;
+      }
+      /**
+       * <code>optional bool once = 6;</code>
+       */
+      public Builder setOnce(boolean value) {
+        bitField0_ |= 0x00000020;
+        once_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool once = 6;</code>
+       */
+      public Builder clearOnce() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        once_ = false;
+        onChanged();
+        return this;
+      }
+
+      // repeated string tags = 7;
+      private com.google.protobuf.LazyStringList tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureTagsIsMutable() {
+        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+          tags_ = new com.google.protobuf.LazyStringArrayList(tags_);
+          bitField0_ |= 0x00000040;
+         }
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public java.util.List<java.lang.String>
+          getTagsList() {
+        return java.util.Collections.unmodifiableList(tags_);
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public int getTagsCount() {
+        return tags_.size();
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public java.lang.String getTags(int index) {
+        return tags_.get(index);
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTagsBytes(int index) {
+        return tags_.getByteString(index);
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public Builder setTags(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTagsIsMutable();
+        tags_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public Builder addTags(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTagsIsMutable();
+        tags_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public Builder addAllTags(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureTagsIsMutable();
+        super.addAll(values, tags_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public Builder clearTags() {
+        tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public Builder addTagsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTagsIsMutable();
+        tags_.add(value);
+        onChanged();
+        return this;
+      }
+
+      // optional float ttl = 8;
+      private float ttl_ ;
+      /**
+       * <code>optional float ttl = 8;</code>
+       */
+      public boolean hasTtl() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      /**
+       * <code>optional float ttl = 8;</code>
+       */
+      public float getTtl() {
+        return ttl_;
+      }
+      /**
+       * <code>optional float ttl = 8;</code>
+       */
+      public Builder setTtl(float value) {
+        bitField0_ |= 0x00000080;
+        ttl_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional float ttl = 8;</code>
+       */
+      public Builder clearTtl() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        ttl_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:State)
+    }
+
+    static {
+      defaultInstance = new State(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:State)
+  }
+
+  public interface EventOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // optional int64 time = 1;
+    /**
+     * <code>optional int64 time = 1;</code>
+     */
+    boolean hasTime();
+    /**
+     * <code>optional int64 time = 1;</code>
+     */
+    long getTime();
+
+    // optional string state = 2;
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    boolean hasState();
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    java.lang.String getState();
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getStateBytes();
+
+    // optional string service = 3;
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    boolean hasService();
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    java.lang.String getService();
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getServiceBytes();
+
+    // optional string host = 4;
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    boolean hasHost();
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    java.lang.String getHost();
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getHostBytes();
+
+    // optional string description = 5;
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    boolean hasDescription();
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    java.lang.String getDescription();
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getDescriptionBytes();
+
+    // repeated string tags = 7;
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    java.util.List<java.lang.String>
+    getTagsList();
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    int getTagsCount();
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    java.lang.String getTags(int index);
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getTagsBytes(int index);
+
+    // optional float ttl = 8;
+    /**
+     * <code>optional float ttl = 8;</code>
+     */
+    boolean hasTtl();
+    /**
+     * <code>optional float ttl = 8;</code>
+     */
+    float getTtl();
+
+    // repeated .Attribute attributes = 9;
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
+    java.util.List<com.aphyr.riemann.Proto.Attribute> 
+        getAttributesList();
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
+    com.aphyr.riemann.Proto.Attribute getAttributes(int index);
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
+    int getAttributesCount();
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
+    java.util.List<? extends com.aphyr.riemann.Proto.AttributeOrBuilder> 
+        getAttributesOrBuilderList();
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
+    com.aphyr.riemann.Proto.AttributeOrBuilder getAttributesOrBuilder(
+        int index);
+
+    // optional sint64 metric_sint64 = 13;
+    /**
+     * <code>optional sint64 metric_sint64 = 13;</code>
+     */
+    boolean hasMetricSint64();
+    /**
+     * <code>optional sint64 metric_sint64 = 13;</code>
+     */
+    long getMetricSint64();
+
+    // optional double metric_d = 14;
+    /**
+     * <code>optional double metric_d = 14;</code>
+     */
+    boolean hasMetricD();
+    /**
+     * <code>optional double metric_d = 14;</code>
+     */
+    double getMetricD();
+
+    // optional float metric_f = 15;
+    /**
+     * <code>optional float metric_f = 15;</code>
+     */
+    boolean hasMetricF();
+    /**
+     * <code>optional float metric_f = 15;</code>
+     */
+    float getMetricF();
+  }
+  /**
+   * Protobuf type {@code Event}
+   */
+  public static final class Event extends
+      com.google.protobuf.GeneratedMessage
+      implements EventOrBuilder {
+    // Use Event.newBuilder() to construct.
+    private Event(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Event(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Event defaultInstance;
+    public static Event getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Event getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Event(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
           int tag = input.readTag();
           switch (tag) {
             case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
+              done = true;
+              break;
             default: {
               if (!parseUnknownField(input, unknownFields,
-                extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
+                                     extensionRegistry, tag)) {
+                done = true;
               }
               break;
             }
@@ -714,452 +1609,100 @@ public final class Proto {
               description_ = input.readBytes();
               break;
             }
-            case 48: {
-              bitField0_ |= 0x00000020;
-              once_ = input.readBool();
-              break;
-            }
             case 58: {
-              ensureTagsIsMutable();
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+                tags_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000020;
+              }
               tags_.add(input.readBytes());
               break;
             }
             case 69: {
-              bitField0_ |= 0x00000080;
+              bitField0_ |= 0x00000020;
               ttl_ = input.readFloat();
+              break;
+            }
+            case 74: {
+              if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+                attributes_ = new java.util.ArrayList<com.aphyr.riemann.Proto.Attribute>();
+                mutable_bitField0_ |= 0x00000080;
+              }
+              attributes_.add(input.readMessage(com.aphyr.riemann.Proto.Attribute.PARSER, extensionRegistry));
+              break;
+            }
+            case 104: {
+              bitField0_ |= 0x00000040;
+              metricSint64_ = input.readSInt64();
+              break;
+            }
+            case 113: {
+              bitField0_ |= 0x00000080;
+              metricD_ = input.readDouble();
+              break;
+            }
+            case 125: {
+              bitField0_ |= 0x00000100;
+              metricF_ = input.readFloat();
               break;
             }
           }
         }
-      }
-
-      private int bitField0_;
-
-      // optional int64 time = 1;
-      private long time_;
-
-      public boolean hasTime() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-
-      public long getTime() {
-        return time_;
-      }
-
-      public Builder setTime(long value) {
-        bitField0_ |= 0x00000001;
-        time_ = value;
-        onChanged();
-        return this;
-      }
-
-      public Builder clearTime() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        time_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      // optional string state = 2;
-      private java.lang.Object state_ = "";
-
-      public boolean hasState() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-
-      public String getState() {
-        java.lang.Object ref = state_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          state_ = s;
-          return s;
-        } else {
-          return (String) ref;
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+          tags_ = new com.google.protobuf.UnmodifiableLazyStringList(tags_);
         }
-      }
-
-      public Builder setState(String value) {
-        if (value == null) {
-          throw new NullPointerException();
+        if (((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+          attributes_ = java.util.Collections.unmodifiableList(attributes_);
         }
-        bitField0_ |= 0x00000002;
-        state_ = value;
-        onChanged();
-        return this;
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
       }
-
-      public Builder clearState() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        state_ = getDefaultInstance().getState();
-        onChanged();
-        return this;
-      }
-
-      void setState(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
-        state_ = value;
-        onChanged();
-      }
-
-      // optional string service = 3;
-      private java.lang.Object service_ = "";
-
-      public boolean hasService() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-
-      public String getService() {
-        java.lang.Object ref = service_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          service_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-
-      public Builder setService(String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
-        service_ = value;
-        onChanged();
-        return this;
-      }
-
-      public Builder clearService() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        service_ = getDefaultInstance().getService();
-        onChanged();
-        return this;
-      }
-
-      void setService(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000004;
-        service_ = value;
-        onChanged();
-      }
-
-      // optional string host = 4;
-      private java.lang.Object host_ = "";
-
-      public boolean hasHost() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-
-      public String getHost() {
-        java.lang.Object ref = host_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          host_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-
-      public Builder setHost(String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000008;
-        host_ = value;
-        onChanged();
-        return this;
-      }
-
-      public Builder clearHost() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        host_ = getDefaultInstance().getHost();
-        onChanged();
-        return this;
-      }
-
-      void setHost(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000008;
-        host_ = value;
-        onChanged();
-      }
-
-      // optional string description = 5;
-      private java.lang.Object description_ = "";
-
-      public boolean hasDescription() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
-      }
-
-      public String getDescription() {
-        java.lang.Object ref = description_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          description_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-
-      public Builder setDescription(String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000010;
-        description_ = value;
-        onChanged();
-        return this;
-      }
-
-      public Builder clearDescription() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        description_ = getDefaultInstance().getDescription();
-        onChanged();
-        return this;
-      }
-
-      void setDescription(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000010;
-        description_ = value;
-        onChanged();
-      }
-
-      // optional bool once = 6;
-      private boolean once_;
-
-      public boolean hasOnce() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
-      }
-
-      public boolean getOnce() {
-        return once_;
-      }
-
-      public Builder setOnce(boolean value) {
-        bitField0_ |= 0x00000020;
-        once_ = value;
-        onChanged();
-        return this;
-      }
-
-      public Builder clearOnce() {
-        bitField0_ = (bitField0_ & ~0x00000020);
-        once_ = false;
-        onChanged();
-        return this;
-      }
-
-      // repeated string tags = 7;
-      private com.google.protobuf.LazyStringList tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-
-      private void ensureTagsIsMutable() {
-        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
-          tags_ = new com.google.protobuf.LazyStringArrayList(tags_);
-          bitField0_ |= 0x00000040;
-        }
-      }
-
-      public java.util.List<String>
-      getTagsList() {
-        return java.util.Collections.unmodifiableList(tags_);
-      }
-
-      public int getTagsCount() {
-        return tags_.size();
-      }
-
-      public String getTags(int index) {
-        return tags_.get(index);
-      }
-
-      public Builder setTags(
-        int index, String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureTagsIsMutable();
-        tags_.set(index, value);
-        onChanged();
-        return this;
-      }
-
-      public Builder addTags(String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureTagsIsMutable();
-        tags_.add(value);
-        onChanged();
-        return this;
-      }
-
-      public Builder addAllTags(
-        java.lang.Iterable<String> values) {
-        ensureTagsIsMutable();
-        super.addAll(values, tags_);
-        onChanged();
-        return this;
-      }
-
-      public Builder clearTags() {
-        tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000040);
-        onChanged();
-        return this;
-      }
-
-      void addTags(com.google.protobuf.ByteString value) {
-        ensureTagsIsMutable();
-        tags_.add(value);
-        onChanged();
-      }
-
-      // optional float ttl = 8;
-      private float ttl_;
-
-      public boolean hasTtl() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
-      }
-
-      public float getTtl() {
-        return ttl_;
-      }
-
-      public Builder setTtl(float value) {
-        bitField0_ |= 0x00000080;
-        ttl_ = value;
-        onChanged();
-        return this;
-      }
-
-      public Builder clearTtl() {
-        bitField0_ = (bitField0_ & ~0x00000080);
-        ttl_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      // @@protoc_insertion_point(builder_scope:State)
     }
-
-    static {
-      defaultInstance = new State(true);
-      defaultInstance.initFields();
-    }
-
-    // @@protoc_insertion_point(class_scope:State)
-  }
-
-  public interface EventOrBuilder
-    extends com.google.protobuf.MessageOrBuilder {
-
-    // optional int64 time = 1;
-    boolean hasTime();
-
-    long getTime();
-
-    // optional string state = 2;
-    boolean hasState();
-
-    String getState();
-
-    // optional string service = 3;
-    boolean hasService();
-
-    String getService();
-
-    // optional string host = 4;
-    boolean hasHost();
-
-    String getHost();
-
-    // optional string description = 5;
-    boolean hasDescription();
-
-    String getDescription();
-
-    // repeated string tags = 7;
-    java.util.List<String> getTagsList();
-
-    int getTagsCount();
-
-    String getTags(int index);
-
-    // optional float ttl = 8;
-    boolean hasTtl();
-
-    float getTtl();
-
-    // repeated .Attribute attributes = 9;
-    java.util.List<com.aphyr.riemann.Proto.Attribute>
-    getAttributesList();
-
-    com.aphyr.riemann.Proto.Attribute getAttributes(int index);
-
-    int getAttributesCount();
-
-    java.util.List<? extends com.aphyr.riemann.Proto.AttributeOrBuilder>
-    getAttributesOrBuilderList();
-
-    com.aphyr.riemann.Proto.AttributeOrBuilder getAttributesOrBuilder(
-      int index);
-
-    // optional sint64 metric_sint64 = 13;
-    boolean hasMetricSint64();
-
-    long getMetricSint64();
-
-    // optional double metric_d = 14;
-    boolean hasMetricD();
-
-    double getMetricD();
-
-    // optional float metric_f = 15;
-    boolean hasMetricF();
-
-    float getMetricF();
-  }
-
-  public static final class Event extends
-    com.google.protobuf.GeneratedMessage
-    implements EventOrBuilder {
-    // Use Event.newBuilder() to construct.
-    private Event(Builder builder) {
-      super(builder);
-    }
-
-    private Event(boolean noInit) {
-    }
-
-    private static final Event defaultInstance;
-
-    public static Event getDefaultInstance() {
-      return defaultInstance;
-    }
-
-    public Event getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.aphyr.riemann.Proto.internal_static_Event_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internalGetFieldAccessorTable() {
-      return com.aphyr.riemann.Proto.internal_static_Event_fieldAccessorTable;
+        internalGetFieldAccessorTable() {
+      return com.aphyr.riemann.Proto.internal_static_Event_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.aphyr.riemann.Proto.Event.class, com.aphyr.riemann.Proto.Event.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Event> PARSER =
+        new com.google.protobuf.AbstractParser<Event>() {
+      public Event parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Event(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Event> getParserForType() {
+      return PARSER;
     }
 
     private int bitField0_;
     // optional int64 time = 1;
     public static final int TIME_FIELD_NUMBER = 1;
     private long time_;
-
+    /**
+     * <code>optional int64 time = 1;</code>
+     */
     public boolean hasTime() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-
+    /**
+     * <code>optional int64 time = 1;</code>
+     */
     public long getTime() {
       return time_;
     }
@@ -1167,31 +1710,39 @@ public final class Proto {
     // optional string state = 2;
     public static final int STATE_FIELD_NUMBER = 2;
     private java.lang.Object state_;
-
+    /**
+     * <code>optional string state = 2;</code>
+     */
     public boolean hasState() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-
-    public String getState() {
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    public java.lang.String getState() {
       java.lang.Object ref = state_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           state_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getStateBytes() {
+    /**
+     * <code>optional string state = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getStateBytes() {
       java.lang.Object ref = state_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         state_ = b;
         return b;
       } else {
@@ -1202,31 +1753,39 @@ public final class Proto {
     // optional string service = 3;
     public static final int SERVICE_FIELD_NUMBER = 3;
     private java.lang.Object service_;
-
+    /**
+     * <code>optional string service = 3;</code>
+     */
     public boolean hasService() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-
-    public String getService() {
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    public java.lang.String getService() {
       java.lang.Object ref = service_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           service_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getServiceBytes() {
+    /**
+     * <code>optional string service = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getServiceBytes() {
       java.lang.Object ref = service_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         service_ = b;
         return b;
       } else {
@@ -1237,31 +1796,39 @@ public final class Proto {
     // optional string host = 4;
     public static final int HOST_FIELD_NUMBER = 4;
     private java.lang.Object host_;
-
+    /**
+     * <code>optional string host = 4;</code>
+     */
     public boolean hasHost() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
-
-    public String getHost() {
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    public java.lang.String getHost() {
       java.lang.Object ref = host_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           host_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getHostBytes() {
+    /**
+     * <code>optional string host = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getHostBytes() {
       java.lang.Object ref = host_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         host_ = b;
         return b;
       } else {
@@ -1272,31 +1839,39 @@ public final class Proto {
     // optional string description = 5;
     public static final int DESCRIPTION_FIELD_NUMBER = 5;
     private java.lang.Object description_;
-
+    /**
+     * <code>optional string description = 5;</code>
+     */
     public boolean hasDescription() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
-
-    public String getDescription() {
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    public java.lang.String getDescription() {
       java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           description_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getDescriptionBytes() {
+    /**
+     * <code>optional string description = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDescriptionBytes() {
       java.lang.Object ref = description_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         description_ = b;
         return b;
       } else {
@@ -1307,28 +1882,45 @@ public final class Proto {
     // repeated string tags = 7;
     public static final int TAGS_FIELD_NUMBER = 7;
     private com.google.protobuf.LazyStringList tags_;
-
-    public java.util.List<String>
-    getTagsList() {
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    public java.util.List<java.lang.String>
+        getTagsList() {
       return tags_;
     }
-
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
     public int getTagsCount() {
       return tags_.size();
     }
-
-    public String getTags(int index) {
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    public java.lang.String getTags(int index) {
       return tags_.get(index);
+    }
+    /**
+     * <code>repeated string tags = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTagsBytes(int index) {
+      return tags_.getByteString(index);
     }
 
     // optional float ttl = 8;
     public static final int TTL_FIELD_NUMBER = 8;
     private float ttl_;
-
+    /**
+     * <code>optional float ttl = 8;</code>
+     */
     public boolean hasTtl() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
-
+    /**
+     * <code>optional float ttl = 8;</code>
+     */
     public float getTtl() {
       return ttl_;
     }
@@ -1336,37 +1928,51 @@ public final class Proto {
     // repeated .Attribute attributes = 9;
     public static final int ATTRIBUTES_FIELD_NUMBER = 9;
     private java.util.List<com.aphyr.riemann.Proto.Attribute> attributes_;
-
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
     public java.util.List<com.aphyr.riemann.Proto.Attribute> getAttributesList() {
       return attributes_;
     }
-
-    public java.util.List<? extends com.aphyr.riemann.Proto.AttributeOrBuilder>
-    getAttributesOrBuilderList() {
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
+    public java.util.List<? extends com.aphyr.riemann.Proto.AttributeOrBuilder> 
+        getAttributesOrBuilderList() {
       return attributes_;
     }
-
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
     public int getAttributesCount() {
       return attributes_.size();
     }
-
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
     public com.aphyr.riemann.Proto.Attribute getAttributes(int index) {
       return attributes_.get(index);
     }
-
+    /**
+     * <code>repeated .Attribute attributes = 9;</code>
+     */
     public com.aphyr.riemann.Proto.AttributeOrBuilder getAttributesOrBuilder(
-      int index) {
+        int index) {
       return attributes_.get(index);
     }
 
     // optional sint64 metric_sint64 = 13;
     public static final int METRIC_SINT64_FIELD_NUMBER = 13;
     private long metricSint64_;
-
+    /**
+     * <code>optional sint64 metric_sint64 = 13;</code>
+     */
     public boolean hasMetricSint64() {
       return ((bitField0_ & 0x00000040) == 0x00000040);
     }
-
+    /**
+     * <code>optional sint64 metric_sint64 = 13;</code>
+     */
     public long getMetricSint64() {
       return metricSint64_;
     }
@@ -1374,11 +1980,15 @@ public final class Proto {
     // optional double metric_d = 14;
     public static final int METRIC_D_FIELD_NUMBER = 14;
     private double metricD_;
-
+    /**
+     * <code>optional double metric_d = 14;</code>
+     */
     public boolean hasMetricD() {
       return ((bitField0_ & 0x00000080) == 0x00000080);
     }
-
+    /**
+     * <code>optional double metric_d = 14;</code>
+     */
     public double getMetricD() {
       return metricD_;
     }
@@ -1386,11 +1996,15 @@ public final class Proto {
     // optional float metric_f = 15;
     public static final int METRIC_F_FIELD_NUMBER = 15;
     private float metricF_;
-
+    /**
+     * <code>optional float metric_f = 15;</code>
+     */
     public boolean hasMetricF() {
       return ((bitField0_ & 0x00000100) == 0x00000100);
     }
-
+    /**
+     * <code>optional float metric_f = 15;</code>
+     */
     public float getMetricF() {
       return metricF_;
     }
@@ -1408,9 +2022,7 @@ public final class Proto {
       metricD_ = 0D;
       metricF_ = 0F;
     }
-
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
@@ -1426,7 +2038,7 @@ public final class Proto {
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-      throws java.io.IOException {
+                        throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt64(1, time_);
@@ -1465,7 +2077,6 @@ public final class Proto {
     }
 
     private int memoizedSerializedSize = -1;
-
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
@@ -1526,123 +2137,94 @@ public final class Proto {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     protected java.lang.Object writeReplace()
-      throws java.io.ObjectStreamException {
+        throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
     public static com.aphyr.riemann.Proto.Event parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.Event parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Event parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.Event parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Event parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Event parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Event parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Event parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Event parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Event parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    public static Builder newBuilder() {
-      return Builder.create();
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
-
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(com.aphyr.riemann.Proto.Event prototype) {
       return newBuilder().mergeFrom(prototype);
     }
-
-    public Builder toBuilder() {
-      return newBuilder(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
+    /**
+     * Protobuf type {@code Event}
+     */
     public static final class Builder extends
-      com.google.protobuf.GeneratedMessage.Builder<Builder>
-      implements com.aphyr.riemann.Proto.EventOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.aphyr.riemann.Proto.EventOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.aphyr.riemann.Proto.internal_static_Event_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-        return com.aphyr.riemann.Proto.internal_static_Event_fieldAccessorTable;
+          internalGetFieldAccessorTable() {
+        return com.aphyr.riemann.Proto.internal_static_Event_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.aphyr.riemann.Proto.Event.class, com.aphyr.riemann.Proto.Event.Builder.class);
       }
 
       // Construct using com.aphyr.riemann.Proto.Event.newBuilder()
@@ -1650,17 +2232,16 @@ public final class Proto {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getAttributesFieldBuilder();
         }
       }
-
       private static Builder create() {
         return new Builder();
       }
@@ -1701,8 +2282,8 @@ public final class Proto {
       }
 
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
-        return com.aphyr.riemann.Proto.Event.getDescriptor();
+          getDescriptorForType() {
+        return com.aphyr.riemann.Proto.internal_static_Event_descriptor;
       }
 
       public com.aphyr.riemann.Proto.Event getDefaultInstanceForType() {
@@ -1713,16 +2294,6 @@ public final class Proto {
         com.aphyr.riemann.Proto.Event result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      private com.aphyr.riemann.Proto.Event buildParsed()
-        throws com.google.protobuf.InvalidProtocolBufferException {
-        com.aphyr.riemann.Proto.Event result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
         }
         return result;
       }
@@ -1753,7 +2324,7 @@ public final class Proto {
         result.description_ = description_;
         if (((bitField0_ & 0x00000020) == 0x00000020)) {
           tags_ = new com.google.protobuf.UnmodifiableLazyStringList(
-            tags_);
+              tags_);
           bitField0_ = (bitField0_ & ~0x00000020);
         }
         result.tags_ = tags_;
@@ -1789,7 +2360,7 @@ public final class Proto {
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.aphyr.riemann.Proto.Event) {
-          return mergeFrom((com.aphyr.riemann.Proto.Event) other);
+          return mergeFrom((com.aphyr.riemann.Proto.Event)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -1802,16 +2373,24 @@ public final class Proto {
           setTime(other.getTime());
         }
         if (other.hasState()) {
-          setState(other.getState());
+          bitField0_ |= 0x00000002;
+          state_ = other.state_;
+          onChanged();
         }
         if (other.hasService()) {
-          setService(other.getService());
+          bitField0_ |= 0x00000004;
+          service_ = other.service_;
+          onChanged();
         }
         if (other.hasHost()) {
-          setHost(other.getHost());
+          bitField0_ |= 0x00000008;
+          host_ = other.host_;
+          onChanged();
         }
         if (other.hasDescription()) {
-          setDescription(other.getDescription());
+          bitField0_ |= 0x00000010;
+          description_ = other.description_;
+          onChanged();
         }
         if (!other.tags_.isEmpty()) {
           if (tags_.isEmpty()) {
@@ -1844,9 +2423,9 @@ public final class Proto {
               attributesBuilder_ = null;
               attributes_ = other.attributes_;
               bitField0_ = (bitField0_ & ~0x00000080);
-              attributesBuilder_ =
+              attributesBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                  getAttributesFieldBuilder() : null;
+                   getAttributesFieldBuilder() : null;
             } else {
               attributesBuilder_.addAllMessages(other.attributes_);
             }
@@ -1868,7 +2447,7 @@ public final class Proto {
       public final boolean isInitialized() {
         for (int i = 0; i < getAttributesCount(); i++) {
           if (!getAttributes(i).isInitialized()) {
-
+            
             return false;
           }
         }
@@ -1876,108 +2455,50 @@ public final class Proto {
       }
 
       public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 8: {
-              bitField0_ |= 0x00000001;
-              time_ = input.readInt64();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              state_ = input.readBytes();
-              break;
-            }
-            case 26: {
-              bitField0_ |= 0x00000004;
-              service_ = input.readBytes();
-              break;
-            }
-            case 34: {
-              bitField0_ |= 0x00000008;
-              host_ = input.readBytes();
-              break;
-            }
-            case 42: {
-              bitField0_ |= 0x00000010;
-              description_ = input.readBytes();
-              break;
-            }
-            case 58: {
-              ensureTagsIsMutable();
-              tags_.add(input.readBytes());
-              break;
-            }
-            case 69: {
-              bitField0_ |= 0x00000040;
-              ttl_ = input.readFloat();
-              break;
-            }
-            case 74: {
-              com.aphyr.riemann.Proto.Attribute.Builder subBuilder = com.aphyr.riemann.Proto.Attribute.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addAttributes(subBuilder.buildPartial());
-              break;
-            }
-            case 104: {
-              bitField0_ |= 0x00000100;
-              metricSint64_ = input.readSInt64();
-              break;
-            }
-            case 113: {
-              bitField0_ |= 0x00000200;
-              metricD_ = input.readDouble();
-              break;
-            }
-            case 125: {
-              bitField0_ |= 0x00000400;
-              metricF_ = input.readFloat();
-              break;
-            }
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.aphyr.riemann.Proto.Event parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.aphyr.riemann.Proto.Event) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-
       private int bitField0_;
 
       // optional int64 time = 1;
-      private long time_;
-
+      private long time_ ;
+      /**
+       * <code>optional int64 time = 1;</code>
+       */
       public boolean hasTime() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-
+      /**
+       * <code>optional int64 time = 1;</code>
+       */
       public long getTime() {
         return time_;
       }
-
+      /**
+       * <code>optional int64 time = 1;</code>
+       */
       public Builder setTime(long value) {
         bitField0_ |= 0x00000001;
         time_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional int64 time = 1;</code>
+       */
       public Builder clearTime() {
         bitField0_ = (bitField0_ & ~0x00000001);
         time_ = 0L;
@@ -1987,251 +2508,419 @@ public final class Proto {
 
       // optional string state = 2;
       private java.lang.Object state_ = "";
-
+      /**
+       * <code>optional string state = 2;</code>
+       */
       public boolean hasState() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-
-      public String getState() {
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public java.lang.String getState() {
         java.lang.Object ref = state_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           state_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-
-      public Builder setState(String value) {
-        if (value == null) {
-          throw new NullPointerException();
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getStateBytes() {
+        java.lang.Object ref = state_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          state_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
-        bitField0_ |= 0x00000002;
+      }
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public Builder setState(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
         state_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional string state = 2;</code>
+       */
       public Builder clearState() {
         bitField0_ = (bitField0_ & ~0x00000002);
         state_ = getDefaultInstance().getState();
         onChanged();
         return this;
       }
-
-      void setState(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
-        state_ = value;
-        onChanged();
-      }
-
-      // optional string service = 3;
-      private java.lang.Object service_ = "";
-
-      public boolean hasService() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-
-      public String getService() {
-        java.lang.Object ref = service_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          service_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-
-      public Builder setService(String value) {
+      /**
+       * <code>optional string state = 2;</code>
+       */
+      public Builder setStateBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
-        service_ = value;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        state_ = value;
         onChanged();
         return this;
       }
 
+      // optional string service = 3;
+      private java.lang.Object service_ = "";
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public boolean hasService() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public java.lang.String getService() {
+        java.lang.Object ref = service_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          service_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getServiceBytes() {
+        java.lang.Object ref = service_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          service_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public Builder setService(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        service_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string service = 3;</code>
+       */
       public Builder clearService() {
         bitField0_ = (bitField0_ & ~0x00000004);
         service_ = getDefaultInstance().getService();
         onChanged();
         return this;
       }
-
-      void setService(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000004;
-        service_ = value;
-        onChanged();
-      }
-
-      // optional string host = 4;
-      private java.lang.Object host_ = "";
-
-      public boolean hasHost() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-
-      public String getHost() {
-        java.lang.Object ref = host_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          host_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-
-      public Builder setHost(String value) {
+      /**
+       * <code>optional string service = 3;</code>
+       */
+      public Builder setServiceBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000008;
-        host_ = value;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        service_ = value;
         onChanged();
         return this;
       }
 
+      // optional string host = 4;
+      private java.lang.Object host_ = "";
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public boolean hasHost() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public java.lang.String getHost() {
+        java.lang.Object ref = host_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          host_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getHostBytes() {
+        java.lang.Object ref = host_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          host_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public Builder setHost(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        host_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string host = 4;</code>
+       */
       public Builder clearHost() {
         bitField0_ = (bitField0_ & ~0x00000008);
         host_ = getDefaultInstance().getHost();
         onChanged();
         return this;
       }
-
-      void setHost(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000008;
-        host_ = value;
-        onChanged();
-      }
-
-      // optional string description = 5;
-      private java.lang.Object description_ = "";
-
-      public boolean hasDescription() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
-      }
-
-      public String getDescription() {
-        java.lang.Object ref = description_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          description_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-
-      public Builder setDescription(String value) {
+      /**
+       * <code>optional string host = 4;</code>
+       */
+      public Builder setHostBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000010;
-        description_ = value;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        host_ = value;
         onChanged();
         return this;
       }
 
+      // optional string description = 5;
+      private java.lang.Object description_ = "";
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public boolean hasDescription() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public java.lang.String getDescription() {
+        java.lang.Object ref = description_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          description_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDescriptionBytes() {
+        java.lang.Object ref = description_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          description_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public Builder setDescription(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        description_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string description = 5;</code>
+       */
       public Builder clearDescription() {
         bitField0_ = (bitField0_ & ~0x00000010);
         description_ = getDefaultInstance().getDescription();
         onChanged();
         return this;
       }
-
-      void setDescription(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000010;
+      /**
+       * <code>optional string description = 5;</code>
+       */
+      public Builder setDescriptionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
         description_ = value;
         onChanged();
+        return this;
       }
 
       // repeated string tags = 7;
       private com.google.protobuf.LazyStringList tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-
       private void ensureTagsIsMutable() {
         if (!((bitField0_ & 0x00000020) == 0x00000020)) {
           tags_ = new com.google.protobuf.LazyStringArrayList(tags_);
           bitField0_ |= 0x00000020;
-        }
+         }
       }
-
-      public java.util.List<String>
-      getTagsList() {
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public java.util.List<java.lang.String>
+          getTagsList() {
         return java.util.Collections.unmodifiableList(tags_);
       }
-
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
       public int getTagsCount() {
         return tags_.size();
       }
-
-      public String getTags(int index) {
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public java.lang.String getTags(int index) {
         return tags_.get(index);
       }
-
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTagsBytes(int index) {
+        return tags_.getByteString(index);
+      }
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
       public Builder setTags(
-        int index, String value) {
+          int index, java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureTagsIsMutable();
+    throw new NullPointerException();
+  }
+  ensureTagsIsMutable();
         tags_.set(index, value);
         onChanged();
         return this;
       }
-
-      public Builder addTags(String value) {
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public Builder addTags(
+          java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureTagsIsMutable();
+    throw new NullPointerException();
+  }
+  ensureTagsIsMutable();
         tags_.add(value);
         onChanged();
         return this;
       }
-
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
       public Builder addAllTags(
-        java.lang.Iterable<String> values) {
+          java.lang.Iterable<java.lang.String> values) {
         ensureTagsIsMutable();
         super.addAll(values, tags_);
         onChanged();
         return this;
       }
-
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
       public Builder clearTags() {
         tags_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000020);
         onChanged();
         return this;
       }
-
-      void addTags(com.google.protobuf.ByteString value) {
-        ensureTagsIsMutable();
+      /**
+       * <code>repeated string tags = 7;</code>
+       */
+      public Builder addTagsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTagsIsMutable();
         tags_.add(value);
         onChanged();
+        return this;
       }
 
       // optional float ttl = 8;
-      private float ttl_;
-
+      private float ttl_ ;
+      /**
+       * <code>optional float ttl = 8;</code>
+       */
       public boolean hasTtl() {
         return ((bitField0_ & 0x00000040) == 0x00000040);
       }
-
+      /**
+       * <code>optional float ttl = 8;</code>
+       */
       public float getTtl() {
         return ttl_;
       }
-
+      /**
+       * <code>optional float ttl = 8;</code>
+       */
       public Builder setTtl(float value) {
         bitField0_ |= 0x00000040;
         ttl_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional float ttl = 8;</code>
+       */
       public Builder clearTtl() {
         bitField0_ = (bitField0_ & ~0x00000040);
         ttl_ = 0F;
@@ -2242,17 +2931,19 @@ public final class Proto {
       // repeated .Attribute attributes = 9;
       private java.util.List<com.aphyr.riemann.Proto.Attribute> attributes_ =
         java.util.Collections.emptyList();
-
       private void ensureAttributesIsMutable() {
         if (!((bitField0_ & 0x00000080) == 0x00000080)) {
           attributes_ = new java.util.ArrayList<com.aphyr.riemann.Proto.Attribute>(attributes_);
           bitField0_ |= 0x00000080;
-        }
+         }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-        com.aphyr.riemann.Proto.Attribute, com.aphyr.riemann.Proto.Attribute.Builder, com.aphyr.riemann.Proto.AttributeOrBuilder> attributesBuilder_;
+          com.aphyr.riemann.Proto.Attribute, com.aphyr.riemann.Proto.Attribute.Builder, com.aphyr.riemann.Proto.AttributeOrBuilder> attributesBuilder_;
 
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public java.util.List<com.aphyr.riemann.Proto.Attribute> getAttributesList() {
         if (attributesBuilder_ == null) {
           return java.util.Collections.unmodifiableList(attributes_);
@@ -2260,7 +2951,9 @@ public final class Proto {
           return attributesBuilder_.getMessageList();
         }
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public int getAttributesCount() {
         if (attributesBuilder_ == null) {
           return attributes_.size();
@@ -2268,7 +2961,9 @@ public final class Proto {
           return attributesBuilder_.getCount();
         }
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public com.aphyr.riemann.Proto.Attribute getAttributes(int index) {
         if (attributesBuilder_ == null) {
           return attributes_.get(index);
@@ -2276,9 +2971,11 @@ public final class Proto {
           return attributesBuilder_.getMessage(index);
         }
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder setAttributes(
-        int index, com.aphyr.riemann.Proto.Attribute value) {
+          int index, com.aphyr.riemann.Proto.Attribute value) {
         if (attributesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2291,9 +2988,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder setAttributes(
-        int index, com.aphyr.riemann.Proto.Attribute.Builder builderForValue) {
+          int index, com.aphyr.riemann.Proto.Attribute.Builder builderForValue) {
         if (attributesBuilder_ == null) {
           ensureAttributesIsMutable();
           attributes_.set(index, builderForValue.build());
@@ -2303,7 +3002,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder addAttributes(com.aphyr.riemann.Proto.Attribute value) {
         if (attributesBuilder_ == null) {
           if (value == null) {
@@ -2317,9 +3018,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder addAttributes(
-        int index, com.aphyr.riemann.Proto.Attribute value) {
+          int index, com.aphyr.riemann.Proto.Attribute value) {
         if (attributesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2332,9 +3035,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder addAttributes(
-        com.aphyr.riemann.Proto.Attribute.Builder builderForValue) {
+          com.aphyr.riemann.Proto.Attribute.Builder builderForValue) {
         if (attributesBuilder_ == null) {
           ensureAttributesIsMutable();
           attributes_.add(builderForValue.build());
@@ -2344,9 +3049,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder addAttributes(
-        int index, com.aphyr.riemann.Proto.Attribute.Builder builderForValue) {
+          int index, com.aphyr.riemann.Proto.Attribute.Builder builderForValue) {
         if (attributesBuilder_ == null) {
           ensureAttributesIsMutable();
           attributes_.add(index, builderForValue.build());
@@ -2356,9 +3063,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder addAllAttributes(
-        java.lang.Iterable<? extends com.aphyr.riemann.Proto.Attribute> values) {
+          java.lang.Iterable<? extends com.aphyr.riemann.Proto.Attribute> values) {
         if (attributesBuilder_ == null) {
           ensureAttributesIsMutable();
           super.addAll(values, attributes_);
@@ -2368,7 +3077,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder clearAttributes() {
         if (attributesBuilder_ == null) {
           attributes_ = java.util.Collections.emptyList();
@@ -2379,7 +3090,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public Builder removeAttributes(int index) {
         if (attributesBuilder_ == null) {
           ensureAttributesIsMutable();
@@ -2390,79 +3103,97 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public com.aphyr.riemann.Proto.Attribute.Builder getAttributesBuilder(
-        int index) {
+          int index) {
         return getAttributesFieldBuilder().getBuilder(index);
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public com.aphyr.riemann.Proto.AttributeOrBuilder getAttributesOrBuilder(
-        int index) {
+          int index) {
         if (attributesBuilder_ == null) {
-          return attributes_.get(index);
-        } else {
+          return attributes_.get(index);  } else {
           return attributesBuilder_.getMessageOrBuilder(index);
         }
       }
-
-      public java.util.List<? extends com.aphyr.riemann.Proto.AttributeOrBuilder>
-      getAttributesOrBuilderList() {
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
+      public java.util.List<? extends com.aphyr.riemann.Proto.AttributeOrBuilder> 
+           getAttributesOrBuilderList() {
         if (attributesBuilder_ != null) {
           return attributesBuilder_.getMessageOrBuilderList();
         } else {
           return java.util.Collections.unmodifiableList(attributes_);
         }
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public com.aphyr.riemann.Proto.Attribute.Builder addAttributesBuilder() {
         return getAttributesFieldBuilder().addBuilder(
-          com.aphyr.riemann.Proto.Attribute.getDefaultInstance());
+            com.aphyr.riemann.Proto.Attribute.getDefaultInstance());
       }
-
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
       public com.aphyr.riemann.Proto.Attribute.Builder addAttributesBuilder(
-        int index) {
+          int index) {
         return getAttributesFieldBuilder().addBuilder(
-          index, com.aphyr.riemann.Proto.Attribute.getDefaultInstance());
+            index, com.aphyr.riemann.Proto.Attribute.getDefaultInstance());
       }
-
-      public java.util.List<com.aphyr.riemann.Proto.Attribute.Builder>
-      getAttributesBuilderList() {
+      /**
+       * <code>repeated .Attribute attributes = 9;</code>
+       */
+      public java.util.List<com.aphyr.riemann.Proto.Attribute.Builder> 
+           getAttributesBuilderList() {
         return getAttributesFieldBuilder().getBuilderList();
       }
-
       private com.google.protobuf.RepeatedFieldBuilder<
-        com.aphyr.riemann.Proto.Attribute, com.aphyr.riemann.Proto.Attribute.Builder, com.aphyr.riemann.Proto.AttributeOrBuilder>
-      getAttributesFieldBuilder() {
+          com.aphyr.riemann.Proto.Attribute, com.aphyr.riemann.Proto.Attribute.Builder, com.aphyr.riemann.Proto.AttributeOrBuilder> 
+          getAttributesFieldBuilder() {
         if (attributesBuilder_ == null) {
           attributesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-            com.aphyr.riemann.Proto.Attribute, com.aphyr.riemann.Proto.Attribute.Builder, com.aphyr.riemann.Proto.AttributeOrBuilder>(
-            attributes_,
-            ((bitField0_ & 0x00000080) == 0x00000080),
-            getParentForChildren(),
-            isClean());
+              com.aphyr.riemann.Proto.Attribute, com.aphyr.riemann.Proto.Attribute.Builder, com.aphyr.riemann.Proto.AttributeOrBuilder>(
+                  attributes_,
+                  ((bitField0_ & 0x00000080) == 0x00000080),
+                  getParentForChildren(),
+                  isClean());
           attributes_ = null;
         }
         return attributesBuilder_;
       }
 
       // optional sint64 metric_sint64 = 13;
-      private long metricSint64_;
-
+      private long metricSint64_ ;
+      /**
+       * <code>optional sint64 metric_sint64 = 13;</code>
+       */
       public boolean hasMetricSint64() {
         return ((bitField0_ & 0x00000100) == 0x00000100);
       }
-
+      /**
+       * <code>optional sint64 metric_sint64 = 13;</code>
+       */
       public long getMetricSint64() {
         return metricSint64_;
       }
-
+      /**
+       * <code>optional sint64 metric_sint64 = 13;</code>
+       */
       public Builder setMetricSint64(long value) {
         bitField0_ |= 0x00000100;
         metricSint64_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional sint64 metric_sint64 = 13;</code>
+       */
       public Builder clearMetricSint64() {
         bitField0_ = (bitField0_ & ~0x00000100);
         metricSint64_ = 0L;
@@ -2471,23 +3202,31 @@ public final class Proto {
       }
 
       // optional double metric_d = 14;
-      private double metricD_;
-
+      private double metricD_ ;
+      /**
+       * <code>optional double metric_d = 14;</code>
+       */
       public boolean hasMetricD() {
         return ((bitField0_ & 0x00000200) == 0x00000200);
       }
-
+      /**
+       * <code>optional double metric_d = 14;</code>
+       */
       public double getMetricD() {
         return metricD_;
       }
-
+      /**
+       * <code>optional double metric_d = 14;</code>
+       */
       public Builder setMetricD(double value) {
         bitField0_ |= 0x00000200;
         metricD_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional double metric_d = 14;</code>
+       */
       public Builder clearMetricD() {
         bitField0_ = (bitField0_ & ~0x00000200);
         metricD_ = 0D;
@@ -2496,23 +3235,31 @@ public final class Proto {
       }
 
       // optional float metric_f = 15;
-      private float metricF_;
-
+      private float metricF_ ;
+      /**
+       * <code>optional float metric_f = 15;</code>
+       */
       public boolean hasMetricF() {
         return ((bitField0_ & 0x00000400) == 0x00000400);
       }
-
+      /**
+       * <code>optional float metric_f = 15;</code>
+       */
       public float getMetricF() {
         return metricF_;
       }
-
+      /**
+       * <code>optional float metric_f = 15;</code>
+       */
       public Builder setMetricF(float value) {
         bitField0_ |= 0x00000400;
         metricF_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional float metric_f = 15;</code>
+       */
       public Builder clearMetricF() {
         bitField0_ = (bitField0_ & ~0x00000400);
         metricF_ = 0F;
@@ -2532,27 +3279,37 @@ public final class Proto {
   }
 
   public interface QueryOrBuilder
-    extends com.google.protobuf.MessageOrBuilder {
+      extends com.google.protobuf.MessageOrBuilder {
 
     // optional string string = 1;
+    /**
+     * <code>optional string string = 1;</code>
+     */
     boolean hasString();
-
-    String getString();
+    /**
+     * <code>optional string string = 1;</code>
+     */
+    java.lang.String getString();
+    /**
+     * <code>optional string string = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getStringBytes();
   }
-
+  /**
+   * Protobuf type {@code Query}
+   */
   public static final class Query extends
-    com.google.protobuf.GeneratedMessage
-    implements QueryOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements QueryOrBuilder {
     // Use Query.newBuilder() to construct.
-    private Query(Builder builder) {
+    private Query(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-
-    private Query(boolean noInit) {
-    }
+    private Query(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
     private static final Query defaultInstance;
-
     public static Query getDefaultInstance() {
       return defaultInstance;
     }
@@ -2561,45 +3318,116 @@ public final class Proto {
       return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Query(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              string_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.aphyr.riemann.Proto.internal_static_Query_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internalGetFieldAccessorTable() {
-      return com.aphyr.riemann.Proto.internal_static_Query_fieldAccessorTable;
+        internalGetFieldAccessorTable() {
+      return com.aphyr.riemann.Proto.internal_static_Query_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.aphyr.riemann.Proto.Query.class, com.aphyr.riemann.Proto.Query.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Query> PARSER =
+        new com.google.protobuf.AbstractParser<Query>() {
+      public Query parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Query(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Query> getParserForType() {
+      return PARSER;
     }
 
     private int bitField0_;
     // optional string string = 1;
     public static final int STRING_FIELD_NUMBER = 1;
     private java.lang.Object string_;
-
+    /**
+     * <code>optional string string = 1;</code>
+     */
     public boolean hasString() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-
-    public String getString() {
+    /**
+     * <code>optional string string = 1;</code>
+     */
+    public java.lang.String getString() {
       java.lang.Object ref = string_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           string_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getStringBytes() {
+    /**
+     * <code>optional string string = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getStringBytes() {
       java.lang.Object ref = string_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         string_ = b;
         return b;
       } else {
@@ -2610,9 +3438,7 @@ public final class Proto {
     private void initFields() {
       string_ = "";
     }
-
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
@@ -2622,7 +3448,7 @@ public final class Proto {
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-      throws java.io.IOException {
+                        throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, getStringBytes());
@@ -2631,7 +3457,6 @@ public final class Proto {
     }
 
     private int memoizedSerializedSize = -1;
-
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
@@ -2647,123 +3472,94 @@ public final class Proto {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     protected java.lang.Object writeReplace()
-      throws java.io.ObjectStreamException {
+        throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
     public static com.aphyr.riemann.Proto.Query parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.Query parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Query parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.Query parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Query parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Query parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Query parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Query parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Query parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Query parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    public static Builder newBuilder() {
-      return Builder.create();
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
-
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(com.aphyr.riemann.Proto.Query prototype) {
       return newBuilder().mergeFrom(prototype);
     }
-
-    public Builder toBuilder() {
-      return newBuilder(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
+    /**
+     * Protobuf type {@code Query}
+     */
     public static final class Builder extends
-      com.google.protobuf.GeneratedMessage.Builder<Builder>
-      implements com.aphyr.riemann.Proto.QueryOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.aphyr.riemann.Proto.QueryOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.aphyr.riemann.Proto.internal_static_Query_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-        return com.aphyr.riemann.Proto.internal_static_Query_fieldAccessorTable;
+          internalGetFieldAccessorTable() {
+        return com.aphyr.riemann.Proto.internal_static_Query_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.aphyr.riemann.Proto.Query.class, com.aphyr.riemann.Proto.Query.Builder.class);
       }
 
       // Construct using com.aphyr.riemann.Proto.Query.newBuilder()
@@ -2771,16 +3567,15 @@ public final class Proto {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-
       private static Builder create() {
         return new Builder();
       }
@@ -2797,8 +3592,8 @@ public final class Proto {
       }
 
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
-        return com.aphyr.riemann.Proto.Query.getDescriptor();
+          getDescriptorForType() {
+        return com.aphyr.riemann.Proto.internal_static_Query_descriptor;
       }
 
       public com.aphyr.riemann.Proto.Query getDefaultInstanceForType() {
@@ -2809,16 +3604,6 @@ public final class Proto {
         com.aphyr.riemann.Proto.Query result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      private com.aphyr.riemann.Proto.Query buildParsed()
-        throws com.google.protobuf.InvalidProtocolBufferException {
-        com.aphyr.riemann.Proto.Query result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
         }
         return result;
       }
@@ -2838,7 +3623,7 @@ public final class Proto {
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.aphyr.riemann.Proto.Query) {
-          return mergeFrom((com.aphyr.riemann.Proto.Query) other);
+          return mergeFrom((com.aphyr.riemann.Proto.Query)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -2848,7 +3633,9 @@ public final class Proto {
       public Builder mergeFrom(com.aphyr.riemann.Proto.Query other) {
         if (other == com.aphyr.riemann.Proto.Query.getDefaultInstance()) return this;
         if (other.hasString()) {
-          setString(other.getString());
+          bitField0_ |= 0x00000001;
+          string_ = other.string_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -2859,78 +3646,96 @@ public final class Proto {
       }
 
       public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              string_ = input.readBytes();
-              break;
-            }
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.aphyr.riemann.Proto.Query parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.aphyr.riemann.Proto.Query) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-
       private int bitField0_;
 
       // optional string string = 1;
       private java.lang.Object string_ = "";
-
+      /**
+       * <code>optional string string = 1;</code>
+       */
       public boolean hasString() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-
-      public String getString() {
+      /**
+       * <code>optional string string = 1;</code>
+       */
+      public java.lang.String getString() {
         java.lang.Object ref = string_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           string_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-
-      public Builder setString(String value) {
-        if (value == null) {
-          throw new NullPointerException();
+      /**
+       * <code>optional string string = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getStringBytes() {
+        java.lang.Object ref = string_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          string_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
-        bitField0_ |= 0x00000001;
+      }
+      /**
+       * <code>optional string string = 1;</code>
+       */
+      public Builder setString(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         string_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional string string = 1;</code>
+       */
       public Builder clearString() {
         bitField0_ = (bitField0_ & ~0x00000001);
         string_ = getDefaultInstance().getString();
         onChanged();
         return this;
       }
-
-      void setString(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
+      /**
+       * <code>optional string string = 1;</code>
+       */
+      public Builder setStringBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         string_ = value;
         onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:Query)
@@ -2945,67 +3750,111 @@ public final class Proto {
   }
 
   public interface MsgOrBuilder
-    extends com.google.protobuf.MessageOrBuilder {
+      extends com.google.protobuf.MessageOrBuilder {
 
     // optional bool ok = 2;
+    /**
+     * <code>optional bool ok = 2;</code>
+     */
     boolean hasOk();
-
+    /**
+     * <code>optional bool ok = 2;</code>
+     */
     boolean getOk();
 
     // optional string error = 3;
+    /**
+     * <code>optional string error = 3;</code>
+     */
     boolean hasError();
-
-    String getError();
+    /**
+     * <code>optional string error = 3;</code>
+     */
+    java.lang.String getError();
+    /**
+     * <code>optional string error = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getErrorBytes();
 
     // repeated .State states = 4;
-    java.util.List<com.aphyr.riemann.Proto.State>
-    getStatesList();
-
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
+    java.util.List<com.aphyr.riemann.Proto.State> 
+        getStatesList();
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
     com.aphyr.riemann.Proto.State getStates(int index);
-
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
     int getStatesCount();
-
-    java.util.List<? extends com.aphyr.riemann.Proto.StateOrBuilder>
-    getStatesOrBuilderList();
-
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
+    java.util.List<? extends com.aphyr.riemann.Proto.StateOrBuilder> 
+        getStatesOrBuilderList();
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
     com.aphyr.riemann.Proto.StateOrBuilder getStatesOrBuilder(
-      int index);
+        int index);
 
     // optional .Query query = 5;
+    /**
+     * <code>optional .Query query = 5;</code>
+     */
     boolean hasQuery();
-
+    /**
+     * <code>optional .Query query = 5;</code>
+     */
     com.aphyr.riemann.Proto.Query getQuery();
-
+    /**
+     * <code>optional .Query query = 5;</code>
+     */
     com.aphyr.riemann.Proto.QueryOrBuilder getQueryOrBuilder();
 
     // repeated .Event events = 6;
-    java.util.List<com.aphyr.riemann.Proto.Event>
-    getEventsList();
-
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
+    java.util.List<com.aphyr.riemann.Proto.Event> 
+        getEventsList();
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
     com.aphyr.riemann.Proto.Event getEvents(int index);
-
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
     int getEventsCount();
-
-    java.util.List<? extends com.aphyr.riemann.Proto.EventOrBuilder>
-    getEventsOrBuilderList();
-
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
+    java.util.List<? extends com.aphyr.riemann.Proto.EventOrBuilder> 
+        getEventsOrBuilderList();
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
     com.aphyr.riemann.Proto.EventOrBuilder getEventsOrBuilder(
-      int index);
+        int index);
   }
-
+  /**
+   * Protobuf type {@code Msg}
+   */
   public static final class Msg extends
-    com.google.protobuf.GeneratedMessage
-    implements MsgOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements MsgOrBuilder {
     // Use Msg.newBuilder() to construct.
-    private Msg(Builder builder) {
+    private Msg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-
-    private Msg(boolean noInit) {
-    }
+    private Msg(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
     private static final Msg defaultInstance;
-
     public static Msg getDefaultInstance() {
       return defaultInstance;
     }
@@ -3014,25 +3863,132 @@ public final class Proto {
       return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Msg(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000001;
+              ok_ = input.readBool();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000002;
+              error_ = input.readBytes();
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                states_ = new java.util.ArrayList<com.aphyr.riemann.Proto.State>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              states_.add(input.readMessage(com.aphyr.riemann.Proto.State.PARSER, extensionRegistry));
+              break;
+            }
+            case 42: {
+              com.aphyr.riemann.Proto.Query.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                subBuilder = query_.toBuilder();
+              }
+              query_ = input.readMessage(com.aphyr.riemann.Proto.Query.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(query_);
+                query_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000004;
+              break;
+            }
+            case 50: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                events_ = new java.util.ArrayList<com.aphyr.riemann.Proto.Event>();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              events_.add(input.readMessage(com.aphyr.riemann.Proto.Event.PARSER, extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          states_ = java.util.Collections.unmodifiableList(states_);
+        }
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+          events_ = java.util.Collections.unmodifiableList(events_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.aphyr.riemann.Proto.internal_static_Msg_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internalGetFieldAccessorTable() {
-      return com.aphyr.riemann.Proto.internal_static_Msg_fieldAccessorTable;
+        internalGetFieldAccessorTable() {
+      return com.aphyr.riemann.Proto.internal_static_Msg_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.aphyr.riemann.Proto.Msg.class, com.aphyr.riemann.Proto.Msg.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Msg> PARSER =
+        new com.google.protobuf.AbstractParser<Msg>() {
+      public Msg parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Msg(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Msg> getParserForType() {
+      return PARSER;
     }
 
     private int bitField0_;
     // optional bool ok = 2;
     public static final int OK_FIELD_NUMBER = 2;
     private boolean ok_;
-
+    /**
+     * <code>optional bool ok = 2;</code>
+     */
     public boolean hasOk() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-
+    /**
+     * <code>optional bool ok = 2;</code>
+     */
     public boolean getOk() {
       return ok_;
     }
@@ -3040,31 +3996,39 @@ public final class Proto {
     // optional string error = 3;
     public static final int ERROR_FIELD_NUMBER = 3;
     private java.lang.Object error_;
-
+    /**
+     * <code>optional string error = 3;</code>
+     */
     public boolean hasError() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-
-    public String getError() {
+    /**
+     * <code>optional string error = 3;</code>
+     */
+    public java.lang.String getError() {
       java.lang.Object ref = error_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           error_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getErrorBytes() {
+    /**
+     * <code>optional string error = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getErrorBytes() {
       java.lang.Object ref = error_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         error_ = b;
         return b;
       } else {
@@ -3075,41 +4039,57 @@ public final class Proto {
     // repeated .State states = 4;
     public static final int STATES_FIELD_NUMBER = 4;
     private java.util.List<com.aphyr.riemann.Proto.State> states_;
-
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
     public java.util.List<com.aphyr.riemann.Proto.State> getStatesList() {
       return states_;
     }
-
-    public java.util.List<? extends com.aphyr.riemann.Proto.StateOrBuilder>
-    getStatesOrBuilderList() {
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
+    public java.util.List<? extends com.aphyr.riemann.Proto.StateOrBuilder> 
+        getStatesOrBuilderList() {
       return states_;
     }
-
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
     public int getStatesCount() {
       return states_.size();
     }
-
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
     public com.aphyr.riemann.Proto.State getStates(int index) {
       return states_.get(index);
     }
-
+    /**
+     * <code>repeated .State states = 4;</code>
+     */
     public com.aphyr.riemann.Proto.StateOrBuilder getStatesOrBuilder(
-      int index) {
+        int index) {
       return states_.get(index);
     }
 
     // optional .Query query = 5;
     public static final int QUERY_FIELD_NUMBER = 5;
     private com.aphyr.riemann.Proto.Query query_;
-
+    /**
+     * <code>optional .Query query = 5;</code>
+     */
     public boolean hasQuery() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
-
+    /**
+     * <code>optional .Query query = 5;</code>
+     */
     public com.aphyr.riemann.Proto.Query getQuery() {
       return query_;
     }
-
+    /**
+     * <code>optional .Query query = 5;</code>
+     */
     public com.aphyr.riemann.Proto.QueryOrBuilder getQueryOrBuilder() {
       return query_;
     }
@@ -3117,26 +4097,36 @@ public final class Proto {
     // repeated .Event events = 6;
     public static final int EVENTS_FIELD_NUMBER = 6;
     private java.util.List<com.aphyr.riemann.Proto.Event> events_;
-
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
     public java.util.List<com.aphyr.riemann.Proto.Event> getEventsList() {
       return events_;
     }
-
-    public java.util.List<? extends com.aphyr.riemann.Proto.EventOrBuilder>
-    getEventsOrBuilderList() {
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
+    public java.util.List<? extends com.aphyr.riemann.Proto.EventOrBuilder> 
+        getEventsOrBuilderList() {
       return events_;
     }
-
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
     public int getEventsCount() {
       return events_.size();
     }
-
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
     public com.aphyr.riemann.Proto.Event getEvents(int index) {
       return events_.get(index);
     }
-
+    /**
+     * <code>repeated .Event events = 6;</code>
+     */
     public com.aphyr.riemann.Proto.EventOrBuilder getEventsOrBuilder(
-      int index) {
+        int index) {
       return events_.get(index);
     }
 
@@ -3147,9 +4137,7 @@ public final class Proto {
       query_ = com.aphyr.riemann.Proto.Query.getDefaultInstance();
       events_ = java.util.Collections.emptyList();
     }
-
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
@@ -3165,7 +4153,7 @@ public final class Proto {
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-      throws java.io.IOException {
+                        throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBool(2, ok_);
@@ -3186,7 +4174,6 @@ public final class Proto {
     }
 
     private int memoizedSerializedSize = -1;
-
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
@@ -3218,123 +4205,94 @@ public final class Proto {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     protected java.lang.Object writeReplace()
-      throws java.io.ObjectStreamException {
+        throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
     public static com.aphyr.riemann.Proto.Msg parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Msg parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    public static Builder newBuilder() {
-      return Builder.create();
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
-
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(com.aphyr.riemann.Proto.Msg prototype) {
       return newBuilder().mergeFrom(prototype);
     }
-
-    public Builder toBuilder() {
-      return newBuilder(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
+    /**
+     * Protobuf type {@code Msg}
+     */
     public static final class Builder extends
-      com.google.protobuf.GeneratedMessage.Builder<Builder>
-      implements com.aphyr.riemann.Proto.MsgOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.aphyr.riemann.Proto.MsgOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.aphyr.riemann.Proto.internal_static_Msg_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-        return com.aphyr.riemann.Proto.internal_static_Msg_fieldAccessorTable;
+          internalGetFieldAccessorTable() {
+        return com.aphyr.riemann.Proto.internal_static_Msg_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.aphyr.riemann.Proto.Msg.class, com.aphyr.riemann.Proto.Msg.Builder.class);
       }
 
       // Construct using com.aphyr.riemann.Proto.Msg.newBuilder()
@@ -3342,11 +4300,11 @@ public final class Proto {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getStatesFieldBuilder();
@@ -3354,7 +4312,6 @@ public final class Proto {
           getEventsFieldBuilder();
         }
       }
-
       private static Builder create() {
         return new Builder();
       }
@@ -3391,8 +4348,8 @@ public final class Proto {
       }
 
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
-        return com.aphyr.riemann.Proto.Msg.getDescriptor();
+          getDescriptorForType() {
+        return com.aphyr.riemann.Proto.internal_static_Msg_descriptor;
       }
 
       public com.aphyr.riemann.Proto.Msg getDefaultInstanceForType() {
@@ -3403,16 +4360,6 @@ public final class Proto {
         com.aphyr.riemann.Proto.Msg result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      private com.aphyr.riemann.Proto.Msg buildParsed()
-        throws com.google.protobuf.InvalidProtocolBufferException {
-        com.aphyr.riemann.Proto.Msg result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
         }
         return result;
       }
@@ -3462,7 +4409,7 @@ public final class Proto {
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.aphyr.riemann.Proto.Msg) {
-          return mergeFrom((com.aphyr.riemann.Proto.Msg) other);
+          return mergeFrom((com.aphyr.riemann.Proto.Msg)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -3475,7 +4422,9 @@ public final class Proto {
           setOk(other.getOk());
         }
         if (other.hasError()) {
-          setError(other.getError());
+          bitField0_ |= 0x00000002;
+          error_ = other.error_;
+          onChanged();
         }
         if (statesBuilder_ == null) {
           if (!other.states_.isEmpty()) {
@@ -3495,9 +4444,9 @@ public final class Proto {
               statesBuilder_ = null;
               states_ = other.states_;
               bitField0_ = (bitField0_ & ~0x00000004);
-              statesBuilder_ =
+              statesBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                  getStatesFieldBuilder() : null;
+                   getStatesFieldBuilder() : null;
             } else {
               statesBuilder_.addAllMessages(other.states_);
             }
@@ -3524,9 +4473,9 @@ public final class Proto {
               eventsBuilder_ = null;
               events_ = other.events_;
               bitField0_ = (bitField0_ & ~0x00000010);
-              eventsBuilder_ =
+              eventsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                  getEventsFieldBuilder() : null;
+                   getEventsFieldBuilder() : null;
             } else {
               eventsBuilder_.addAllMessages(other.events_);
             }
@@ -3539,7 +4488,7 @@ public final class Proto {
       public final boolean isInitialized() {
         for (int i = 0; i < getEventsCount(); i++) {
           if (!getEvents(i).isInitialized()) {
-
+            
             return false;
           }
         }
@@ -3547,83 +4496,50 @@ public final class Proto {
       }
 
       public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 16: {
-              bitField0_ |= 0x00000001;
-              ok_ = input.readBool();
-              break;
-            }
-            case 26: {
-              bitField0_ |= 0x00000002;
-              error_ = input.readBytes();
-              break;
-            }
-            case 34: {
-              com.aphyr.riemann.Proto.State.Builder subBuilder = com.aphyr.riemann.Proto.State.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addStates(subBuilder.buildPartial());
-              break;
-            }
-            case 42: {
-              com.aphyr.riemann.Proto.Query.Builder subBuilder = com.aphyr.riemann.Proto.Query.newBuilder();
-              if (hasQuery()) {
-                subBuilder.mergeFrom(getQuery());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setQuery(subBuilder.buildPartial());
-              break;
-            }
-            case 50: {
-              com.aphyr.riemann.Proto.Event.Builder subBuilder = com.aphyr.riemann.Proto.Event.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addEvents(subBuilder.buildPartial());
-              break;
-            }
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.aphyr.riemann.Proto.Msg parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.aphyr.riemann.Proto.Msg) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-
       private int bitField0_;
 
       // optional bool ok = 2;
-      private boolean ok_;
-
+      private boolean ok_ ;
+      /**
+       * <code>optional bool ok = 2;</code>
+       */
       public boolean hasOk() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-
+      /**
+       * <code>optional bool ok = 2;</code>
+       */
       public boolean getOk() {
         return ok_;
       }
-
+      /**
+       * <code>optional bool ok = 2;</code>
+       */
       public Builder setOk(boolean value) {
         bitField0_ |= 0x00000001;
         ok_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional bool ok = 2;</code>
+       */
       public Builder clearOk() {
         bitField0_ = (bitField0_ & ~0x00000001);
         ok_ = false;
@@ -3633,59 +4549,94 @@ public final class Proto {
 
       // optional string error = 3;
       private java.lang.Object error_ = "";
-
+      /**
+       * <code>optional string error = 3;</code>
+       */
       public boolean hasError() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
-
-      public String getError() {
+      /**
+       * <code>optional string error = 3;</code>
+       */
+      public java.lang.String getError() {
         java.lang.Object ref = error_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           error_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-
-      public Builder setError(String value) {
-        if (value == null) {
-          throw new NullPointerException();
+      /**
+       * <code>optional string error = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getErrorBytes() {
+        java.lang.Object ref = error_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          error_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
-        bitField0_ |= 0x00000002;
+      }
+      /**
+       * <code>optional string error = 3;</code>
+       */
+      public Builder setError(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
         error_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>optional string error = 3;</code>
+       */
       public Builder clearError() {
         bitField0_ = (bitField0_ & ~0x00000002);
         error_ = getDefaultInstance().getError();
         onChanged();
         return this;
       }
-
-      void setError(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
+      /**
+       * <code>optional string error = 3;</code>
+       */
+      public Builder setErrorBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
         error_ = value;
         onChanged();
+        return this;
       }
 
       // repeated .State states = 4;
       private java.util.List<com.aphyr.riemann.Proto.State> states_ =
         java.util.Collections.emptyList();
-
       private void ensureStatesIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
           states_ = new java.util.ArrayList<com.aphyr.riemann.Proto.State>(states_);
           bitField0_ |= 0x00000004;
-        }
+         }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-        com.aphyr.riemann.Proto.State, com.aphyr.riemann.Proto.State.Builder, com.aphyr.riemann.Proto.StateOrBuilder> statesBuilder_;
+          com.aphyr.riemann.Proto.State, com.aphyr.riemann.Proto.State.Builder, com.aphyr.riemann.Proto.StateOrBuilder> statesBuilder_;
 
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public java.util.List<com.aphyr.riemann.Proto.State> getStatesList() {
         if (statesBuilder_ == null) {
           return java.util.Collections.unmodifiableList(states_);
@@ -3693,7 +4644,9 @@ public final class Proto {
           return statesBuilder_.getMessageList();
         }
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public int getStatesCount() {
         if (statesBuilder_ == null) {
           return states_.size();
@@ -3701,7 +4654,9 @@ public final class Proto {
           return statesBuilder_.getCount();
         }
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public com.aphyr.riemann.Proto.State getStates(int index) {
         if (statesBuilder_ == null) {
           return states_.get(index);
@@ -3709,9 +4664,11 @@ public final class Proto {
           return statesBuilder_.getMessage(index);
         }
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder setStates(
-        int index, com.aphyr.riemann.Proto.State value) {
+          int index, com.aphyr.riemann.Proto.State value) {
         if (statesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3724,9 +4681,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder setStates(
-        int index, com.aphyr.riemann.Proto.State.Builder builderForValue) {
+          int index, com.aphyr.riemann.Proto.State.Builder builderForValue) {
         if (statesBuilder_ == null) {
           ensureStatesIsMutable();
           states_.set(index, builderForValue.build());
@@ -3736,7 +4695,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder addStates(com.aphyr.riemann.Proto.State value) {
         if (statesBuilder_ == null) {
           if (value == null) {
@@ -3750,9 +4711,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder addStates(
-        int index, com.aphyr.riemann.Proto.State value) {
+          int index, com.aphyr.riemann.Proto.State value) {
         if (statesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3765,9 +4728,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder addStates(
-        com.aphyr.riemann.Proto.State.Builder builderForValue) {
+          com.aphyr.riemann.Proto.State.Builder builderForValue) {
         if (statesBuilder_ == null) {
           ensureStatesIsMutable();
           states_.add(builderForValue.build());
@@ -3777,9 +4742,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder addStates(
-        int index, com.aphyr.riemann.Proto.State.Builder builderForValue) {
+          int index, com.aphyr.riemann.Proto.State.Builder builderForValue) {
         if (statesBuilder_ == null) {
           ensureStatesIsMutable();
           states_.add(index, builderForValue.build());
@@ -3789,9 +4756,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder addAllStates(
-        java.lang.Iterable<? extends com.aphyr.riemann.Proto.State> values) {
+          java.lang.Iterable<? extends com.aphyr.riemann.Proto.State> values) {
         if (statesBuilder_ == null) {
           ensureStatesIsMutable();
           super.addAll(values, states_);
@@ -3801,7 +4770,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder clearStates() {
         if (statesBuilder_ == null) {
           states_ = java.util.Collections.emptyList();
@@ -3812,7 +4783,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public Builder removeStates(int index) {
         if (statesBuilder_ == null) {
           ensureStatesIsMutable();
@@ -3823,56 +4796,66 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public com.aphyr.riemann.Proto.State.Builder getStatesBuilder(
-        int index) {
+          int index) {
         return getStatesFieldBuilder().getBuilder(index);
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public com.aphyr.riemann.Proto.StateOrBuilder getStatesOrBuilder(
-        int index) {
+          int index) {
         if (statesBuilder_ == null) {
-          return states_.get(index);
-        } else {
+          return states_.get(index);  } else {
           return statesBuilder_.getMessageOrBuilder(index);
         }
       }
-
-      public java.util.List<? extends com.aphyr.riemann.Proto.StateOrBuilder>
-      getStatesOrBuilderList() {
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
+      public java.util.List<? extends com.aphyr.riemann.Proto.StateOrBuilder> 
+           getStatesOrBuilderList() {
         if (statesBuilder_ != null) {
           return statesBuilder_.getMessageOrBuilderList();
         } else {
           return java.util.Collections.unmodifiableList(states_);
         }
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public com.aphyr.riemann.Proto.State.Builder addStatesBuilder() {
         return getStatesFieldBuilder().addBuilder(
-          com.aphyr.riemann.Proto.State.getDefaultInstance());
+            com.aphyr.riemann.Proto.State.getDefaultInstance());
       }
-
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
       public com.aphyr.riemann.Proto.State.Builder addStatesBuilder(
-        int index) {
+          int index) {
         return getStatesFieldBuilder().addBuilder(
-          index, com.aphyr.riemann.Proto.State.getDefaultInstance());
+            index, com.aphyr.riemann.Proto.State.getDefaultInstance());
       }
-
-      public java.util.List<com.aphyr.riemann.Proto.State.Builder>
-      getStatesBuilderList() {
+      /**
+       * <code>repeated .State states = 4;</code>
+       */
+      public java.util.List<com.aphyr.riemann.Proto.State.Builder> 
+           getStatesBuilderList() {
         return getStatesFieldBuilder().getBuilderList();
       }
-
       private com.google.protobuf.RepeatedFieldBuilder<
-        com.aphyr.riemann.Proto.State, com.aphyr.riemann.Proto.State.Builder, com.aphyr.riemann.Proto.StateOrBuilder>
-      getStatesFieldBuilder() {
+          com.aphyr.riemann.Proto.State, com.aphyr.riemann.Proto.State.Builder, com.aphyr.riemann.Proto.StateOrBuilder> 
+          getStatesFieldBuilder() {
         if (statesBuilder_ == null) {
           statesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-            com.aphyr.riemann.Proto.State, com.aphyr.riemann.Proto.State.Builder, com.aphyr.riemann.Proto.StateOrBuilder>(
-            states_,
-            ((bitField0_ & 0x00000004) == 0x00000004),
-            getParentForChildren(),
-            isClean());
+              com.aphyr.riemann.Proto.State, com.aphyr.riemann.Proto.State.Builder, com.aphyr.riemann.Proto.StateOrBuilder>(
+                  states_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  getParentForChildren(),
+                  isClean());
           states_ = null;
         }
         return statesBuilder_;
@@ -3881,12 +4864,16 @@ public final class Proto {
       // optional .Query query = 5;
       private com.aphyr.riemann.Proto.Query query_ = com.aphyr.riemann.Proto.Query.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-        com.aphyr.riemann.Proto.Query, com.aphyr.riemann.Proto.Query.Builder, com.aphyr.riemann.Proto.QueryOrBuilder> queryBuilder_;
-
+          com.aphyr.riemann.Proto.Query, com.aphyr.riemann.Proto.Query.Builder, com.aphyr.riemann.Proto.QueryOrBuilder> queryBuilder_;
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       public boolean hasQuery() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       public com.aphyr.riemann.Proto.Query getQuery() {
         if (queryBuilder_ == null) {
           return query_;
@@ -3894,7 +4881,9 @@ public final class Proto {
           return queryBuilder_.getMessage();
         }
       }
-
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       public Builder setQuery(com.aphyr.riemann.Proto.Query value) {
         if (queryBuilder_ == null) {
           if (value == null) {
@@ -3908,9 +4897,11 @@ public final class Proto {
         bitField0_ |= 0x00000008;
         return this;
       }
-
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       public Builder setQuery(
-        com.aphyr.riemann.Proto.Query.Builder builderForValue) {
+          com.aphyr.riemann.Proto.Query.Builder builderForValue) {
         if (queryBuilder_ == null) {
           query_ = builderForValue.build();
           onChanged();
@@ -3920,11 +4911,13 @@ public final class Proto {
         bitField0_ |= 0x00000008;
         return this;
       }
-
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       public Builder mergeQuery(com.aphyr.riemann.Proto.Query value) {
         if (queryBuilder_ == null) {
           if (((bitField0_ & 0x00000008) == 0x00000008) &&
-            query_ != com.aphyr.riemann.Proto.Query.getDefaultInstance()) {
+              query_ != com.aphyr.riemann.Proto.Query.getDefaultInstance()) {
             query_ =
               com.aphyr.riemann.Proto.Query.newBuilder(query_).mergeFrom(value).buildPartial();
           } else {
@@ -3937,7 +4930,9 @@ public final class Proto {
         bitField0_ |= 0x00000008;
         return this;
       }
-
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       public Builder clearQuery() {
         if (queryBuilder_ == null) {
           query_ = com.aphyr.riemann.Proto.Query.getDefaultInstance();
@@ -3948,13 +4943,17 @@ public final class Proto {
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
-
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       public com.aphyr.riemann.Proto.Query.Builder getQueryBuilder() {
         bitField0_ |= 0x00000008;
         onChanged();
         return getQueryFieldBuilder().getBuilder();
       }
-
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       public com.aphyr.riemann.Proto.QueryOrBuilder getQueryOrBuilder() {
         if (queryBuilder_ != null) {
           return queryBuilder_.getMessageOrBuilder();
@@ -3962,16 +4961,18 @@ public final class Proto {
           return query_;
         }
       }
-
+      /**
+       * <code>optional .Query query = 5;</code>
+       */
       private com.google.protobuf.SingleFieldBuilder<
-        com.aphyr.riemann.Proto.Query, com.aphyr.riemann.Proto.Query.Builder, com.aphyr.riemann.Proto.QueryOrBuilder>
-      getQueryFieldBuilder() {
+          com.aphyr.riemann.Proto.Query, com.aphyr.riemann.Proto.Query.Builder, com.aphyr.riemann.Proto.QueryOrBuilder> 
+          getQueryFieldBuilder() {
         if (queryBuilder_ == null) {
           queryBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-            com.aphyr.riemann.Proto.Query, com.aphyr.riemann.Proto.Query.Builder, com.aphyr.riemann.Proto.QueryOrBuilder>(
-            query_,
-            getParentForChildren(),
-            isClean());
+              com.aphyr.riemann.Proto.Query, com.aphyr.riemann.Proto.Query.Builder, com.aphyr.riemann.Proto.QueryOrBuilder>(
+                  query_,
+                  getParentForChildren(),
+                  isClean());
           query_ = null;
         }
         return queryBuilder_;
@@ -3980,17 +4981,19 @@ public final class Proto {
       // repeated .Event events = 6;
       private java.util.List<com.aphyr.riemann.Proto.Event> events_ =
         java.util.Collections.emptyList();
-
       private void ensureEventsIsMutable() {
         if (!((bitField0_ & 0x00000010) == 0x00000010)) {
           events_ = new java.util.ArrayList<com.aphyr.riemann.Proto.Event>(events_);
           bitField0_ |= 0x00000010;
-        }
+         }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-        com.aphyr.riemann.Proto.Event, com.aphyr.riemann.Proto.Event.Builder, com.aphyr.riemann.Proto.EventOrBuilder> eventsBuilder_;
+          com.aphyr.riemann.Proto.Event, com.aphyr.riemann.Proto.Event.Builder, com.aphyr.riemann.Proto.EventOrBuilder> eventsBuilder_;
 
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public java.util.List<com.aphyr.riemann.Proto.Event> getEventsList() {
         if (eventsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(events_);
@@ -3998,7 +5001,9 @@ public final class Proto {
           return eventsBuilder_.getMessageList();
         }
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public int getEventsCount() {
         if (eventsBuilder_ == null) {
           return events_.size();
@@ -4006,7 +5011,9 @@ public final class Proto {
           return eventsBuilder_.getCount();
         }
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public com.aphyr.riemann.Proto.Event getEvents(int index) {
         if (eventsBuilder_ == null) {
           return events_.get(index);
@@ -4014,9 +5021,11 @@ public final class Proto {
           return eventsBuilder_.getMessage(index);
         }
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder setEvents(
-        int index, com.aphyr.riemann.Proto.Event value) {
+          int index, com.aphyr.riemann.Proto.Event value) {
         if (eventsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4029,9 +5038,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder setEvents(
-        int index, com.aphyr.riemann.Proto.Event.Builder builderForValue) {
+          int index, com.aphyr.riemann.Proto.Event.Builder builderForValue) {
         if (eventsBuilder_ == null) {
           ensureEventsIsMutable();
           events_.set(index, builderForValue.build());
@@ -4041,7 +5052,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder addEvents(com.aphyr.riemann.Proto.Event value) {
         if (eventsBuilder_ == null) {
           if (value == null) {
@@ -4055,9 +5068,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder addEvents(
-        int index, com.aphyr.riemann.Proto.Event value) {
+          int index, com.aphyr.riemann.Proto.Event value) {
         if (eventsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4070,9 +5085,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder addEvents(
-        com.aphyr.riemann.Proto.Event.Builder builderForValue) {
+          com.aphyr.riemann.Proto.Event.Builder builderForValue) {
         if (eventsBuilder_ == null) {
           ensureEventsIsMutable();
           events_.add(builderForValue.build());
@@ -4082,9 +5099,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder addEvents(
-        int index, com.aphyr.riemann.Proto.Event.Builder builderForValue) {
+          int index, com.aphyr.riemann.Proto.Event.Builder builderForValue) {
         if (eventsBuilder_ == null) {
           ensureEventsIsMutable();
           events_.add(index, builderForValue.build());
@@ -4094,9 +5113,11 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder addAllEvents(
-        java.lang.Iterable<? extends com.aphyr.riemann.Proto.Event> values) {
+          java.lang.Iterable<? extends com.aphyr.riemann.Proto.Event> values) {
         if (eventsBuilder_ == null) {
           ensureEventsIsMutable();
           super.addAll(values, events_);
@@ -4106,7 +5127,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder clearEvents() {
         if (eventsBuilder_ == null) {
           events_ = java.util.Collections.emptyList();
@@ -4117,7 +5140,9 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public Builder removeEvents(int index) {
         if (eventsBuilder_ == null) {
           ensureEventsIsMutable();
@@ -4128,56 +5153,66 @@ public final class Proto {
         }
         return this;
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public com.aphyr.riemann.Proto.Event.Builder getEventsBuilder(
-        int index) {
+          int index) {
         return getEventsFieldBuilder().getBuilder(index);
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public com.aphyr.riemann.Proto.EventOrBuilder getEventsOrBuilder(
-        int index) {
+          int index) {
         if (eventsBuilder_ == null) {
-          return events_.get(index);
-        } else {
+          return events_.get(index);  } else {
           return eventsBuilder_.getMessageOrBuilder(index);
         }
       }
-
-      public java.util.List<? extends com.aphyr.riemann.Proto.EventOrBuilder>
-      getEventsOrBuilderList() {
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
+      public java.util.List<? extends com.aphyr.riemann.Proto.EventOrBuilder> 
+           getEventsOrBuilderList() {
         if (eventsBuilder_ != null) {
           return eventsBuilder_.getMessageOrBuilderList();
         } else {
           return java.util.Collections.unmodifiableList(events_);
         }
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public com.aphyr.riemann.Proto.Event.Builder addEventsBuilder() {
         return getEventsFieldBuilder().addBuilder(
-          com.aphyr.riemann.Proto.Event.getDefaultInstance());
+            com.aphyr.riemann.Proto.Event.getDefaultInstance());
       }
-
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
       public com.aphyr.riemann.Proto.Event.Builder addEventsBuilder(
-        int index) {
+          int index) {
         return getEventsFieldBuilder().addBuilder(
-          index, com.aphyr.riemann.Proto.Event.getDefaultInstance());
+            index, com.aphyr.riemann.Proto.Event.getDefaultInstance());
       }
-
-      public java.util.List<com.aphyr.riemann.Proto.Event.Builder>
-      getEventsBuilderList() {
+      /**
+       * <code>repeated .Event events = 6;</code>
+       */
+      public java.util.List<com.aphyr.riemann.Proto.Event.Builder> 
+           getEventsBuilderList() {
         return getEventsFieldBuilder().getBuilderList();
       }
-
       private com.google.protobuf.RepeatedFieldBuilder<
-        com.aphyr.riemann.Proto.Event, com.aphyr.riemann.Proto.Event.Builder, com.aphyr.riemann.Proto.EventOrBuilder>
-      getEventsFieldBuilder() {
+          com.aphyr.riemann.Proto.Event, com.aphyr.riemann.Proto.Event.Builder, com.aphyr.riemann.Proto.EventOrBuilder> 
+          getEventsFieldBuilder() {
         if (eventsBuilder_ == null) {
           eventsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-            com.aphyr.riemann.Proto.Event, com.aphyr.riemann.Proto.Event.Builder, com.aphyr.riemann.Proto.EventOrBuilder>(
-            events_,
-            ((bitField0_ & 0x00000010) == 0x00000010),
-            getParentForChildren(),
-            isClean());
+              com.aphyr.riemann.Proto.Event, com.aphyr.riemann.Proto.Event.Builder, com.aphyr.riemann.Proto.EventOrBuilder>(
+                  events_,
+                  ((bitField0_ & 0x00000010) == 0x00000010),
+                  getParentForChildren(),
+                  isClean());
           events_ = null;
         }
         return eventsBuilder_;
@@ -4195,32 +5230,52 @@ public final class Proto {
   }
 
   public interface AttributeOrBuilder
-    extends com.google.protobuf.MessageOrBuilder {
+      extends com.google.protobuf.MessageOrBuilder {
 
     // required string key = 1;
+    /**
+     * <code>required string key = 1;</code>
+     */
     boolean hasKey();
-
-    String getKey();
+    /**
+     * <code>required string key = 1;</code>
+     */
+    java.lang.String getKey();
+    /**
+     * <code>required string key = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getKeyBytes();
 
     // optional string value = 2;
+    /**
+     * <code>optional string value = 2;</code>
+     */
     boolean hasValue();
-
-    String getValue();
+    /**
+     * <code>optional string value = 2;</code>
+     */
+    java.lang.String getValue();
+    /**
+     * <code>optional string value = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getValueBytes();
   }
-
+  /**
+   * Protobuf type {@code Attribute}
+   */
   public static final class Attribute extends
-    com.google.protobuf.GeneratedMessage
-    implements AttributeOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements AttributeOrBuilder {
     // Use Attribute.newBuilder() to construct.
-    private Attribute(Builder builder) {
+    private Attribute(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-
-    private Attribute(boolean noInit) {
-    }
+    private Attribute(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
     private static final Attribute defaultInstance;
-
     public static Attribute getDefaultInstance() {
       return defaultInstance;
     }
@@ -4229,45 +5284,121 @@ public final class Proto {
       return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Attribute(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              key_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              value_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
+        getDescriptor() {
       return com.aphyr.riemann.Proto.internal_static_Attribute_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internalGetFieldAccessorTable() {
-      return com.aphyr.riemann.Proto.internal_static_Attribute_fieldAccessorTable;
+        internalGetFieldAccessorTable() {
+      return com.aphyr.riemann.Proto.internal_static_Attribute_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.aphyr.riemann.Proto.Attribute.class, com.aphyr.riemann.Proto.Attribute.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Attribute> PARSER =
+        new com.google.protobuf.AbstractParser<Attribute>() {
+      public Attribute parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Attribute(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Attribute> getParserForType() {
+      return PARSER;
     }
 
     private int bitField0_;
     // required string key = 1;
     public static final int KEY_FIELD_NUMBER = 1;
     private java.lang.Object key_;
-
+    /**
+     * <code>required string key = 1;</code>
+     */
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-
-    public String getKey() {
+    /**
+     * <code>required string key = 1;</code>
+     */
+    public java.lang.String getKey() {
       java.lang.Object ref = key_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           key_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getKeyBytes() {
+    /**
+     * <code>required string key = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getKeyBytes() {
       java.lang.Object ref = key_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         key_ = b;
         return b;
       } else {
@@ -4278,31 +5409,39 @@ public final class Proto {
     // optional string value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
     private java.lang.Object value_;
-
+    /**
+     * <code>optional string value = 2;</code>
+     */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
-
-    public String getValue() {
+    /**
+     * <code>optional string value = 2;</code>
+     */
+    public java.lang.String getValue() {
       java.lang.Object ref = value_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-          (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           value_ = s;
         }
         return s;
       }
     }
-
-    private com.google.protobuf.ByteString getValueBytes() {
+    /**
+     * <code>optional string value = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getValueBytes() {
       java.lang.Object ref = value_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-          com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         value_ = b;
         return b;
       } else {
@@ -4314,9 +5453,7 @@ public final class Proto {
       key_ = "";
       value_ = "";
     }
-
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
@@ -4330,7 +5467,7 @@ public final class Proto {
     }
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-      throws java.io.IOException {
+                        throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, getKeyBytes());
@@ -4342,7 +5479,6 @@ public final class Proto {
     }
 
     private int memoizedSerializedSize = -1;
-
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
@@ -4362,123 +5498,94 @@ public final class Proto {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     protected java.lang.Object writeReplace()
-      throws java.io.ObjectStreamException {
+        throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
 
     public static com.aphyr.riemann.Proto.Attribute parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-        .buildParsed();
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
     }
-
     public static com.aphyr.riemann.Proto.Attribute parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-        .buildParsed();
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    public static Builder newBuilder() {
-      return Builder.create();
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
-
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(com.aphyr.riemann.Proto.Attribute prototype) {
       return newBuilder().mergeFrom(prototype);
     }
-
-    public Builder toBuilder() {
-      return newBuilder(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
+    /**
+     * Protobuf type {@code Attribute}
+     */
     public static final class Builder extends
-      com.google.protobuf.GeneratedMessage.Builder<Builder>
-      implements com.aphyr.riemann.Proto.AttributeOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.aphyr.riemann.Proto.AttributeOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+          getDescriptor() {
         return com.aphyr.riemann.Proto.internal_static_Attribute_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internalGetFieldAccessorTable() {
-        return com.aphyr.riemann.Proto.internal_static_Attribute_fieldAccessorTable;
+          internalGetFieldAccessorTable() {
+        return com.aphyr.riemann.Proto.internal_static_Attribute_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.aphyr.riemann.Proto.Attribute.class, com.aphyr.riemann.Proto.Attribute.Builder.class);
       }
 
       // Construct using com.aphyr.riemann.Proto.Attribute.newBuilder()
@@ -4486,16 +5593,15 @@ public final class Proto {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-
       private static Builder create() {
         return new Builder();
       }
@@ -4514,8 +5620,8 @@ public final class Proto {
       }
 
       public com.google.protobuf.Descriptors.Descriptor
-      getDescriptorForType() {
-        return com.aphyr.riemann.Proto.Attribute.getDescriptor();
+          getDescriptorForType() {
+        return com.aphyr.riemann.Proto.internal_static_Attribute_descriptor;
       }
 
       public com.aphyr.riemann.Proto.Attribute getDefaultInstanceForType() {
@@ -4526,16 +5632,6 @@ public final class Proto {
         com.aphyr.riemann.Proto.Attribute result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      private com.aphyr.riemann.Proto.Attribute buildParsed()
-        throws com.google.protobuf.InvalidProtocolBufferException {
-        com.aphyr.riemann.Proto.Attribute result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
         }
         return result;
       }
@@ -4559,7 +5655,7 @@ public final class Proto {
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.aphyr.riemann.Proto.Attribute) {
-          return mergeFrom((com.aphyr.riemann.Proto.Attribute) other);
+          return mergeFrom((com.aphyr.riemann.Proto.Attribute)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -4569,10 +5665,14 @@ public final class Proto {
       public Builder mergeFrom(com.aphyr.riemann.Proto.Attribute other) {
         if (other == com.aphyr.riemann.Proto.Attribute.getDefaultInstance()) return this;
         if (other.hasKey()) {
-          setKey(other.getKey());
+          bitField0_ |= 0x00000001;
+          key_ = other.key_;
+          onChanged();
         }
         if (other.hasValue()) {
-          setValue(other.getValue());
+          bitField0_ |= 0x00000002;
+          value_ = other.value_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -4580,131 +5680,177 @@ public final class Proto {
 
       public final boolean isInitialized() {
         if (!hasKey()) {
-
+          
           return false;
         }
         return true;
       }
 
       public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              key_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              bitField0_ |= 0x00000002;
-              value_ = input.readBytes();
-              break;
-            }
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.aphyr.riemann.Proto.Attribute parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.aphyr.riemann.Proto.Attribute) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-
       private int bitField0_;
 
       // required string key = 1;
       private java.lang.Object key_ = "";
-
+      /**
+       * <code>required string key = 1;</code>
+       */
       public boolean hasKey() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-
-      public String getKey() {
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public java.lang.String getKey() {
         java.lang.Object ref = key_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           key_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-
-      public Builder setKey(String value) {
-        if (value == null) {
-          throw new NullPointerException();
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getKeyBytes() {
+        java.lang.Object ref = key_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          key_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
-        bitField0_ |= 0x00000001;
+      }
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public Builder setKey(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         key_ = value;
         onChanged();
         return this;
       }
-
+      /**
+       * <code>required string key = 1;</code>
+       */
       public Builder clearKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
         key_ = getDefaultInstance().getKey();
         onChanged();
         return this;
       }
-
-      void setKey(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
-        key_ = value;
-        onChanged();
-      }
-
-      // optional string value = 2;
-      private java.lang.Object value_ = "";
-
-      public boolean hasValue() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-
-      public String getValue() {
-        java.lang.Object ref = value_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-          value_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-
-      public Builder setValue(String value) {
+      /**
+       * <code>required string key = 1;</code>
+       */
+      public Builder setKeyBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        value_ = value;
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        key_ = value;
         onChanged();
         return this;
       }
 
+      // optional string value = 2;
+      private java.lang.Object value_ = "";
+      /**
+       * <code>optional string value = 2;</code>
+       */
+      public boolean hasValue() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional string value = 2;</code>
+       */
+      public java.lang.String getValue() {
+        java.lang.Object ref = value_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          value_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string value = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getValueBytes() {
+        java.lang.Object ref = value_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          value_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string value = 2;</code>
+       */
+      public Builder setValue(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        value_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string value = 2;</code>
+       */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000002);
         value_ = getDefaultInstance().getValue();
         onChanged();
         return this;
       }
-
-      void setValue(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000002;
+      /**
+       * <code>optional string value = 2;</code>
+       */
+      public Builder setValueBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
         value_ = value;
         onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:Attribute)
@@ -4721,105 +5867,93 @@ public final class Proto {
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_State_descriptor;
   private static
-  com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internal_static_State_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_State_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_Event_descriptor;
   private static
-  com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internal_static_Event_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Event_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_Query_descriptor;
   private static
-  com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internal_static_Query_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Query_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_Msg_descriptor;
   private static
-  com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internal_static_Msg_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Msg_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_Attribute_descriptor;
   private static
-  com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internal_static_Attribute_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Attribute_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
-  getDescriptor() {
+      getDescriptor() {
     return descriptor;
   }
-
   private static com.google.protobuf.Descriptors.FileDescriptor
-    descriptor;
-
+      descriptor;
   static {
     java.lang.String[] descriptorData = {
       "\n\013proto.proto\"\201\001\n\005State\022\014\n\004time\030\001 \001(\003\022\r\n" +
-        "\005state\030\002 \001(\t\022\017\n\007service\030\003 \001(\t\022\014\n\004host\030\004 " +
-        "\001(\t\022\023\n\013description\030\005 \001(\t\022\014\n\004once\030\006 \001(\010\022\014" +
-        "\n\004tags\030\007 \003(\t\022\013\n\003ttl\030\010 \001(\002\"\316\001\n\005Event\022\014\n\004t" +
-        "ime\030\001 \001(\003\022\r\n\005state\030\002 \001(\t\022\017\n\007service\030\003 \001(" +
-        "\t\022\014\n\004host\030\004 \001(\t\022\023\n\013description\030\005 \001(\t\022\014\n\004" +
-        "tags\030\007 \003(\t\022\013\n\003ttl\030\010 \001(\002\022\036\n\nattributes\030\t " +
-        "\003(\0132\n.Attribute\022\025\n\rmetric_sint64\030\r \001(\022\022\020" +
-        "\n\010metric_d\030\016 \001(\001\022\020\n\010metric_f\030\017 \001(\002\"\027\n\005Qu" +
-        "ery\022\016\n\006string\030\001 \001(\t\"g\n\003Msg\022\n\n\002ok\030\002 \001(\010\022\r",
+      "\005state\030\002 \001(\t\022\017\n\007service\030\003 \001(\t\022\014\n\004host\030\004 " +
+      "\001(\t\022\023\n\013description\030\005 \001(\t\022\014\n\004once\030\006 \001(\010\022\014" +
+      "\n\004tags\030\007 \003(\t\022\013\n\003ttl\030\010 \001(\002\"\316\001\n\005Event\022\014\n\004t" +
+      "ime\030\001 \001(\003\022\r\n\005state\030\002 \001(\t\022\017\n\007service\030\003 \001(" +
+      "\t\022\014\n\004host\030\004 \001(\t\022\023\n\013description\030\005 \001(\t\022\014\n\004" +
+      "tags\030\007 \003(\t\022\013\n\003ttl\030\010 \001(\002\022\036\n\nattributes\030\t " +
+      "\003(\0132\n.Attribute\022\025\n\rmetric_sint64\030\r \001(\022\022\020" +
+      "\n\010metric_d\030\016 \001(\001\022\020\n\010metric_f\030\017 \001(\002\"\027\n\005Qu" +
+      "ery\022\016\n\006string\030\001 \001(\t\"g\n\003Msg\022\n\n\002ok\030\002 \001(\010\022\r",
       "\n\005error\030\003 \001(\t\022\026\n\006states\030\004 \003(\0132\006.State\022\025\n" +
-        "\005query\030\005 \001(\0132\006.Query\022\026\n\006events\030\006 \003(\0132\006.E" +
-        "vent\"\'\n\tAttribute\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030" +
-        "\002 \001(\tB\032\n\021com.aphyr.riemannB\005Proto"
+      "\005query\030\005 \001(\0132\006.Query\022\026\n\006events\030\006 \003(\0132\006.E" +
+      "vent\"\'\n\tAttribute\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030" +
+      "\002 \001(\tB\032\n\021com.aphyr.riemannB\005Proto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
-          com.google.protobuf.Descriptors.FileDescriptor root) {
+            com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
           internal_static_State_descriptor =
             getDescriptor().getMessageTypes().get(0);
           internal_static_State_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-            internal_static_State_descriptor,
-            new java.lang.String[]{"Time", "State", "Service", "Host", "Description", "Once", "Tags", "Ttl",},
-            com.aphyr.riemann.Proto.State.class,
-            com.aphyr.riemann.Proto.State.Builder.class);
+              internal_static_State_descriptor,
+              new java.lang.String[] { "Time", "State", "Service", "Host", "Description", "Once", "Tags", "Ttl", });
           internal_static_Event_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_Event_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-            internal_static_Event_descriptor,
-            new java.lang.String[]{"Time", "State", "Service", "Host", "Description", "Tags", "Ttl", "Attributes", "MetricSint64", "MetricD", "MetricF",},
-            com.aphyr.riemann.Proto.Event.class,
-            com.aphyr.riemann.Proto.Event.Builder.class);
+              internal_static_Event_descriptor,
+              new java.lang.String[] { "Time", "State", "Service", "Host", "Description", "Tags", "Ttl", "Attributes", "MetricSint64", "MetricD", "MetricF", });
           internal_static_Query_descriptor =
             getDescriptor().getMessageTypes().get(2);
           internal_static_Query_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-            internal_static_Query_descriptor,
-            new java.lang.String[]{"String",},
-            com.aphyr.riemann.Proto.Query.class,
-            com.aphyr.riemann.Proto.Query.Builder.class);
+              internal_static_Query_descriptor,
+              new java.lang.String[] { "String", });
           internal_static_Msg_descriptor =
             getDescriptor().getMessageTypes().get(3);
           internal_static_Msg_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-            internal_static_Msg_descriptor,
-            new java.lang.String[]{"Ok", "Error", "States", "Query", "Events",},
-            com.aphyr.riemann.Proto.Msg.class,
-            com.aphyr.riemann.Proto.Msg.Builder.class);
+              internal_static_Msg_descriptor,
+              new java.lang.String[] { "Ok", "Error", "States", "Query", "Events", });
           internal_static_Attribute_descriptor =
             getDescriptor().getMessageTypes().get(4);
           internal_static_Attribute_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-            internal_static_Attribute_descriptor,
-            new java.lang.String[]{"Key", "Value",},
-            com.aphyr.riemann.Proto.Attribute.class,
-            com.aphyr.riemann.Proto.Attribute.Builder.class);
+              internal_static_Attribute_descriptor,
+              new java.lang.String[] { "Key", "Value", });
           return null;
         }
       };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[]{
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
 
