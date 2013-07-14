@@ -91,6 +91,9 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
     private RiemannPubSubClient pubSubClient;
     private RiemannPubSubConnection pubSubConnection;
 
+    @Inject
+    RiemannEventObjectMapper objectMapper;
+
     @PostConstruct
     public void establishConnection() {
        tcpConnection = makeConnection();
@@ -123,8 +126,7 @@ public class RiemannTest extends AbstractTestNGSpringContextTests implements Que
     @Test(dependsOnMethods = {"testSendWithAck" }, timeOut = 60000)
     public void testContinuousQuery() throws InterruptedException, IOException {
         String json = events.take();
-        RiemannEventObjectMapper mapper = new RiemannEventObjectMapper();
-        assertThat(mapper.readEvent(json).getMetricD()).isEqualTo(5.3);
+        assertThat(objectMapper.readEvent(json).getMetricD()).isEqualTo(5.3);
     }
 
     private List<Proto.Event> query() throws InterruptedException {
