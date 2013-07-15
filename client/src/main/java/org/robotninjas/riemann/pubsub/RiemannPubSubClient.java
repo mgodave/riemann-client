@@ -42,19 +42,11 @@ public class RiemannPubSubClient {
       final URI uri = new URI("ws", "", address, port, "/index/", queryString, "");
       final WebSocketClientHandshaker handshaker = handshakerFactory.newHandshaker(uri, WebSocketVersion.V13, null, false, null);
       final ClientBootstrap bootstrap = bootstrapSupplier.get();
-      final RiemannPubSubConnection connection = new RiemannPubSubConnection(resultExecutor, listener);
+      final RiemannPubSubConnection connection = new RiemannPubSubConnection(resultExecutor, listener, bootstrap);
       bootstrap.setPipelineFactory(new WebSocketClientPipelineFactory(handshaker, connection));
       final ChannelFuture connect = bootstrap.connect(new InetSocketAddress(uri.getHost(), uri.getPort()));
       connect.sync();
       connection.init(connect.getChannel());
-      connect.getChannel().getCloseFuture().addListener(new ChannelFutureListener() {
-        @Override
-        public void operationComplete(ChannelFuture future) throws Exception {
-          if (future.isDone() && future.isSuccess()) {
-            bootstrap.releaseExternalResources();
-          }
-        }
-      });
       return connection;
     } catch (UnsupportedEncodingException e) {
       throw Throwables.propagate(e);
