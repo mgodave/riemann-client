@@ -22,7 +22,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Queues;
 import org.robobninjas.riemann.json.RiemannEventObjectMapper;
 import org.robobninjas.riemann.spring.server.RiemannProcess;
-import org.robobninjas.riemann.spring.server.RiemannProcessConfiguration;
 import org.robotninjas.riemann.client.RiemannTcpClient;
 import org.robotninjas.riemann.client.RiemannTcpConnection;
 import org.robotninjas.riemann.pubsub.QueryResultListener;
@@ -56,9 +55,9 @@ import static org.fest.assertions.api.Assertions.assertThat;
  * @author Itai Frenkel
  * @since 3.0.1
  */
-@ContextConfiguration(classes = { RiemannTest.Config.class })
+@ContextConfiguration(classes = { RiemannIT.Config.class })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class RiemannTest extends AbstractTestNGSpringContextTests implements QueryResultListener {
+public class RiemannIT extends AbstractTestNGSpringContextTests implements QueryResultListener {
 
     private BlockingQueue<String> events = Queues.newArrayBlockingQueue(10);
 
