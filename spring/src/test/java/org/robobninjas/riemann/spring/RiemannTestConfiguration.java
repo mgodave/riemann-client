@@ -33,7 +33,9 @@ import org.springframework.context.annotation.Import;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.URISyntaxException;
 
 /**
@@ -53,6 +55,10 @@ public class RiemannTestConfiguration {
     // Injection makes sure Riemann server process is started, before connection attempts.
     @Inject
     RiemannProcess riemannProcess;
+
+    @Value("${riemann.client.connection.timeout-milliseconds:1000}")
+    int connectionTimeoutMilliseconds;
+
 
     @Value("${riemann.client.connection.number-of-connection-attempts:60}")
     int numberOfConnectionAttempts;
@@ -104,14 +110,16 @@ public class RiemannTestConfiguration {
 
     private void checkTcpConnection() throws InterruptedException, IOException {
         if (waitForTcpServer) {
-            Socket clientSocket = new Socket(host, tcpPort);
+            Socket clientSocket = new Socket();
+            clientSocket.connect(new InetSocketAddress(host, tcpPort), connectionTimeoutMilliseconds);
             clientSocket.close();
         }
     }
 
     private void checkWebSocketConnection() throws InterruptedException, IOException {
         if (waitForWebSocketServer) {
-            Socket clientSocket = new Socket(host, webSocketPort);
+            Socket clientSocket = new Socket();
+            clientSocket.connect(new InetSocketAddress(host, webSocketPort), connectionTimeoutMilliseconds);
             clientSocket.close();
         }
     }
