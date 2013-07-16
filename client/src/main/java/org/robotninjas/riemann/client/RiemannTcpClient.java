@@ -33,11 +33,13 @@ import static com.google.common.base.Throwables.propagateIfInstanceOf;
 public class RiemannTcpClient implements RiemannClient {
 
   private static final int DEFAULT_RETRIES = 0;
+  private static final long DEFAULT_SLEEP_BETWEEN_RETRIES = 0;
 
-  private final ClientBootstrap bootstrap;
+    private final ClientBootstrap bootstrap;
   private volatile int maxRetries = DEFAULT_RETRIES;
+  private long sleepBetweenRetries = DEFAULT_SLEEP_BETWEEN_RETRIES;
 
-  @Inject
+    @Inject
   public RiemannTcpClient(ClientBootstrap bootstrap) {
     this.bootstrap = bootstrap;
   }
@@ -48,6 +50,10 @@ public class RiemannTcpClient implements RiemannClient {
 
   public void setMaxRetries(int maxRetries) {
     this.maxRetries = maxRetries;
+  }
+
+  public void setSleepBetweenRetriesMilliseconds(long sleepBetweenRetries) {
+    this.sleepBetweenRetries = sleepBetweenRetries;
   }
 
   @Override
@@ -89,6 +95,9 @@ public class RiemannTcpClient implements RiemannClient {
       } catch (Exception e) {
         propagateIfInstanceOf(e, InterruptedException.class);
         lastException = Optional.of(e);
+        if (i < maxRetries) {
+            Thread.sleep(sleepBetweenRetries);
+        }
       }
     }
 
@@ -104,5 +113,4 @@ public class RiemannTcpClient implements RiemannClient {
     bootstrap.releaseExternalResources();
     bootstrap.shutdown();
   }
-
 }
