@@ -58,6 +58,12 @@ public class RiemannTcpClientConfiguration {
     @Value("${riemann-client.tcp-port:"+ DEFAULT_TCP_PORT +"}")
     private Integer port;
 
+    @Value("${riemann.client.connection.number-of-connection-attempts:60}")
+    int numberOfConnectionAttempts;
+
+    @Value("${riemann.client.connection.sleep-before-connection-attempt-milliseconds:1000}")
+    int sleepBeforeConnectionAttemptMilliseconds;
+
     @Inject
     private NioClientBossPool boss;
 
@@ -85,6 +91,9 @@ public class RiemannTcpClientConfiguration {
         bootstrap.setOption("remoteAddress", new InetSocketAddress(host, port));
         bootstrap.setOption("tcpNoDelay", true);
         bootstrap.setOption("child.tcpNoDelay", true);
-        return new RiemannTcpClient(bootstrap);
+        RiemannTcpClient riemannTcpClient = new RiemannTcpClient(bootstrap);
+        riemannTcpClient.setMaxRetries(numberOfConnectionAttempts - 1);
+        riemannTcpClient.setSleepBetweenRetriesMilliseconds(sleepBeforeConnectionAttemptMilliseconds);
+        return riemannTcpClient;
     }
 }

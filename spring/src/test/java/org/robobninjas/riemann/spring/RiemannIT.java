@@ -100,7 +100,7 @@ public class RiemannIT extends AbstractTestNGSpringContextTests implements Query
     }
 
     @PreDestroy
-    public void closeConnection() throws IOException {
+    public void closeConnection() throws IOException, InterruptedException {
         if (tcpConnection != null) {
             tcpConnection.close();
         }
