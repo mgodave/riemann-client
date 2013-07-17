@@ -23,6 +23,7 @@ import org.jboss.netty.channel.socket.nio.NioClientBossPool;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioWorkerPool;
 import org.jboss.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
+import org.robobninjas.riemann.json.RiemannEventObjectMapper;
 import org.robobninjas.riemann.spring.internal.RiemannNioConfiguration;
 import org.robotninjas.riemann.pubsub.RiemannPubSubClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 /**
@@ -40,7 +42,7 @@ import javax.inject.Inject;
  * @since 3.0.1
  */
 @Configuration
-@Import({RiemannNioConfiguration.class})
+@Import({RiemannNioConfiguration.class })
 public class RiemannWebsocketClientConfiguration {
     public static final String DEFAULT_ADDRESS = "localhost";
     public static final int DEFAULT_PORT = 5556;
@@ -48,14 +50,26 @@ public class RiemannWebsocketClientConfiguration {
     @Value("${riemann-client.host:" + DEFAULT_ADDRESS + "}")
     private String host;
 
+    protected void setHost(String host) {
+        this.host = host;
+    }
+
     @Value("${riemann-client.websocket-port:"+ DEFAULT_PORT +"}")
-    private Integer port;
+    private int port;
+    protected void setPort(int port) {
+        this.port = port;
+    }
 
     @Inject
     private NioClientBossPool boss;
 
     @Inject
     private NioWorkerPool worker;
+
+    @PostConstruct
+    public void initDefaults() {
+        //place holder for subclasses
+    }
 
     @Bean
     public RiemannPubSubClient pubsubClient() {
@@ -70,5 +84,10 @@ public class RiemannWebsocketClientConfiguration {
                     }
                 },
                 MoreExecutors.sameThreadExecutor());
+    }
+
+    @Bean
+    RiemannEventObjectMapper riemannEventObjectMapper() {
+        return new RiemannEventObjectMapper();
     }
 }

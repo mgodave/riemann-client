@@ -55,14 +55,22 @@ public class RiemannTcpClientConfiguration {
     @Value("${riemann-client.host:" + DEFAULT_ADDRESS + "}")
     private String host;
 
+    protected void setHost(String host) {
+        this.host = host;
+    }
+
     @Value("${riemann-client.tcp-port:"+ DEFAULT_TCP_PORT +"}")
-    private Integer port;
+    private int port;
+
+    protected void setPort(int port) {
+        this.port = port;
+    }
 
     @Value("${riemann.client.connection.number-of-connection-attempts:60}")
-    int numberOfConnectionAttempts;
+    private int numberOfConnectionAttempts;
 
     @Value("${riemann.client.connection.sleep-before-connection-attempt-milliseconds:1000}")
-    int sleepBeforeConnectionAttemptMilliseconds;
+    private int sleepBeforeConnectionAttemptMilliseconds;
 
     @Inject
     private NioClientBossPool boss;
