@@ -26,7 +26,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * TODO: Write a short summary of this type's roles and responsibilities.
+ * Start Detector for Riemann process, and also discovers port settings.
+ * Uses stdout parsing.
  *
  * @author Itai Frenkel
  * @since 0.1
