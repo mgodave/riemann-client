@@ -22,6 +22,11 @@
             <artifactId>pool</artifactId>
             <version>3.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.robotninjas.riemann</groupId>
+            <artifactId>json</artifactId>
+            <version>3.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- Spring DI -->
         <dependency>
             <groupId>org.springframework</groupId>
