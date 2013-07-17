@@ -35,12 +35,15 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -56,7 +59,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
  * @since 3.0.1
  */
 @ContextConfiguration(classes = { RiemannIT.Config.class })
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class RiemannIT extends AbstractTestNGSpringContextTests implements QueryResultListener {
 
     private BlockingQueue<String> events = Queues.newArrayBlockingQueue(10);
@@ -93,14 +96,16 @@ public class RiemannIT extends AbstractTestNGSpringContextTests implements Query
     @Inject
     RiemannEventObjectMapper objectMapper;
 
-    @PostConstruct
-    public void establishConnection() {
+    @BeforeMethod
+    public void establishConnection(Method method) {
+       logger.info("establishing connections before test " + method.getName());
        tcpConnection = makeConnection();
        pubSubConnection = continuousQuery();
     }
 
-    @PreDestroy
-    public void closeConnection() throws IOException, InterruptedException {
+    @AfterMethod(alwaysRun = true)
+    public void closeConnection(Method method) throws IOException, InterruptedException {
+        logger.info("closing connections after test " + method.getName());
         if (tcpConnection != null) {
             tcpConnection.close();
         }
@@ -118,12 +123,14 @@ public class RiemannIT extends AbstractTestNGSpringContextTests implements Query
 
     @Test(dependsOnMethods = {"testSendWithAck" }, timeOut = 60000)
     public void testQuery() throws InterruptedException {
+        sendWithAck();
         List<Proto.Event> events = query();
         assertThat(Iterables.getOnlyElement(events).getMetricD()).isEqualTo(5.3);
     }
 
     @Test(dependsOnMethods = {"testSendWithAck" }, timeOut = 60000)
     public void testContinuousQuery() throws InterruptedException, IOException {
+        sendWithAck();
         String json = events.take();
         assertThat(objectMapper.readEvent(json).getMetricD()).isEqualTo(5.3);
     }
