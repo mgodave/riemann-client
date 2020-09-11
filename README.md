@@ -40,16 +40,16 @@ There is a Riemann load test tool included in this repo. To build it:
 cd $CLIENT_HOME
 mvn clean install
 cd load-test
-mvn assembly:single
+mvn package assembly:single
 ```
 
 There will be a tarball under in the target directory, this is a standalone version of the tool. To run, extract the tarball
-and run ./bin/load-test.sh -h
+and run ./bin/riemann-load.sh -h
 
 The options available are:
 
 ```
-usage: ./load-test.sh [options] [host:port]
+usage: ./riemann-load.sh [options] [host:port]
  -b,--batch-size <arg>       number of Events to send in each Msg
  -c,--connections <arg>      number of concurrent connections
  -n,--netty-workers <arg>    number of netty worker threads
